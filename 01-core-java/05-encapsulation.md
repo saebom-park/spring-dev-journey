@@ -51,10 +51,12 @@ public class Person {
         System.out.println("나이: " + p1.getAge());
     }
 }
-
+```
 ---
 
 ## 예제 코드 2 – `Car`
+
+```java
 public class Car {
     private String model;
     private int speed;
