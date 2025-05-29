@@ -52,7 +52,7 @@ public class bookArray {
 ```
 ---
 
-## 예제 코드 3 – 평균 체중 계산 (실습 미션 2)`
+## 예제 코드 3 – `평균 체중 계산 (실습 미션 2)`
 
 ```java
 public class weightArray {
