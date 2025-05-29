@@ -52,7 +52,7 @@ public class Person {
     }
 }
 
-------
+---
 
 ## 예제 코드 2 – `Car`
 public class Car {
