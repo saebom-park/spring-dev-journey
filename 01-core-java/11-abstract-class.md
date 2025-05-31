@@ -92,8 +92,6 @@ class Dog extends Animal {
 ✅ 자식 클래스는 **부모 클래스의 필드/메서드를 그대로 상속받기 때문!**
 
 ```java
-java
-복사편집
 Dog dog = new Dog("아부");
 System.out.println(dog.name); // ✅ 가능
 
@@ -117,4 +115,23 @@ System.out.println(dog.name); // ✅ 가능
 > 
 > 
 > 따라서 `super(name)` 같은 명시 호출이 필수야.
->
+
+---
+
+### ❓ 추상 클래스는 왜 다중 상속이 안 되는 거야?
+
+봄이의 질문: `class Dog extends Animal {}`와 같이 여러 클래스가 상속 가능해 보였는데 왜 안 되는지?
+
+✅ 자바는 클래스 간 **다중 상속(extends A, B)** 을 허용하지 않음!  
+→ `class Dog extends Animal, Mammal {}` ❌ 불가!
+
+| 구분 | 단일 상속 | 다중 상속 |
+|------|------------|------------|
+| `class` → `class` | ✅ 가능 (`extends` 1개만) | ❌ 불가능 |
+| `interface` → `interface` | ✅ | ✅ |
+| `class` → `interface` | ✅ (`implements`) | ✅ (`implements A, B`) |
+
+✅ 우리가 했던 건 "여러 클래스가 하나의 추상 클래스를 각각 상속"한 것!  
+하지만 "한 클래스가 여러 추상 클래스를 동시에 상속"하는 건 불가능!
+
+---
