@@ -1,10 +1,18 @@
-# 디폴트 무시된 파일
+# IntelliJ IDEA 설정
+.idea/
+*.iml
+
+# 프로젝트 설정 무시
 /shelf/
 /workspace.xml
-# 에디터 기반 HTTP 클라이언트 요청
+
+# HTTP 클라이언트
 /httpRequests/
-# Datasource local storage ignored files
+
+# DB 데이터소스 설정
 /dataSources/
 /dataSources.local.xml
+
+# 빌드 결과물
 *.class
 /out/
