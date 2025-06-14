@@ -1,3 +1,5 @@
+package oop;
+
 public class Car {
     String model;
     int speed;
