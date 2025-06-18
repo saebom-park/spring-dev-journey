@@ -1,30 +1,71 @@
 # [16-3단계] 질문노트: 파일 입출력 (WriteFileExample.java)
 
-> 💬 봄이가 직접 궁금해서 물어본 것들 + 온이의 설명 요약
-> 
-> 
+> 💬 봄이가 직접 궁금해서 물어본 것들 + 온이의 설명 요약  
 > (코드: WriteFileExample.java 실습 기준)
-> 
 
 ---
 
-### 💡 1. 질문 주제 요약
+### 💡 1. try 문에 괄호 `( )` 붙는 문법은 뭐야?
 
 | 질문 | 답변 요약 |
-| --- | --- |
-| `try (FileWriter writer = new FileWriter(...))` 문법은 왜 `try()`처럼 생겼나요? | try-with-resources 구문이에요. 괄호 안의 자원은 AutoCloseable 인터페이스를 구현하고 있어서 try 종료 시 자동으로 close() 처리돼요. |
-| `(line = reader.readLine()) != null`은 무슨 의미인가요? | reader로 한 줄 읽은 결과를 line에 저장하고, 그 값이 null이 아닌 동안 반복하라는 뜻이에요. null이면 더 이상 읽을 줄이 없는 상태예요. |
-| 왜 `BufferedReader`에 `FileReader`를 넣나요? | `BufferedReader`는 줄 단위로 효율적으로 읽는 클래스고, 파일을 직접 여는 건 `FileReader`라서 두 클래스를 조합해 사용해요. |
-| `File`과 `FileReader`는 어떤 차이가 있나요? | `File`은 파일의 존재/경로/크기 같은 정보만 다루고, `FileReader`는 파일 내용을 문자 단위로 읽는 스트림이에요. |
-| `FileWriter`로 두 번 실행했더니 첫 번째 내용이 사라지던데요? | FileWriter는 기본이 덮어쓰기(overwrite) 모드예요. 내용을 추가하려면 `new FileWriter(path, true)`처럼 true를 넣어야 해요. |
-| `createNewFile()`은 어디서 실제 파일을 생성하나요? | `new File(...)`은 파일 객체만 만들고, 실제 파일은 `createNewFile()`을 호출해야 생성돼요. |
-| 상대 경로로 파일 만들면 어디에 생기나요? | `System.getProperty("user.dir")`로 확인할 수 있는 현재 실행 디렉토리에 생겨요. |
+|------|-----------|
+| `try (FileWriter writer = new FileWriter(...))` 문법은 왜 괄호 안에 들어가? | 이건 **try-with-resources** 구문이야. 괄호 안 자원은 `AutoCloseable`을 구현한 객체만 들어올 수 있고, **try가 끝나면 자동으로 close()** 돼. |
+
+---
+
+### 💡 2. `readLine() != null` 이건 무슨 뜻이야?
+
+| 질문 | 답변 요약 |
+|------|-----------|
+| `(line = reader.readLine()) != null`은 왜 이렇게 써? | `readLine()`으로 한 줄 읽어서 `line`에 저장하고, 그 값이 null이 아닐 동안 반복하는 거야. null이면 더 이상 읽을 게 없단 뜻! |
+
+---
+
+### 💡 3. `BufferedReader`랑 `FileReader`를 같이 쓰는 이유는?
+
+| 질문 | 답변 요약 |
+|------|-----------|
+| 왜 둘을 합쳐 써야 해? | `FileReader`는 문자 단위로 읽고, `BufferedReader`는 줄 단위로 **더 효율적으로 읽을 수 있게 도와주는 보조 스트림**이야. |
+
+---
+
+### 💡 4. `File`이랑 `FileReader`는 어떤 차이야?
+
+| 질문 | 답변 요약 |
+|------|-----------|
+| 이름이 비슷해서 헷갈려… | `File`은 **파일 정보 객체 (경로, 존재 여부 등)**, `FileReader`는 **파일 내용을 읽는 문자 입력 스트림**이야. 역할이 아예 달라! |
+
+---
+
+### 💡 5. `FileWriter`로 쓰면 기존 내용이 사라져버렸어
+
+| 질문 | 답변 요약 |
+|------|-----------|
+| 두 번 실행했더니 첫 내용이 없어졌어! | `FileWriter`는 기본이 **덮어쓰기(overwrite)** 모드라서 그래. **내용을 추가하려면** `new FileWriter(path, true)`처럼 true를 넣어야 해. |
+
+---
+
+### 💡 6. 실제로 파일은 언제 만들어져?
+
+| 질문 | 답변 요약 |
+|------|-----------|
+| `new File(...)` 하면 바로 파일 생기는 거 아니야? | 아니야! 그건 단순히 **파일 객체만 만든 거고**, 실제로 디스크에 파일을 만들려면 `createNewFile()`을 호출해야 해. |
+
+---
+
+### 💡 7. 상대 경로로 만든 파일은 어디에 저장돼?
+
+| 질문 | 답변 요약 |
+|------|-----------|
+| 상대 경로로 만들었는데 어디 있는 거야? | 상대 경로는 **현재 실행 디렉토리 기준**으로 파일이 생성돼. 경로 확인은 `System.getProperty("user.dir")`로 가능해. |
 
 ---
 
 ### 🌱 정리 키워드
 
-- try-with-resources 문법
-- BufferedReader와 FileReader 조합
-- 덮어쓰기 vs 추가쓰기 모드
-- 파일 객체 생성과 실제 생성의 차이
+- `try-with-resources` → 자원 자동 반환
+- `BufferedReader + FileReader` → 줄 단위 효율적 읽기
+- `File` vs `FileReader` → 정보 vs 읽기 스트림
+- `FileWriter` 기본은 덮어쓰기 → true 넣으면 추가쓰기
+- `createNewFile()` → 실제 파일 생성 시점
+- 상대 경로 기준 → 현재 작업 디렉토리
