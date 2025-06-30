@@ -40,9 +40,42 @@
 
 ---
 
+### 💡 5. AUTO_INCREMENT인데 id에 값을 넣어도 왜 오류가 안 나는 거야?
+
+| 질문 | 답변 요약 |
+| --- | --- |
+| id 컬럼이 AUTO_INCREMENT인데 직접 값을 지정해도 에러가 안 나! 왜지? | MySQL이나 H2에서는 명시적으로 값을 지정한 경우에는 그 값을 우선 사용하고, 자동 증가 기능은 생략된 경우에만 동작해. 중복 값만 아니라면 허용돼. |
+
+---
+
+### 💡 6. 그럼 PreparedStatement 객체에 리턴된 id 값이 자동으로 저장돼?
+
+| 질문 | 답변 요약 |
+| --- | --- |
+| Statement.RETURN_GENERATED_KEYS 옵션을 쓰면 pstmt 안에 id 값이 저장돼? | 아니, pstmt 자체에 저장되는 건 아니고, `getGeneratedKeys()` 메서드를 통해 별도로 꺼내야 해. ResultSet으로 반환돼. |
+
+> 예시:
+> 
+> 
+> ```java
+> PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+> pstmt.executeUpdate();
+> ResultSet rs = pstmt.getGeneratedKeys();
+> if (rs.next()) {
+>     int generatedId = rs.getInt(1);
+>     System.out.println("생성된 ID: " + generatedId);
+> }
+> ```
+> 
+
+---
+
 ### 🌱 정리 키워드
 
 - `jdbc:h2:mem:testdb` vs `jdbc:mysql://...`
 - H2 인메모리 → 테이블은 코드 안에서 생성 가능
 - 실무 기준은 `try-with-resources`로 자원 관리
 - 예시 코드는 흐름 중심, 실습은 환경 맞춰 조정
+- `AUTO_INCREMENT` 컬럼은 명시적 값 지정도 허용됨 (단, 중복은 불가)
+- 자동 생성된 id는 `getGeneratedKeys()`로 꺼내야 함
+- pstmt 객체에 자동 저장되는 건 아님
