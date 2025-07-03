@@ -4,7 +4,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class Car {
-    private final Engine engine;
+    Engine engine;
 
     public Car(Engine engine) {
         this.engine = engine;
