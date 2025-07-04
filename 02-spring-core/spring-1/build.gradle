@@ -8,4 +8,5 @@ repositories {
 
 dependencies {
     implementation 'org.springframework:spring-context:6.2.7'
+    implementation 'jakarta.annotation:jakarta.annotation-api:2.1.1'
 }
