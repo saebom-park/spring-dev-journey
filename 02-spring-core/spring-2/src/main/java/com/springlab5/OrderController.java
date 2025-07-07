@@ -14,5 +14,4 @@ public class OrderController {
         System.out.println("🧾 주문 접수됨: ID = " + id);
         orderService.processOrder(id);
     }
-
 }
