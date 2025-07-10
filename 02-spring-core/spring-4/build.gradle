@@ -4,7 +4,7 @@ plugins {
     id 'io.spring.dependency-management' version '1.1.4'
 }
 
-group = 'com.springlab7'
+group = 'com.springlab9'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '17'
 
