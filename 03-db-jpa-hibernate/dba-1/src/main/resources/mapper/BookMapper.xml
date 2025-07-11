@@ -4,16 +4,16 @@
         "<http://mybatis.org/dtd/mybatis-3-mapper.dtd>">
 
 <mapper namespace="com.springlab13.BookMapper">
-    <select id="findAll" resultType="com.springlab13.Book">
-        SELECT * FROM books
-    </select>
+        <select id="findAll" resultType="com.springlab13.Book">
+            SELECT * FROM books
+        </select>
 
-    <select id="findById" resultType="com.springlab13.Book" parameterType="int">
-        SELECT * FROM books WHERE id = #{id}
-    </select>
+        <select id="findById" resultType="com.springlab13.Book" parameterType="int">
+            SELECT * FROM books WHERE id = #{id}
+        </select>
 
-    <insert id="insert" parameterType="com.springlab13.Book">
-        INSERT INTO books (title, author)
-        VALUES (#{title}, #{author})
-    </insert>
+        <insert id="insert" parameterType="com.springlab13.Book">
+            INSERT INTO books (title, author)
+            VALUES (#{title}, #{author})
+        </insert>
 </mapper>

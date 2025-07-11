@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration
-        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        PUBLIC "-//mybatis.org//DTD 3.0 Config//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 
 <configuration>
-
     <typeAliases>
         <typeAlias alias="Book" type="com.springlab13.Book"/>
     </typeAliases>
@@ -24,5 +23,4 @@
     <mappers>
         <mapper resource="mapper/BookMapper.xml"/>
     </mappers>
-
 </configuration>
