@@ -16,4 +16,8 @@
             INSERT INTO books (title, author)
             VALUES (#{title}, #{author})
         </insert>
+
+        <delete id="deleteAll">
+            DELETE FROM books
+        </delete>
 </mapper>
