@@ -7,6 +7,8 @@
 
     <typeAliases>
         <typeAlias alias="Product" type="com.springlab14.Product"/>
+        <typeAlias alias="Order" type="com.springlab14.practice.Order"/>
+        <typeAlias alias="Customer" type="com.springlab14.practice2.Customer"/>
     </typeAliases>
 
     <environments default="dev">
@@ -23,6 +25,8 @@
 
     <mappers>
         <mapper resource="mapper/ProductMapper.xml"/>
+        <mapper resource="mapper/OrderMapper.xml"/>
+        <mapper resource="mapper/CustomerMapper.xml"/>
     </mappers>
 
 </configuration>
