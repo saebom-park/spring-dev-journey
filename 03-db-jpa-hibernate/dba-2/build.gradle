@@ -2,7 +2,7 @@ plugins {
     id 'java'
 }
 
-group = 'com.springlab13'    // 💡 package 구조와 1:1로 맞춰줘야 해
+group = 'com.springlab14'    // 💡 package 구조와 1:1로 맞춰줘야 해
 version = '1.0-SNAPSHOT'
 
 repositories {
