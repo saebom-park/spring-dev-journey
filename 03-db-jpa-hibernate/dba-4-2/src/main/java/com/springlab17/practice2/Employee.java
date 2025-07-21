@@ -18,6 +18,7 @@ public class Employee {
     private String position;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "department_id")
     private Department department;
 
     // Constructor
