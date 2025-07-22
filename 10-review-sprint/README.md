@@ -28,15 +28,25 @@
 
 ---
 
-## 📚 복습 시리즈 목록
+## 📚 총복습 시리즈 전체 목록
 
-| 폴더명 | 주제 | 핵심 개념 | 상태 |
-|--------|------|-----------|------|
-| `review-1-java-core/` | Java 기초 종합 | 클래스, 예외, static 등 | 🔜 |
-| `review-2-jdbc-crud/` | JDBC + CRUD | DB 연결, DAO 패턴 | 🔜 |
-| `review-3-spring-api/` | Spring API 설계 | DI, Controller, DTO | 🔜 |
-| `review-4-mybatis-search/` | MyBatis 조건 검색 | Mapper XML, resultMap | 🔜 |
-| `review-5-jpa-relation/` | JPA 연관관계 | @ManyToOne, 영속성 컨텍스트 | 🔜 |
+| 세트명 | 폴더명 | 주제 | 주요 개념 |
+|--------|--------|------|------------|
+| REVIEW-1-1 | review-1-1-bookstore | 도서 시스템 | 클래스, 생성자, static, 예외 |
+| REVIEW-1-2 | review-1-2-album-manager | 앨범 관리 | 인터페이스, 다형성 |
+| REVIEW-1-3 | review-1-3-membership-grade | 멤버십 등급 시스템 | 상속, 추상 클래스 |
+| REVIEW-2-1 | review-2-1-jdbc-crud | 도서 CRUD | JDBC 연결, DAO 패턴 |
+| REVIEW-2-2 | review-2-2-jdbc-error-case | 예외 케이스 핸들링 | 트랜잭션, 에러 처리 |
+| REVIEW-2-3 | review-2-3-dao-integration | DAO 통합 실습 | CRUD + 트랜잭션 |
+| REVIEW-3-1 | review-3-1-spring-api-basic | 회원 등록 API | DI, @RestController, DTO |
+| REVIEW-3-2 | review-3-2-spring-layered | 3계층 구조 API | Controller → Service → Repo 흐름 |
+| REVIEW-3-3 | review-3-3-json-mapping | 요청/응답 DTO 설계 | @RequestBody, @ResponseBody |
+| REVIEW-4-1 | review-4-1-mybatis-search | 상품 검색 API | Mapper XML, resultMap |
+| REVIEW-4-2 | review-4-2-dynamic-sql | 동적 SQL 처리 | if/where, 조건 분기 |
+| REVIEW-4-3 | review-4-3-resultMap-nested | 중첩 resultMap | 관계형 매핑 |
+| REVIEW-5-1 | review-5-1-jpa-entity | JPA 엔티티 설계 | @Entity, @Id, @GeneratedValue |
+| REVIEW-5-2 | review-5-2-jpa-relation | 연관관계 매핑 | @ManyToOne, 지연 로딩 |
+| REVIEW-5-3 | review-5-3-jpa-tx-context | 트랜잭션 & 영속성 | flush, dirty checking, rollback |
 
 ---
 
