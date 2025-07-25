@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <title>Vue Directives</title>
+        <script src="https://cdn.jsdelivr.net/npm/vue@2"></script>
+    </head>
+    <body>
+        <div id="app">
+            <h2 v-if="titleVisible">{{ title }}</h2>
+            
+            <ul>
+                <li v-for="fruit in fruits">{{ fruit }}</li>
+            </ul>
+
+            <a v-bind:href="link" target="_blank">Vue 공식 사이트</a>
+
+            <br/><br/>
+            <button @click="toggleTitle">제목 보이기/숨기기</button>
+        </div>
+
+        <script>
+            const app = new Vue({
+                el: '#app',
+                data: {
+                    title: '나의 과일 리스트',
+                    titleVisible: true,
+                    fruits: ['사과', '바나나', '포도', '복숭아'],
+                    link: 'https://vuejs.org/'
+                },
+                methods: {
+                    toggleTitle() {
+                        this.titleVisible = !this.titleVisible;
+                    }
+                }
+            })
+        </script>
+    </body>
+</html>
