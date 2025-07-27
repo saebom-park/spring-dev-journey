@@ -78,7 +78,7 @@ Connection conn = DriverManager.getConnection(url, user, password);
 ```
 review-2-1-jdbc-crud/
 ├── README.md
-└── src/
+└── src/main/java
     └── com.review21/
         ├── Book.java
         ├── BookDao.java

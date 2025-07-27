@@ -77,7 +77,7 @@ CREATE TABLE books (
 ```
 review-2-2-jdbc-error-case/
 ├── README.md
-└── src/
+└── src/main/java
     └── com.review22/
         ├── Book.java
         ├── BookDao.java
