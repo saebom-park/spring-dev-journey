@@ -3,6 +3,7 @@ package com.review23;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 public class OrderDaoRefactor {
     private Connection conn;
@@ -45,6 +46,32 @@ public class OrderDaoRefactor {
             }
         }
         return list;
+    }
+
+    // find by id
+    // 읽기 전용 메서드는 트랜잭션 불필요
+    // 피드백 3 수정
+    public Optional<Order> findById(int id) throws SQLException {
+        String sql = "SELECT * FROM orders WHERE id = ?";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setLong(1, id);
+
+            try (ResultSet rs = pstmt.executeQuery()) {
+                if (rs.next()) {
+                    // 피드백 4 수정
+                    Order order = new Order();
+                    order.setId(rs.getLong("id"));
+                    order.setProductName(rs.getString("productName"));
+                    order.setQuantity(rs.getInt("quantity"));
+                    order.setPrice(rs.getInt("price"));
+                    // 피드백 3 수정
+                    return Optional.of(order);
+                }
+            }
+        }
+        // 피드백 3 수정
+        return Optional.empty();
     }
 
     // insert multiple
