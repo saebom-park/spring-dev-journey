@@ -1,9 +1,7 @@
 package com.review23;
 
 import java.sql.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 public class OrderDaoRefactor {
     private Connection conn;
@@ -13,45 +11,31 @@ public class OrderDaoRefactor {
         this.conn = conn;
     }
 
-    // insert
-    // 단건 입력은 트랜잭션 불필요
-    public void insert(Order order) throws SQLException {
-        String sql = "INSERT INTO orders (productName, quantity, price) VALUES (?, ?, ?)";
-        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, order.getProductName());
-            pstmt.setInt(2, order.getQuantity());
-            pstmt.setInt(3, order.getPrice());
-            pstmt.executeUpdate();
-        }
-    }
-
     // find all
-    // 읽기 전용 메서드는 트랜잭션 불필요
+    // 읽기 전용 메서드는 일반적으로 트랜잭션 사용하지 않음
     public List<Order> findAll() throws SQLException {
-        List<Order> list = new ArrayList<>();
+        List<Order> orders = new ArrayList<>();
         String sql = "SELECT * FROM orders";
 
         try (
             PreparedStatement pstmt = conn.prepareStatement(sql);
-            ResultSet rs = pstmt.executeQuery()
+            ResultSet rs = pstmt.executeQuery();
         ) {
-
             while (rs.next()) {
                 Order order = new Order();
                 order.setId(rs.getLong("id"));
                 order.setProductName(rs.getString("productName"));
                 order.setQuantity(rs.getInt("quantity"));
                 order.setPrice(rs.getInt("price"));
-                list.add(order);
+                orders.add(order);
             }
         }
-        return list;
+        return orders;
     }
-
+    
     // find by id
-    // 읽기 전용 메서드는 트랜잭션 불필요
     // 피드백 3 수정
-    public Optional<Order> findById(int id) throws SQLException {
+    public Optional<Order> findById(Long id) throws SQLException {
         String sql = "SELECT * FROM orders WHERE id = ?";
 
         try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
@@ -74,18 +58,31 @@ public class OrderDaoRefactor {
         return Optional.empty();
     }
 
+    // insert
+    // 단건 입력은 일반적으로 트랜잭션 사용하지 않음
+    public int insert(Order order) throws SQLException {
+        int insertCnt = 0;
+        String sql = "INSERT INTO orders (productName, quantity, price) VALUES (?, ?, ?)";
+
+        try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, order.getProductName());
+            pstmt.setInt(2, order.getQuantity());
+            pstmt.setInt(3, order.getPrice());
+            insertCnt = pstmt.executeUpdate();
+        }
+        return insertCnt;
+    }
+
     // insert multiple
     public int insertMultiple(List<Order> orders) throws SQLException {
-        int insertCnt = 0;
         // 피드백 1 수정
         if (orders == null || orders.isEmpty()) {
-            System.out.println("입력된 주문 정보가 없습니다.");
-            return 0;
+            throw new SQLException("입력된 주문 정보가 없습니다.");
         }
+        int insertCnt = 0;
+        String sql = "INSERT INTO orders (productName, quantity, price) VALUES (?, ?, ?)";
 
         try {
-            String sql = "INSERT INTO orders (productName, quantity, price) VALUES (?, ?, ?)";
-
             // transaction
             conn.setAutoCommit(false);
 
@@ -105,7 +102,7 @@ public class OrderDaoRefactor {
             try {
                 if (conn != null) {
                     conn.rollback();
-                    System.out.println("에러: 입력중 오류 발생! 롤백 수행됨");
+                    System.out.println("에러: 입력 중 오류 발생! 롤백 수행 됨");
                 }
             } catch (SQLException rollbackEx) {
                 System.out.println("에러: 롤백 중 오류 발생!");
@@ -118,5 +115,94 @@ public class OrderDaoRefactor {
             throw e;
         }
         return insertCnt;
+    }
+
+    // update
+    public int update(Long id, int type, String value) throws SQLException {
+        // 피드백 6 수정
+        String typeText = ORDER_COLUMNS.get(type);
+        if (typeText == null) {
+            throw new SQLException("유효하지 않은 type 입니다.");
+        }
+        int updateCnt = 0;
+        String sql = "UPDATE orders SET " + typeText + " = ? WHERE id = ?";
+
+        try {
+            // transaction
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                // 피드백 5 수정
+                if ("quantity".equals(typeText) || "price".equals(typeText)) {
+                    try {
+                        pstmt.setInt(1, Integer.parseInt(value));
+                    } catch (NumberFormatException formatEx) {
+                        throw new SQLException("에러: 숫자만 입력 가능합니다. [value = " + value + "]", formatEx);
+                    }
+                } else {
+                    pstmt.setString(1, value);
+                }
+                pstmt.setLong(2, id);
+                updateCnt = pstmt.executeUpdate();
+            }
+
+            // commit
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                    System.out.println("에러: 업데이트 중 오류 발생! 롤백 수행");
+                }
+            } catch (SQLException rollbackEx) {
+                System.out.println("에러: 롤백 중 오류 발생!");
+                rollbackEx.printStackTrace();
+                throw rollbackEx;
+            }
+            e.printStackTrace();
+            throw e;
+        }
+        return updateCnt;
+    }
+
+    // delete
+    public int delete(Long id) throws SQLException {
+        int deleteCnt = 0;
+        String sql = "DELETE FROM orders WHERE id = ?";
+
+        try {
+            // transaction
+            conn.setAutoCommit(false);
+
+            try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
+                pstmt.setLong(1, id);
+                deleteCnt = pstmt.executeUpdate();
+            }
+
+            // commit
+            conn.commit();
+        } catch (SQLException e) {
+            try {
+                if (conn != null) {
+                    conn.rollback();
+                    System.out.println("에러: 삭제 중 오류 발생! 롤백 수행");
+                }
+            } catch (SQLException rollbackEx) {
+                System.out.println("에러: 롤백 중 오류 발생!");
+                rollbackEx.printStackTrace();
+                throw rollbackEx;
+            }
+            e.printStackTrace();
+            throw e;
+        }
+        return deleteCnt;
+    }
+    
+    // 피드백 6 수정
+    private static final Map<Integer, String> ORDER_COLUMNS = new HashMap<>();
+    static {
+        ORDER_COLUMNS.put(1, "productName");
+        ORDER_COLUMNS.put(2, "quantity");
+        ORDER_COLUMNS.put(3, "price");
     }
 }

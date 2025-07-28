@@ -28,6 +28,6 @@ public class Order {
 
     @Override
     public String toString() {
-        return "[주문 내역]\n- 주문 번호: " + id + " / 상품명: " + productName + " / 수량: " + quantity + " / 가격: " + price;
+        return "- 주문 번호: " + id + " / 상품명: " + productName + " / 수량: " + quantity + " / 가격: " + price;
     }
 }
