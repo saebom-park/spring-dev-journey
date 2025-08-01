@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: spring1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:  # spring 하위가 아닌 최상위 레벨로 이동!
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.review41.dto
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    com.review42: debug
+    org.mybatis: debug
