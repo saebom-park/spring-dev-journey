@@ -10,7 +10,7 @@ spring:
 
 mybatis:  # spring 하위가 아닌 최상위 레벨로 이동!
   mapper-locations: classpath:mapper/*.xml
-  type-aliases-package: com.review41.dto
+  type-aliases-package: com.review42.dto
   configuration:
     map-underscore-to-camel-case: true
 
