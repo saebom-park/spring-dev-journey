@@ -11,7 +11,7 @@
         <result property="categoryName" column="category_name"/>
     </resultMap>
 
-    <select id="selectFilteredProducts" resultMap="ProductResultMap" parameterType="ProductFilterDto">
+    <select id="selectFilteredProducts" resultMap="ProductResultMap" parameterType="com.review42.dto.ProductFilterDto">
         SELECT
             p.id AS product_id, p.product_name AS product_name, p.product_price AS product_price, c.category_name AS category_name
         FROM products p
@@ -24,10 +24,10 @@
                 AND p.category_id = #{categoryId}
             </if>
             <if test="minPrice != null">
-                AND p.product_price >= #{minPrice}
+                AND p.product_price &gt;= #{minPrice}
             </if>
             <if test="maxPrice != null">
-                AND p.product_price <= #{maxPrice}
+                AND p.product_price &lt;= #{maxPrice}
             </if>
         </where>
         ORDER BY ${sortBy} ${sortDir}
