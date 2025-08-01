@@ -1,24 +1,20 @@
-# 포트 설정
 server:
-  port: 8080  # API 서버 포트 (기본값 8080)
+  port: 8080
 
-# 데이터베이스 연결 설정
 spring:
   datasource:
-    url: jdbc:mysql://localhost:3306/testdb  # DB 주소 (로컬 MySQL 기준)
-    username: root                         # DB 사용자명
-    password: spring1234                   # DB 비밀번호
-    driver-class-name: com.mysql.cj.jdbc.Driver  # MySQL 드라이버
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: spring1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
 
-  # MyBatis 설정
-  mybatis:
-    mapper-locations: classpath:mapper/*.xml         # 매퍼 XML 위치
-    type-aliases-package: com.review41.domain        # 도메인 클래스 alias 경로
-    configuration:
-      map-underscore-to-camel-case: true             # snake_case → camelCase 자동 매핑
+mybatis:  # spring 하위가 아닌 최상위 레벨로 이동!
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.review41.dto
+  configuration:
+    map-underscore-to-camel-case: true
 
-# 로깅 레벨 설정 (개발 중 SQL 확인용)
 logging:
   level:
-    com.review41: debug        # 패키지별 로그 출력
-    org.mybatis: debug         # MyBatis 쿼리 로그 출력
+    com.review41: debug
+    org.mybatis: debug
