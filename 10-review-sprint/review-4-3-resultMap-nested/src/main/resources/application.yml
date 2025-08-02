@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/testdb
+    username: root
+    password: spring1234
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+mybatis:
+  mapper-locations: classpath:mapper/*.xml
+  type-aliases-package: com.review43.dto
+  configuration:
+    map-underscore-to-camel-case: true
+
+logging:
+  level:
+    review.com43: debug
+    org.mybatis: debug
