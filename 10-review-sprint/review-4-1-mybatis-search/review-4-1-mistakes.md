@@ -12,7 +12,7 @@ spring:
     mapper-locations: classpath:mapper/*.xml
 ```
 
-✅ 정답 코드
+✅ 정답:
 
 ```yaml
 mybatis:
