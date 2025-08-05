@@ -26,7 +26,6 @@ public class Order {
 
     // constructor
     public Order() {}
-    // 주문은 회원에 귀속되므로 생성자에 포함하는 것이 적절함
     public Order(String orderDate, String status, Member member) {
         this.orderDate = orderDate;
         this.status = status;

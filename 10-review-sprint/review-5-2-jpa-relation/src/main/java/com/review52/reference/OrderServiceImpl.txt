@@ -1,0 +1,104 @@
+package com.review52.service;
+
+import com.review52.repository.MemberRepository;
+import com.review52.repository.ProductRepository;
+import com.review52.repository.OrderRepository;
+import com.review52.repository.OrderItemRepository;
+import com.review52.dto.OrderItemDto;
+import com.review52.dto.OrderRequestDto;
+import com.review52.dto.OrderResponseDto;
+import com.review52.domain.Member;
+import com.review52.domain.Product;
+import com.review52.domain.Order;
+import com.review52.domain.OrderItem;
+
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.Optional;
+import java.util.List;
+import java.util.ArrayList;
+
+@Service
+public class OrderServiceImpl implements OrderService {
+
+    private final MemberRepository memberRepository;
+    private final ProductRepository productRepository;
+    private final OrderRepository orderRepository;
+    private final OrderItemRepository orderItemRepository;
+
+    // constructor
+    public OrderServiceImpl(
+        MemberRepository memberRepository,
+        ProductRepository productRepository,
+        OrderRepository orderRepository,
+        OrderItemRepository orderItemRepository
+    ) {
+        this.memberRepository = memberRepository;
+        this.productRepository = productRepository;
+        this.orderRepository = orderRepository;
+        this.orderItemRepository = orderItemRepository;
+    }
+
+    @Override
+    @Transactional
+    public OrderResponseDto createOrder(OrderRequestDto requestDto) {
+        Member member = memberRepository.findById(requestDto.getMemberId())
+            .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 회원입니다."));
+
+        // 현재 시간 기준 주문 날짜 설정
+        String orderDate = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"));
+        String status = "주문완료";
+
+        // 주문 생성
+        Order order = new Order(orderDate, status, member);
+
+        // 요청된 주문 항목 처리
+        List<OrderItemDto> itemDtos = new ArrayList<>();
+        for (OrderItemDto item : requestDto.getItems()) {
+            Product product = productRepository.findById(item.getProductId())
+                .orElseThrow(() -> new IllegalArgumentException("존재하지 않는 상품입니다."));
+
+            OrderItem orderItem = new OrderItem(item.getQuantity(), item.getOrderPrice(), product, order);
+            order.addOrderItem(orderItem); // 연관관계 설정
+            itemDtos.add(new OrderItemDto(product.getId(), item.getQuantity(), item.getOrderPrice()));
+        }
+
+        // 주문 저장
+        orderRepository.save(order);
+
+        return new OrderResponseDto(order.getId(), member.getName(), order.getOrderDate(), order.getStatus(), itemDtos);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<OrderResponseDto> getOrders() {
+        List<OrderResponseDto> result = new ArrayList<>();
+        List<Order> orders = orderRepository.findAll();
+
+        for (Order order : orders) {
+            List<OrderItemDto> itemDtos = new ArrayList<>();
+            for (OrderItem orderItem : order.getOrderItems()) {
+                itemDtos.add(new OrderItemDto(
+                    orderItem.getProduct().getId(),
+                    orderItem.getQuantity(),
+                    orderItem.getOrderPrice()
+                ));
+            }
+
+            OrderResponseDto responseDto = new OrderResponseDto(
+                order.getId(),
+                order.getMember().getName(),
+                order.getOrderDate(),
+                order.getStatus(),
+                itemDtos
+            );
+
+            result.add(responseDto);
+        }
+
+        return result;
+    }
+}

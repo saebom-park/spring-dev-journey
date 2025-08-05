@@ -20,7 +20,7 @@ public class Member {
 
     // constructor
     public Member() {}
-    public Member(String name) { this.name= name; }
+    public Member(String name) { this.name = name; }
 
     // getter
     public Long getId() { return id; }

@@ -25,12 +25,10 @@ public class OrderItem {
 
     // constructor
     public OrderItem() {}
-    // 주문 내역은 상품, 주문에 귀속되므로 생성자에 포함하는 것이 적절함
-    public OrderItem(int quantity, int orderPrice, Product product, Order order) {
+    public OrderItem(int quantity, int orderPrice, Product product) {
         this.quantity = quantity;
         this.orderPrice = orderPrice;
         this.product = product;
-        this.order = order;
     }
 
     // getter
