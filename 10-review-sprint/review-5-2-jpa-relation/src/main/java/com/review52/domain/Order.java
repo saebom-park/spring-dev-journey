@@ -3,6 +3,7 @@ package com.review52.domain;
 import jakarta.persistence.*;
 import java.util.List;
 import java.util.ArrayList;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="orders")
@@ -21,13 +22,13 @@ public class Order {
     @JoinColumn(name="member_id")
     private Member member;
 
-    @OneToMany(mappedBy="order")
+    @OneToMany(mappedBy="order", cascade=CascadeType.ALL)
     private List<OrderItem> orderItems = new ArrayList<>();
 
     // constructor
     public Order() {}
-    public Order(String orderDate, String status, Member member) {
-        this.orderDate = orderDate;
+    public Order(String status, Member member) {
+        this.orderDate = LocalDate.now().toString();
         this.status = status;
         this.member = member;
     }
