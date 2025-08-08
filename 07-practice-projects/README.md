@@ -20,14 +20,13 @@
 
 | 프로젝트명 | 내용 | 주요 기술 | 핵심 키워드 |
 |------------|------|-----------|-------------|
-| `member-crud` | 회원 등록/조회/수정/삭제 | Spring Boot, JPA | CRUD, DTO, 계층 구조 |
-| `board-api` | 게시판 + 댓글 + 로그인 | Spring Boot, Vue | 인증, 관계 매핑, 프론트연동 |
+| `bulletin-board` | 회원제 게시판 + 댓글 + 로그인 | Spring Boot, Vue | 인증, 게시글, 프론트연동 |
 | `todo-app` | 일정 관리 + 상태 변경 | Spring Boot, JPA | 상태값, 로직 분기 |
 | `library-system` | 도서 대출/반납 시스템 | Spring Boot, JPA, Security | 관리자 기능, 인증 |
 | `team-collab` | 팀 일정 공유 + 알림 | Spring Boot, OAuth, CI/CD | 팀 협업, 자동 배포 |
 
-> 난이도는 기본 기능 → 실무 기능 → 포트폴리오 기능 순으로 점진적 확장  
-> 각 실습은 독립된 프로젝트로 구성하며, 실제 업무 흐름에 가깝게 설계
+> ⚠️ 현재 실습 중인 프로젝트는 `bulletin-board`입니다.  
+> 이후 실습은 진행하면서 순차적으로 채워질 예정입니다.
 
 ---
 
@@ -35,13 +34,13 @@
 
 ```
 07-practice-projects/
-├── member-crud/
-│   ├── src/
-│   ├── README.md
-│   ├── domain/, controller/, ...
-├── board-api/
+├── bulletin-board/
+│   ├── backend/
+│   ├── frontend/
+│   └── README.md
 ├── todo-app/
-└── ...
+├── library-system/
+└── team-collab/
 ```
 
 ---
