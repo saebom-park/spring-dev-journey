@@ -157,14 +157,9 @@ GET /api/posts?page=0&size=10
       {
         "id": 1,
         "title": "첫 번째 게시글",
-        "content": "게시글 내용입니다.",
-        "author": {
-          "id": 1,
-          "name": "홍길동"
-        },
-        "commentCount": 3,
-        "createdAt": "2025-08-08T10:30:00",
-        "updatedAt": "2025-08-08T10:30:00"
+        "author": "홍길동",
+        "createdAt": "2025-08-10",
+        "views": 15
       }
     ],
     "page": {
@@ -189,24 +184,24 @@ GET /api/posts/{postId}
   "data": {
     "id": 1,
     "title": "첫 번째 게시글",
-    "content": "게시글 내용입니다.",
-    "author": {
-      "id": 1,
-      "name": "홍길동"
-    },
+    "content": "게시글 내용입니다. 여기에 실제 게시글의 전체 내용이 들어갑니다.",
+    "author": "홍길동",
+    "createdAt": "2025-08-10",
+    "views": 15,
     "comments": [
       {
         "id": 1,
-        "content": "첫 번째 댓글입니다.",
-        "author": {
-          "id": 2,
-          "name": "김철수"
-        },
-        "createdAt": "2025-08-08T11:00:00"
+        "comment": "첫 번째 댓글입니다.",
+        "author": "김철수",
+        "createdAt": "2025-08-10"
+      },
+      {
+        "id": 2,
+        "comment": "두 번째 댓글입니다.",
+        "author": "이영희",
+        "createdAt": "2025-08-10"
       }
-    ],
-    "createdAt": "2025-08-08T10:30:00",
-    "updatedAt": "2025-08-08T10:30:00"
+    ]
   }
 }
 ```
@@ -238,11 +233,10 @@ Content-Type: application/json
     "id": 2,
     "title": "새 게시글 제목",
     "content": "게시글 내용입니다.",
-    "author": {
-      "id": 1,
-      "name": "홍길동"
-    },
-    "createdAt": "2025-08-08T12:00:00"
+    "author": "홍길동",
+    "createdAt": "2025-08-10",
+    "views": 0,
+    "comments": []
   },
   "message": "게시글이 작성되었습니다."
 }
@@ -275,11 +269,10 @@ Content-Type: application/json
     "id": 1,
     "title": "수정된 제목",
     "content": "수정된 내용입니다.",
-    "author": {
-      "id": 1,
-      "name": "홍길동"
-    },
-    "updatedAt": "2025-08-08T12:30:00"
+    "author": "홍길동",
+    "createdAt": "2025-08-10",
+    "views": 20,
+    "comments": []
   },
   "message": "게시글이 수정되었습니다."
 }
@@ -319,12 +312,15 @@ GET /api/posts/{postId}/comments
   "data": [
     {
       "id": 1,
-      "content": "첫 번째 댓글입니다.",
-      "author": {
-        "id": 2,
-        "name": "김철수"
-      },
-      "createdAt": "2025-08-08T11:00:00"
+      "comment": "첫 번째 댓글입니다.",
+      "author": "김철수",
+      "createdAt": "2025-08-10"
+    },
+    {
+      "id": 2,
+      "comment": "두 번째 댓글입니다.",
+      "author": "이영희",
+      "createdAt": "2025-08-10"
     }
   ]
 }
@@ -344,7 +340,7 @@ Content-Type: application/json
 **Request Body:**
 ```json
 {
-  "content": "새로운 댓글입니다."
+  "comment": "새로운 댓글입니다."
 }
 ```
 
@@ -354,12 +350,9 @@ Content-Type: application/json
   "success": true,
   "data": {
     "id": 2,
-    "content": "새로운 댓글입니다.",
-    "author": {
-      "id": 1,
-      "name": "홍길동"
-    },
-    "createdAt": "2025-08-08T13:00:00"
+    "comment": "새로운 댓글입니다.",
+    "author": "홍길동",
+    "createdAt": "2025-08-10"
   },
   "message": "댓글이 등록되었습니다."
 }
