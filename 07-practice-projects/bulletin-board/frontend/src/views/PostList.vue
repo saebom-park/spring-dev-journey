@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import axios from 'axios'
 
 const posts = ref([])
 const isDark = ref(false)
+const router = useRouter()
 
 onMounted(async () => {
   const res = await axios.get('http://localhost:8080/api/posts')
@@ -63,6 +65,7 @@ const toggleTheme = () => {
         <div
             v-for="post in posts"
             :key="post.id"
+            @click="router.push(`/post/${post.id}`)"
             class="group cursor-pointer transform transition-all duration-300 hover:-translate-y-2 hover:scale-[1.02] backdrop-blur-sm rounded-2xl border shadow-lg hover:shadow-2xl"
             :class="isDark
             ? 'bg-gray-800/50 hover:bg-gray-700/60 border-gray-600'

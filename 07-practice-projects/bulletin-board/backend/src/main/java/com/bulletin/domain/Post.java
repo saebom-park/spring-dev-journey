@@ -16,6 +16,7 @@ public class Post {
     private String title;
 
     @Lob
+    @Column(columnDefinition = "TEXT")
     private String content;
 
     @ManyToOne(fetch=FetchType.LAZY)
@@ -51,4 +52,6 @@ public class Post {
 
     // setter
     public void setAuthor(User author) { this.author = author; }
+    public void setTitle(String title) { this.title = title; }
+    public void setContent(String content) { this.content = content; }
 }
