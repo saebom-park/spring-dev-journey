@@ -5,6 +5,7 @@ import com.bulletin.repository.UserRepository;
 import com.bulletin.repository.PostRepository;
 import com.bulletin.dto.CommentCreateRequestDto;
 import com.bulletin.dto.CommentResponseDto;
+import com.bulletin.dto.UserResponseDto;
 import com.bulletin.domain.User;
 import com.bulletin.domain.Post;
 import com.bulletin.domain.Comment;
@@ -13,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-public class CommentServiceImpl {
+public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
     private final UserRepository userRepository;
     private final PostRepository postRepository;
@@ -37,7 +38,14 @@ public class CommentServiceImpl {
         Comment comment = new Comment(requestDto.getComment(), post, user);
         commentRepository.save(comment);
 
-        //UserReposeDto
-        //return new CommentResponseDto(comment.getId(), comment.getComment(), comment.getAuthor())
+        UserResponseDto userResponseDto = new UserResponseDto(comment.getAuthor().getId(), comment.getAuthor().getNickName());
+        return new CommentResponseDto(comment.getId(), comment.getComment(), userResponseDto, comment.getCreatedAt());
+    }
+
+    @Override
+    public void deleteComment(Long commentId) {
+        Optional<Comment> optionalComment = commentRepository.findById(commentId);
+        Comment comment = optionalComment.orElseThrow(() -> new IllegalArgumentException("해당 댓글이 존재하지 않습니다."));
+        commentRepository.delete(comment);
     }
 }

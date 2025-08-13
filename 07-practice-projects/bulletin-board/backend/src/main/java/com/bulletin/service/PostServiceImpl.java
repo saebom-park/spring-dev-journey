@@ -42,8 +42,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDetailResponseDto getPostById(Long id) {
-        Optional<Post> optionalPost = postRepository.findById(id);
+    public PostDetailResponseDto getPostById(Long postId) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
         Post post = optionalPost.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
         return getPostDetailResponseDto(post);
@@ -61,8 +61,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public PostDetailResponseDto updatePost(Long id, PostUpdateRequestDto requestDto) {
-        Optional<Post> optionalPost = postRepository.findById(id);
+    public PostDetailResponseDto updatePost(Long postId, PostUpdateRequestDto requestDto) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
         Post post = optionalPost.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
         // 데이터 수정
         post.setTitle(requestDto.getTitle());
@@ -73,8 +73,8 @@ public class PostServiceImpl implements PostService{
     }
 
     @Override
-    public void deletePost(Long id) {
-        Optional<Post> optionalPost = postRepository.findById(id);
+    public void deletePost(Long postId) {
+        Optional<Post> optionalPost = postRepository.findById(postId);
         Post post = optionalPost.orElseThrow(() -> new IllegalArgumentException("해당 게시글이 존재하지 않습니다."));
 
         postRepository.delete(post);

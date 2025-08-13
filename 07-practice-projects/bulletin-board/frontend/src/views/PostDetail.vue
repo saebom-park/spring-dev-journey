@@ -8,6 +8,9 @@ const router = useRouter()
 const post = ref(null)
 const isLoading = ref(true)
 const isDark = ref(false)
+const newComment = ref('')
+const isSubmitting = ref(false)
+const isDeleting = ref(false)
 
 onMounted(async () => {
   await fetchPost()
@@ -33,6 +36,68 @@ const goBack = () => {
 
 const toggleTheme = () => {
   isDark.value = !isDark.value
+}
+
+const createComment = async () => {
+  if (!newComment.value.trim()) {
+    alert('댓글 내용을 입력해주세요.')
+    return
+  }
+
+  isSubmitting.value = true
+
+  try {
+    await axios.post(`http://localhost:8080/api/posts/${route.params.id}/comments`, {
+      comment: newComment.value
+    })
+
+    newComment.value = ''
+    await fetchPost() // 게시글 다시 조회해서 댓글 목록 업데이트
+    alert('댓글이 작성되었습니다!')
+  } catch (error) {
+    console.error('댓글 작성 실패:', error)
+    alert('댓글 작성에 실패했습니다.')
+  } finally {
+    isSubmitting.value = false
+  }
+}
+
+const deleteComment = async (commentId) => {
+  if (!confirm('정말로 이 댓글을 삭제하시겠습니까?')) {
+    return
+  }
+
+  try {
+    await axios.delete(`http://localhost:8080/api/comments/${commentId}`)
+    await fetchPost() // 게시글 다시 조회해서 댓글 목록 업데이트
+    alert('댓글이 삭제되었습니다!')
+  } catch (error) {
+    console.error('댓글 삭제 실패:', error)
+    alert('댓글 삭제에 실패했습니다.')
+  }
+}
+
+const editPost = () => {
+  router.push(`/edit/${route.params.id}`)
+}
+
+const deletePost = async () => {
+  if (!confirm('정말로 이 게시글을 삭제하시겠습니까?')) {
+    return
+  }
+
+  isDeleting.value = true
+
+  try {
+    await axios.delete(`http://localhost:8080/api/posts/${route.params.id}`)
+    alert('게시글이 삭제되었습니다.')
+    router.push('/')
+  } catch (error) {
+    console.error('게시글 삭제 실패:', error)
+    alert('게시글 삭제에 실패했습니다.')
+  } finally {
+    isDeleting.value = false
+  }
 }
 </script>
 
@@ -175,6 +240,32 @@ const toggleTheme = () => {
           </div>
         </div>
 
+        <!-- 수정/삭제 버튼 -->
+        <div class="px-8 pb-6 border-b" :class="isDark ? 'border-gray-600' : 'border-gray-200'">
+          <div class="flex gap-3 justify-end">
+            <button
+                @click="editPost"
+                class="px-4 py-2 rounded-xl font-semibold transition-all duration-300 hover:scale-105"
+                :class="isDark
+                ? 'bg-gray-600/50 text-gray-300 hover:bg-gray-500/50'
+                : 'bg-gray-200 text-gray-700 hover:bg-gray-300'"
+            >
+              수정
+            </button>
+
+            <button
+                @click="deletePost"
+                :disabled="isDeleting"
+                class="px-4 py-2 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                :class="isDark
+                ? 'bg-gradient-to-r from-red-500 to-pink-500 hover:from-red-600 hover:to-pink-600'
+                : 'bg-gradient-to-r from-red-500 to-red-600 hover:from-red-600 hover:to-red-700'"
+            >
+              {{ isDeleting ? '삭제 중...' : '삭제' }}
+            </button>
+          </div>
+        </div>
+
         <!-- 댓글 섹션 -->
         <div class="border-t p-8" :class="isDark ? 'border-gray-600' : 'border-gray-200'">
           <h2
@@ -194,27 +285,40 @@ const toggleTheme = () => {
                 ? 'bg-gray-700/30'
                 : 'bg-gray-50'"
             >
-              <div class="flex items-center gap-3 mb-2">
-                <div
-                    class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white"
-                    :class="isDark
-                    ? 'bg-gradient-to-r from-purple-500 to-pink-500'
-                    : 'bg-gradient-to-r from-blue-500 to-purple-500'"
-                >
-                  {{ comment.author.nickName[0] }}
+              <div class="flex items-center justify-between mb-2">
+                <div class="flex items-center gap-3">
+                  <div
+                      class="w-8 h-8 rounded-full flex items-center justify-center text-sm font-bold text-white"
+                      :class="isDark
+                      ? 'bg-gradient-to-r from-purple-500 to-pink-500'
+                      : 'bg-gradient-to-r from-blue-500 to-purple-500'"
+                  >
+                    {{ comment.author.nickName[0] }}
+                  </div>
+                  <span
+                      class="font-medium"
+                      :class="isDark ? 'text-gray-300' : 'text-gray-700'"
+                  >
+                    {{ comment.author.nickName }}
+                  </span>
+                  <span
+                      class="text-sm"
+                      :class="isDark ? 'text-gray-500' : 'text-gray-500'"
+                  >
+                    {{ comment.createdAt }}
+                  </span>
                 </div>
-                <span
-                    class="font-medium"
-                    :class="isDark ? 'text-gray-300' : 'text-gray-700'"
+
+                <!-- 댓글 삭제 버튼 -->
+                <button
+                    @click="deleteComment(comment.id)"
+                    class="px-3 py-1 text-sm rounded-lg transition-all duration-300 hover:scale-105"
+                    :class="isDark
+                    ? 'text-red-400 hover:bg-red-500/20'
+                    : 'text-red-500 hover:bg-red-50'"
                 >
-                  {{ comment.author.nickName }}
-                </span>
-                <span
-                    class="text-sm"
-                    :class="isDark ? 'text-gray-500' : 'text-gray-500'"
-                >
-                  {{ comment.createdAt }}
-                </span>
+                  삭제
+                </button>
               </div>
               <p
                   class="ml-11"
@@ -232,6 +336,41 @@ const toggleTheme = () => {
               :class="isDark ? 'text-gray-500' : 'text-gray-400'"
           >
             첫 번째 댓글을 작성해보세요!
+          </div>
+
+          <!-- 댓글 작성 폼 -->
+          <div class="mt-8 pt-6 border-t" :class="isDark ? 'border-gray-600' : 'border-gray-200'">
+            <h3
+                class="text-lg font-semibold mb-4"
+                :class="isDark ? 'text-white' : 'text-gray-800'"
+            >
+              댓글 작성
+            </h3>
+
+            <div class="space-y-4">
+              <textarea
+                  v-model="newComment"
+                  placeholder="댓글을 입력하세요..."
+                  rows="3"
+                  class="w-full px-4 py-3 rounded-xl border transition-all duration-300 focus:outline-none focus:ring-4 resize-none"
+                  :class="isDark
+                  ? 'bg-gray-700/50 border-gray-600 text-white placeholder-gray-400 focus:ring-purple-400/50 focus:border-purple-400'
+                  : 'bg-white/70 border-gray-300 text-gray-800 placeholder-gray-500 focus:ring-blue-400/50 focus:border-blue-400'"
+              ></textarea>
+
+              <div class="flex justify-end">
+                <button
+                    @click="createComment"
+                    :disabled="isSubmitting || !newComment.trim()"
+                    class="px-6 py-2 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105 disabled:opacity-50 disabled:cursor-not-allowed"
+                    :class="isDark
+                    ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
+                    : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600'"
+                >
+                  {{ isSubmitting ? '작성 중...' : '댓글 작성' }}
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </div>

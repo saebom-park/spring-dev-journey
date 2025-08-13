@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRouter } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import axios from 'axios'
 
+const router = useRouter()
 const posts = ref([])
 const isDark = ref(false)
-const router = useRouter()
 
 onMounted(async () => {
   const res = await axios.get('http://localhost:8080/api/posts')
@@ -21,36 +21,49 @@ const toggleTheme = () => {
   <div
       class="min-h-screen transition-all duration-500"
       :class="isDark
-      ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800' 
+      ? 'bg-gradient-to-br from-gray-800 via-gray-900 to-gray-800'
       : 'bg-gradient-to-br from-blue-50 via-purple-50 to-pink-50'"
   >
     <!-- 헤더 -->
     <div
         class="sticky top-0 backdrop-blur-lg border-b transition-all duration-300"
         :class="isDark
-        ? 'bg-gray-900/80 border-gray-700' 
+        ? 'bg-gray-900/80 border-gray-700'
         : 'bg-white/80 border-gray-200'"
     >
-      <div class="max-w-full mx-auto px-6 py-4 flex justify-between items-center">
-        <h1
-            class="text-2xl font-bold transition-colors"
-            :class="isDark ? 'text-white' : 'text-gray-800'"
-        >
-          게시글 목록
-        </h1>
+      <div class="max-w-4xl mx-auto px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-4">
+          <h1
+              class="text-2xl font-bold transition-colors"
+              :class="isDark ? 'text-white' : 'text-gray-800'"
+          >
+            게시글 목록
+          </h1>
+
+          <!-- 글쓰기 버튼 -->
+          <button
+              @click="router.push('/create')"
+              class="px-4 py-2 rounded-xl font-semibold text-white transition-all duration-300 hover:scale-105"
+              :class="isDark
+              ? 'bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600'
+              : 'bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600'"
+          >
+            글쓰기
+          </button>
+        </div>
 
         <!-- 다크/라이트 토글 -->
         <button
             @click="toggleTheme"
             class="relative w-16 h-8 rounded-full transition-all duration-300 focus:outline-none focus:ring-4"
             :class="isDark
-            ? 'bg-purple-600 focus:ring-purple-400/50' 
+            ? 'bg-purple-600 focus:ring-purple-400/50'
             : 'bg-gray-300 focus:ring-blue-400/50'"
         >
           <div
               class="absolute top-1 w-6 h-6 rounded-full transition-all duration-300 flex items-center justify-center text-xs"
               :class="isDark
-              ? 'left-9 bg-yellow-300 text-gray-800' 
+              ? 'left-9 bg-yellow-300 text-gray-800'
               : 'left-1 bg-white text-gray-600'"
           >
             {{ isDark ? '◐' : '○' }}
@@ -60,7 +73,7 @@ const toggleTheme = () => {
     </div>
 
     <!-- 메인 콘텐츠 -->
-    <div class="max-w-full mx-auto px-6 py-8">
+    <div class="max-w-4xl mx-auto px-6 py-8">
       <div class="grid gap-6">
         <div
             v-for="post in posts"
