@@ -1,7 +1,7 @@
 package com.todo.domain;
 
 import jakarta.persistence.*;
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -20,7 +20,11 @@ public class User {
     private String nickName;
 
     @Column(name="created_at")
-    private LocalDate createdAt;
+    private LocalDateTime createdAt;
+
+    // 읽기 전용 필드
+    @OneToMany(mappedBy="category")
+    private List<Category> categories = new ArrayList<>();
 
     // 읽기 전용 필드
     @OneToMany(mappedBy="user")
@@ -31,22 +35,31 @@ public class User {
     public User(String userName, String nickName) {
         this.userName = userName;
         this.nickName = nickName;
-        this.createdAt = LocalDate.now();
+        this.createdAt = LocalDateTime.now();
     }
 
     // getter
     public Long getId() { return id; }
     public String getUserName() { return userName; }
-    public String getNickName() { return nickName;}
-    public LocalDate getCreatedAt() { return createdAt; }
+    public String getNickName() { return nickName; }
+    public LocalDateTime getCreatedAt() { return createdAt; }
+    public List<Category> getCategories() { return categories; }
     public List<Todo> getTodos() { return todos; }
 
     // setter
-    public void setId(Long id) { this.id = id; }
     public void setUserName(String userName) { this.userName = userName; }
     public void setNickName(String nickName) { this.nickName = nickName; }
-    public void setCreatedAt(LocalDate createdAt) { this.createdAt = createdAt; }
 
     // 사용자 편의 메서드
-    public void addTodos() {}
+    public void addCategory(Category category) {
+        categories.add(category);
+        category.setUser(this);
+    }
+
+    // 사용자 편의 메서드
+    public void addTodo(Todo todo) {
+        todos.add(todo);
+        todo.setUser(this);
+    }
+
 }

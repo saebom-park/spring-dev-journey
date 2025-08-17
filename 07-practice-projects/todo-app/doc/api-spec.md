@@ -59,7 +59,7 @@ POST /api/users
     "id": 1,
     "userName": "user123",
     "nickName": "봄이",
-    "createdAt": "2025-08-14T10:30:00"
+    "createdAt": "2025-08-14"
   },
   "message": "사용자가 등록되었습니다."
 }
@@ -83,13 +83,13 @@ GET /api/categories?userId={userId}
       "id": 1,
       "name": "업무",
       "color": "#FF6B6B",
-      "userName": "봄이"
+      "nickName": "봄이"
     },
     {
       "id": 2,
       "name": "개인",
       "color": "#4ECDC4",
-      "userName": "봄이"
+      "nickName": "봄이"
     }
   ]
 }
@@ -104,8 +104,7 @@ POST /api/categories
 ```json
 {
   "name": "취미",
-  "color": "#45B7D1",
-  "userId": 1
+  "color": "#45B7D1"
 }
 ```
 
@@ -117,7 +116,7 @@ POST /api/categories
     "id": 3,
     "name": "취미",
     "color": "#45B7D1",
-    "userName": "봄이"
+    "nickName": "봄이"
   },
   "message": "카테고리가 생성되었습니다."
 }
@@ -173,8 +172,8 @@ GET /api/todos?userId={userId}&categoryId={categoryId}&status={status}&page=0&si
           "name": "업무",
           "color": "#FF6B6B"
         },
-        "author": "봄이",
-        "createdAt": "2025-08-14T09:00:00",
+        "nickName": "봄이",
+        "createdAt": "2025-08-14",
         "completedAt": null,
         "hasSchedule": true,
         "hasRepeat": false
@@ -209,15 +208,22 @@ GET /api/todos/{todoId}
       "name": "업무",
       "color": "#FF6B6B"
     },
-    "author": "봄이",
-    "createdAt": "2025-08-14T09:00:00",
+    "nickName": "봄이",
+    "createdAt": "2025-08-14",
     "completedAt": null,
     "schedule": {
       "id": 1,
       "startDate": "2025-08-14",
       "dueDate": "2025-08-20"
     },
-    "repeatSetting": null
+    "repeatSetting": {
+      "id": 1,
+      "isRepeated": true,
+      "repeatStart": "2025-08-14",
+      "repeatDue": "2025-12-31",
+      "repeatPattern": "WEEKLY",
+      "dayOfWeek": [1, 3, 5]
+    }
   }
 }
 ```
@@ -232,8 +238,7 @@ POST /api/todos
 {
   "content": "Vue.js 컴포넌트 작성하기",
   "priority": "MEDIUM",
-  "categoryId": 1,
-  "userId": 1
+  "categoryId": 1
 }
 ```
 
@@ -251,8 +256,8 @@ POST /api/todos
       "name": "업무",
       "color": "#FF6B6B"
     },
-    "author": "봄이",
-    "createdAt": "2025-08-14T10:30:00",
+    "nickName": "봄이",
+    "createdAt": "2025-08-14",
     "completedAt": null,
     "hasSchedule": false,
     "hasRepeat": false
@@ -294,7 +299,7 @@ PATCH /api/todos/{todoId}/status
   "data": {
     "id": 2,
     "status": "COMPLETED",
-    "completedAt": "2025-08-14T15:30:00"
+    "completedAt": "2025-08-14"
   },
   "message": "할일 상태가 변경되었습니다."
 }
@@ -329,8 +334,7 @@ POST /api/todos/{todoId}/schedule
   "data": {
     "id": 1,
     "startDate": "2025-08-15",
-    "dueDate": "2025-08-20",
-    "todoId": 2
+    "dueDate": "2025-08-20"
   },
   "message": "일정이 추가되었습니다."
 }
@@ -339,6 +343,14 @@ POST /api/todos/{todoId}/schedule
 ### 2. 일정 수정
 ```http
 PUT /api/schedules/{scheduleId}
+```
+
+**Request Body:**
+```json
+{
+  "startDate": "2025-08-16",
+  "dueDate": "2025-08-22"
+}
 ```
 
 ### 3. 일정 삭제
@@ -359,8 +371,10 @@ POST /api/todos/{todoId}/repeat
 ```json
 {
   "isRepeated": true,
-  "repeatStartDate": "2025-08-15",
-  "repeatUntil": "2025-12-31"
+  "repeatStart": "2025-08-15",
+  "repeatDue": "2025-12-31",
+  "repeatPattern": "WEEKLY",
+  "dayOfWeek": [1, 3, 5]
 }
 ```
 
@@ -371,9 +385,10 @@ POST /api/todos/{todoId}/repeat
   "data": {
     "id": 1,
     "isRepeated": true,
-    "repeatStartDate": "2025-08-15",
-    "repeatUntil": "2025-12-31",
-    "todoId": 2
+    "repeatStart": "2025-08-15",
+    "repeatDue": "2025-12-31",
+    "repeatPattern": "WEEKLY",
+    "dayOfWeek": [1, 3, 5]
   },
   "message": "반복 설정이 추가되었습니다."
 }
@@ -428,15 +443,20 @@ GET /api/todos/stats?userId={userId}
 
 ## 🎨 Enum 값 정의
 
-### Status (상태)
+### TodoStatus (상태)
 - `PENDING`: 대기
 - `IN_PROGRESS`: 진행중
 - `COMPLETED`: 완료
 
-### Priority (우선순위)
+### TodoPriority (우선순위)
 - `HIGH`: 높음
 - `MEDIUM`: 보통
 - `LOW`: 낮음
+
+### RepeatPattern (반복 패턴)
+- `DAILY`: 매일
+- `WEEKLY`: 매주
+- `MONTHLY`: 매월
 
 ---
 
@@ -456,8 +476,8 @@ GET /api/todos/stats?userId={userId}
 ## 📋 개발 체크리스트
 
 ### 백엔드 (Spring Boot)
-- [ ] User, Todo, Category, Schedule, RepeatSetting 엔티티 설계
-- [ ] JPA Repository 구성
+- [x] User, Todo, Category, Schedule, RepeatSetting 엔티티 설계
+- [x] JPA Repository 구성
 - [ ] 할일 CRUD API 구현
 - [ ] 카테고리 관리 API 구현
 - [ ] 상태 변경 API 구현
