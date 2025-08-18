@@ -25,29 +25,32 @@
 | 예외 처리 | `@ExceptionHandler`, `@ControllerAdvice`, 전역 처리 |
 | 표준 응답 구조 | 성공/실패 응답 통일된 포맷으로 관리 |
 | 상태 코드 설계 | `200`, `400`, `404`, `500` 등의 의미와 사용 기준 |
-| Postman & Swagger | API 테스트 및 문서화 도구
+| Postman & Swagger | API 테스트 및 문서화 도구 |
 
 ---
 
 ## 📂 문서 구성
 
-| 파일명 예시 | 설명 |
+| 폴더명 | 설명 |
 |-------------|------|
-| `01-controller-basics.md` | 기본 요청/응답 흐름 실습 |
-| `02-dto-validation.md` | DTO와 입력 검증 실습 |
-| `03-exception-handling.md` | 예외 처리 및 응답 포맷 통일 |
-| `04-api-testing.md` | Postman, Swagger 활용법 |
-| `...-mistakes.md` | 실무에서 자주 겪는 API 오류 정리 |
-| `...-extra.md` | API 버전 관리, 응답 Wrapping 전략 등 |
+| `api-0-crud-habit/` | Habit CRUD (기본기, 네가 직접 구현한 베이스라인) |
+| `api-1-crud/` | CRUD API 보강 (`@Transactional`, `ResponseEntity`) |
+| `api-2-validation/` | 입력값 검증 (Bean Validation, `@Valid`) |
+| `api-3-exception/` | 전역 예외 처리 (`@ControllerAdvice`) |
+| `api-4-swagger/` | Swagger & Postman 테스트 |
+| `api-5-paging/` | 페이징 처리 (Pageable, 정렬) |
+| `...-mistakes.md` | 실수노트 |
+| `...-extra.md` | 추가 개념 정리 |
 
 ---
 
 ## 🧭 학습 흐름
 
-1. 간단한 API부터 시작해 컨트롤러의 흐름에 익숙해지기
-2. DTO를 활용해 계층 간 명확한 데이터 전달 연습
-3. 유효성 검증, 에러 응답 구조를 직접 설계
-4. 실제 테스트 도구를 통해 API 사용자의 입장에서 점검
+1. API-0 Habit CRUD를 직접 구현해 기본기를 확인
+2. API-1~5 예시코드(Habit 보강판)와 실습코드(새 도메인)를 병행 학습
+3. DTO, 입력값 검증, 에러 응답 구조를 단계별로 익힘
+4. Swagger & Postman으로 테스트하며 API 사용성을 점검
+5. Pageable을 활용해 실무형 API로 확장
 
 ---
 
