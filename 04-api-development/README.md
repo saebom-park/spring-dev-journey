@@ -39,12 +39,11 @@
 |-------------|------|
 | `api-0-crud-habit/` | Habit CRUD (베이스라인, 수준 점검) |
 | `api-diary/` | Diary API (API-1~5 단계별로 점진적 개선) |
-| `api-1-crud-responseentity.md` | API-1 수업자료 |
-| `api-2-validation.md` | API-2 수업자료 |
-| `api-3-global-exception.md` | API-3 수업자료 |
-| `api-4-swagger-postman.md` | API-4 수업자료 |
-| `api-5-paging-sorting.md` | API-5 수업자료 |
-| `README.md` | 섹션 전체 가이드 |
+| `docs/api-1-crud-responseentity.md` | API-1 수업자료 |
+| `docs/api-2-validation.md` | API-2 수업자료 |
+| `docs/api-3-global-exception.md` | API-3 수업자료 |
+| `docs/api-4-swagger-postman.md` | API-4 수업자료 |
+| `docs/api-5-paging-sorting.md` | API-5 수업자료 |
 
 ---
 
