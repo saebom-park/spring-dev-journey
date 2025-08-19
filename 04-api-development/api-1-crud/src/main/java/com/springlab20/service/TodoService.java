@@ -1,4 +1,4 @@
-package com.springlab20.domain.service;
+package com.springlab20.service;
 
 import com.springlab20.dto.TodoRequestDto;
 import com.springlab20.dto.TodoResponseDto;
