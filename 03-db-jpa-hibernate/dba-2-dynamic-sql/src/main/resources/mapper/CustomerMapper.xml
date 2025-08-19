@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.springlab14.practice2.CustomerMapper">
+
+    <resultMap id="customerResultMap" type="Customer">
+        <id property="id" column="customer_id"/>
+        <result property="name" column="name"/>
+        <result property="email" column="email"/>
+    </resultMap>
+
+    <select id="findAll" resultMap="customerResultMap">
+        SELECT customer_id, name, email FROM customer
+    </select>
+
+    <select id="findById" resultMap="customerResultMap" parameterType="int">
+        SELECT customer_id, name, email FROM customer WHERE customer_id = #{id}
+    </select>
+
+    <insert id="insert" parameterType="Customer">
+        INSERT INTO customer (name, email)
+        VALUES (#{name}, #{email})
+    </insert>
+
+    <select id="findByCondition" resultMap="customerResultMap">
+        SELECT customer_id, name, email FROM customer
+        <where>
+            <if test="name != null and name != ''">
+                name = #{name}
+            </if>
+            <if test="email != null and email != ''">
+                AND email LIKE CONCAT('%', #{email}, '%')
+            </if>
+        </where>
+    </select>
+</mapper>
