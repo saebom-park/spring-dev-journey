@@ -1,12 +1,12 @@
 package com.todo.dto;
 
-public class UserCreateRequestDto {
+public class UserRequestDto {
     private String userName;
     private String nickName;
 
     // constructor
-    public UserCreateRequestDto() {}
-    public UserCreateRequestDto(String userName, String nickName) {
+    public UserRequestDto() {}
+    public UserRequestDto(String userName, String nickName) {
         this.userName = userName;
         this.nickName = nickName;
     }

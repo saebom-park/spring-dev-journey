@@ -19,7 +19,7 @@ public interface TodoService {
     List<TodoResponseDto> getTodosByPriority(TodoPriority priority);
     List<TodoResponseDto> getTodosByCategory(Long categoryId);
     List<TodoResponseDto> getTodosWithFilters(TodoStatus status, Long categoryId);
-    void updateTodo(Long id, TodoUpdateRequestDto requestDto);
+    TodoResponseDto updateTodo(Long id, TodoUpdateRequestDto requestDto);
     TodoUpdateResponseDto updateTodoStatus(Long id, TodoStatusRequestDto requestDto);
     void deleteTodo(Long id);
     int getTodoCountByStatus(TodoStatus status);

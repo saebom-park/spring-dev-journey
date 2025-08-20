@@ -2,13 +2,13 @@ package com.todo.dto;
 
 import java.time.LocalDateTime;
 
-public class ScheduleUpdateRequestDto {
+public class ScheduleRequestDto {
     private LocalDateTime startDate;
     private LocalDateTime dueDate;
 
     // constructor
-    public ScheduleUpdateRequestDto() {}
-    public ScheduleUpdateRequestDto(LocalDateTime startDate, LocalDateTime dueDate) {
+    public ScheduleRequestDto() {}
+    public ScheduleRequestDto(LocalDateTime startDate, LocalDateTime dueDate) {
         this.startDate = startDate;
         this.dueDate = dueDate;
     }

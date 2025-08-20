@@ -3,10 +3,8 @@ package com.todo.dto;
 import com.todo.enums.RepeatPattern;
 import java.time.LocalDate;
 import java.util.Set;
-import java.util.HashSet;
 
-public class RepeatSettingCreateResponseDto {
-    private Long id;
+public class RepeatSettingRequestDto {
     private boolean isRepeated;
     private LocalDate repeatStart;
     private LocalDate repeatDue;
@@ -14,9 +12,8 @@ public class RepeatSettingCreateResponseDto {
     private Set<Integer> dayOfWeek;
 
     // constructor
-    public RepeatSettingCreateResponseDto() {}
-    public RepeatSettingCreateResponseDto(Long id, boolean isRepeated, LocalDate repeatStart, LocalDate repeatDue, RepeatPattern repeatPattern, Set<Integer> dayOfWeek) {
-        this.id = id;
+    public RepeatSettingRequestDto() {}
+    public RepeatSettingRequestDto(boolean isRepeated, LocalDate repeatStart, LocalDate repeatDue, RepeatPattern repeatPattern, Set<Integer> dayOfWeek) {
         this.isRepeated = isRepeated;
         this.repeatStart = repeatStart;
         this.repeatDue = repeatDue;
@@ -25,9 +22,8 @@ public class RepeatSettingCreateResponseDto {
     }
 
     // getter
-    public Long getId() { return id; }
     public boolean getIsRepeated() { return isRepeated; }
-    public LocalDate getRepeatStart() { return repeatStart; }
+    public LocalDate getRepeatStart()  { return repeatStart; }
     public LocalDate getRepeatDue() { return repeatDue; }
     public RepeatPattern getRepeatPattern() { return repeatPattern; }
     public Set<Integer> getDayOfWeek() { return dayOfWeek; }

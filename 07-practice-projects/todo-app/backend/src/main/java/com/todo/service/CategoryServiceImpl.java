@@ -2,9 +2,8 @@ package com.todo.service;
 
 import com.todo.repository.CategoryRepository;
 import com.todo.repository.UserRepository;
-import com.todo.dto.CategoryCreateRequestDto;
 import com.todo.dto.CategoryResponseDto;
-import com.todo.dto.CategoryUpdateRequestDto;
+import com.todo.dto.CategoryRequestDto;
 import com.todo.domain.Category;
 import com.todo.domain.User;
 import org.springframework.stereotype.Service;
@@ -24,7 +23,7 @@ public class CategoryServiceImpl implements CategoryService {
     }
 
     @Override
-    public CategoryResponseDto createCategory(CategoryCreateRequestDto requestDto) {
+    public CategoryResponseDto createCategory(CategoryRequestDto requestDto) {
         // 사용자 임시 조회 (추후 변경 예정)
         Optional<User> optionalUser = userRepository.findById(1L);
         User user = optionalUser.orElseThrow(() -> new IllegalArgumentException("회원 정보가 존재하지 않습니다."));
@@ -32,7 +31,7 @@ public class CategoryServiceImpl implements CategoryService {
         Category category = new Category(requestDto.getName(), requestDto.getColor(), user);
         categoryRepository.save(category);
 
-        return new CategoryResponseDto(category.getId(), category.getName(), category.getColor(), category.getUser().getNickName());
+        return getCategoryResponseDto(category);
     }
 
     @Override
@@ -51,16 +50,18 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         Category category = optionalCategory.orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 존재하지 않습니다."));
 
-        return new CategoryResponseDto(category.getId(), category.getName(), category.getColor(), category.getUser().getNickName());
+        return getCategoryResponseDto(category);
     }
 
     @Override
-    public void updateCategory(Long id, CategoryUpdateRequestDto requestDto) {
+    public CategoryResponseDto updateCategory(Long id, CategoryRequestDto requestDto) {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         Category category = optionalCategory.orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 존재하지 않습니다."));
         category.setName(requestDto.getName());
         category.setColor(requestDto.getColor());
         categoryRepository.save(category);
+
+        return getCategoryResponseDto(category);
     }
 
     @Override
@@ -68,5 +69,9 @@ public class CategoryServiceImpl implements CategoryService {
         Optional<Category> optionalCategory = categoryRepository.findById(id);
         Category category = optionalCategory.orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 존재하지 않습니다."));
         categoryRepository.delete(category);
+    }
+
+    public CategoryResponseDto getCategoryResponseDto(Category category) {
+        return new CategoryResponseDto(category.getId(), category.getName(), category.getColor(), category.getUser().getNickName());
     }
 }

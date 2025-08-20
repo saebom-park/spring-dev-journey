@@ -1,15 +1,14 @@
 package com.todo.service;
 
-import com.todo.dto.CategoryCreateRequestDto;
 import com.todo.dto.CategoryResponseDto;
-import com.todo.dto.CategoryUpdateRequestDto;
+import com.todo.dto.CategoryRequestDto;
 
 import java.util.List;
 
 public interface CategoryService {
-    CategoryResponseDto createCategory(CategoryCreateRequestDto requestDto);
+    CategoryResponseDto createCategory(CategoryRequestDto requestDto);
     List<CategoryResponseDto> getCategories();
     CategoryResponseDto getCategoryById(Long id);
-    void updateCategory(Long id, CategoryUpdateRequestDto requestDto);
+    CategoryResponseDto updateCategory(Long id, CategoryRequestDto requestDto);
     void deleteCategory(Long id);
 }

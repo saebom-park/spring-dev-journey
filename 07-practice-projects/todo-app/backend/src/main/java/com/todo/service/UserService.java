@@ -1,13 +1,13 @@
 package com.todo.service;
 
-import com.todo.dto.UserCreateRequestDto;
+import com.todo.dto.UserRequestDto;
 import com.todo.dto.UserResponseDto;
 import java.util.List;
 
 public interface UserService {
-    UserResponseDto createUser(UserCreateRequestDto requestDto);
+    UserResponseDto createUser(UserRequestDto requestDto);
     UserResponseDto getUserById(Long id);
     List<UserResponseDto> getAllUsers();
-    void updateUser(Long id, UserCreateRequestDto requestDto);
+    UserResponseDto updateUser(Long id, UserRequestDto requestDto);
     void deleteUser(Long id);
 }

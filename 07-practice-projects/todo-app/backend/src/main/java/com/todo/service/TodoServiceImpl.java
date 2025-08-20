@@ -57,8 +57,6 @@ public class TodoServiceImpl implements TodoService {
 
         Todo todo = new Todo(requestDto.getContent(), requestDto.getPriority(), category, user);
 
-        boolean hasSchedule = requestDto.getStartDate() != null || requestDto.getDueDate() != null;
-        boolean hasRepeat = requestDto.getIsRepeated();
         if (requestDto.getStartDate() != null || requestDto.getDueDate() != null) {
             Schedule schedule = new Schedule(requestDto.getStartDate(), requestDto.getDueDate());
             // todo 객체와 연결 필요!
@@ -73,18 +71,7 @@ public class TodoServiceImpl implements TodoService {
 
         todoRepository.save(todo);
 
-        return new TodoResponseDto(
-                todo.getId(),
-                todo.getContent(),
-                todo.getStatus(),
-                todo.getPriority(),
-                categoryDto,
-                todo.getUser().getNickName(),
-                todo.getCreatedAt(),
-                todo.getCompletedAt(),
-                hasSchedule,
-                hasRepeat
-        );
+        return getTodoResponseDto(todo);
     }
 
     @Override
@@ -93,7 +80,7 @@ public class TodoServiceImpl implements TodoService {
         Optional<User> optionalUser = userRepository.findById(1L);
         User user = optionalUser.orElseThrow(() -> new IllegalArgumentException("회원 정보가 존재하지 않습니다."));
 
-        return getTodoResponseDto(todoRepository.findByUserId(user.getId()));
+        return getTodoResponseDtoList(todoRepository.findByUserId(user.getId()));
     }
 
     @Override
@@ -125,7 +112,7 @@ public class TodoServiceImpl implements TodoService {
         Optional<User> optionalUser = userRepository.findById(1L);
         User user = optionalUser.orElseThrow(() -> new IllegalArgumentException("회원 정보가 존재하지 않습니다."));
 
-        return getTodoResponseDto(todoRepository.findByUserIdAndStatus(user.getId(), status));
+        return getTodoResponseDtoList(todoRepository.findByUserIdAndStatus(user.getId(), status));
     }
 
     @Override
@@ -134,7 +121,7 @@ public class TodoServiceImpl implements TodoService {
         Optional<User> optionalUser = userRepository.findById(1L);
         User user = optionalUser.orElseThrow(() -> new IllegalArgumentException("회원 정보가 존재하지 않습니다."));
 
-        return getTodoResponseDto(todoRepository.findByUserIdAndPriority(user.getId(), priority));
+        return getTodoResponseDtoList(todoRepository.findByUserIdAndPriority(user.getId(), priority));
     }
 
     @Override
@@ -146,7 +133,7 @@ public class TodoServiceImpl implements TodoService {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
         Category category = optionalCategory.orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 존재하지 않습니다."));
 
-        return getTodoResponseDto(todoRepository.findByUserIdAndCategoryId(user.getId(), categoryId));
+        return getTodoResponseDtoList(todoRepository.findByUserIdAndCategoryId(user.getId(), categoryId));
     }
 
     @Override
@@ -158,11 +145,11 @@ public class TodoServiceImpl implements TodoService {
         Optional<Category> optionalCategory = categoryRepository.findById(categoryId);
         Category category = optionalCategory.orElseThrow(() -> new IllegalArgumentException("해당 카테고리가 존재하지 않습니다."));
 
-        return getTodoResponseDto(todoRepository.findByUserIdAndStatusAndCategoryId(user.getId(), status, categoryId));
+        return getTodoResponseDtoList(todoRepository.findByUserIdAndStatusAndCategoryId(user.getId(), status, categoryId));
     }
 
     @Override
-    public void updateTodo(Long id, TodoUpdateRequestDto requestDto) {
+    public TodoResponseDto updateTodo(Long id, TodoUpdateRequestDto requestDto) {
         Optional<Todo> optionalTodo = todoRepository.findById(id);
         Todo todo = optionalTodo.orElseThrow(() -> new IllegalArgumentException("해당 할일이 존재하지 않습니다."));
 
@@ -174,6 +161,8 @@ public class TodoServiceImpl implements TodoService {
         todo.setCategory(category);
 
         todoRepository.save(todo);
+
+        return getTodoResponseDto(todo);
     }
 
     @Override
@@ -208,7 +197,7 @@ public class TodoServiceImpl implements TodoService {
         return todoRepository.countByUserIdAndStatus(user.getId(), status);
     }
 
-    public List<TodoResponseDto> getTodoResponseDto(List<Todo> todos) {
+    public List<TodoResponseDto> getTodoResponseDtoList(List<Todo> todos) {
         return todos.stream().map(
                 todo -> new TodoResponseDto(
                         todo.getId(),
@@ -223,6 +212,21 @@ public class TodoServiceImpl implements TodoService {
                         todo.getRepeatSetting() != null && todo.getRepeatSetting().getIsRepeated()
                 )
         ).collect(Collectors.toList());
+    }
+
+    public TodoResponseDto getTodoResponseDto(Todo todo) {
+        return new TodoResponseDto(
+                todo.getId(),
+                todo.getContent(),
+                todo.getStatus(),
+                todo.getPriority(),
+                new CategoryDto(todo.getCategory().getId(), todo.getCategory().getName(), todo.getCategory().getColor()),
+                todo.getUser().getNickName(),
+                todo.getCreatedAt(),
+                todo.getCompletedAt(),
+                (todo.getSchedule() != null && (todo.getSchedule().getStartDate() != null || todo.getSchedule().getDueDate() != null)),
+                todo.getRepeatSetting() != null && todo.getRepeatSetting().getIsRepeated()
+        );
     }
 
 }
