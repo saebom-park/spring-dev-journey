@@ -3,17 +3,13 @@ package com.todo.controller;
 import com.todo.service.ScheduleService;
 import com.todo.dto.ScheduleDto;
 import com.todo.dto.ScheduleRequestDto;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.*;
 
 import org.springframework.http.ResponseEntity;
 import java.net.URI;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:5175")
 public class ScheduleController {
     private final ScheduleService scheduleService;
 

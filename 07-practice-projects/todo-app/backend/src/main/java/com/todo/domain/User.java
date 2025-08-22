@@ -23,7 +23,7 @@ public class User {
     private LocalDateTime createdAt;
 
     // 읽기 전용 필드
-    @OneToMany(mappedBy="category")
+    @OneToMany(mappedBy="user")
     private List<Category> categories = new ArrayList<>();
 
     // 읽기 전용 필드
