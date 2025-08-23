@@ -1,15 +1,15 @@
 package com.todo.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ScheduleDto {
     private Long id;
-    private LocalDateTime startDate;
-    private LocalDateTime dueDate;
+    private LocalDate startDate;
+    private LocalDate dueDate;
 
     // constructor
     public ScheduleDto() {}
-    public ScheduleDto(Long id, LocalDateTime startDate, LocalDateTime dueDate) {
+    public ScheduleDto(Long id, LocalDate startDate, LocalDate dueDate) {
         this.id = id;
         this.startDate = startDate;
         this.dueDate = dueDate;
@@ -17,6 +17,6 @@ public class ScheduleDto {
 
     // getter
     public Long getId() { return id; }
-    public LocalDateTime getStartDate() { return startDate; }
-    public LocalDateTime getDueDate() { return dueDate; }
+    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getDueDate() { return dueDate; }
 }

@@ -2,9 +2,17 @@
   <div class="min-h-screen bg-gray-50 p-6">
     <div class="max-w-4xl mx-auto">
       <!-- 헤더 -->
-      <div class="mb-8">
-        <h1 class="text-3xl font-bold text-gray-900 mb-2">할일 관리</h1>
-        <p class="text-gray-600">{{ currentUser }}님의 할일을 관리하세요</p>
+      <div class="mb-8 flex items-center justify-between">
+        <div>
+          <h1 class="text-3xl font-bold text-gray-900 mb-2">할일 관리</h1>
+          <p class="text-gray-600">{{ currentUser }}님의 할일을 관리하세요</p>
+        </div>
+        <!-- 추가 버튼 -->
+        <button @click="showCreateModal = true"
+                class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center gap-2">
+          <span>+</span>
+          할일 추가
+        </button>
       </div>
 
       <!-- 필터 및 추가 버튼 -->
@@ -29,13 +37,6 @@
               <option value="COMPLETED">완료</option>
             </select>
           </div>
-
-          <!-- 추가 버튼 -->
-          <button @click="showCreateModal = true"
-                  class="bg-blue-600 text-white px-4 py-2 rounded-md hover:bg-blue-700 flex items-center gap-2">
-            <span>+</span>
-            할일 추가
-          </button>
         </div>
       </div>
 
@@ -54,7 +55,8 @@
         <div v-else>
           <div v-for="todo in todos" :key="todo.id"
                class="bg-white rounded-lg shadow-sm border-l-4 p-6 hover:shadow-md transition-shadow"
-               :class="getPriorityClass(todo.priority)">
+               :class="getPriorityClass(todo.priority)"
+               :style="{ borderLeftColor: todo.categoryDto?.color || '#e5e7eb' }">
 
             <div class="flex items-start justify-between">
               <div class="flex-1">

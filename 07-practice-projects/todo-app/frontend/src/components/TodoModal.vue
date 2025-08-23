@@ -194,7 +194,7 @@ export default {
           form.value = {
             content: todoData.content,
             priority: todoData.priority,
-            categoryId: todoData.category?.id || ''
+            categoryId: todoData.categoryDto?.id || ''
           }
 
           // 일정 정보
@@ -254,12 +254,15 @@ export default {
             await axios.post(`http://localhost:8080/api/todos/${todoId}/schedule`, schedule.value)
           } else {
             // 새 일정 추가
+            schedule.value.startDate += "T00:00:00";
+            schedule.value.dueDate += "T23:59:59";
             await axios.post(`http://localhost:8080/api/todos/${todoId}/schedule`, schedule.value)
           }
         }
 
         // 반복 설정 처리
         if (hasRepeat.value && repeat.value.repeatStart) {
+          console.log(hasRepeat.value + ": " + repeat.value.repeatStart);
           const repeatData = {
             ...repeat.value,
             dayOfWeek: repeat.value.repeatPattern === 'WEEKLY' ? repeat.value.dayOfWeek : []

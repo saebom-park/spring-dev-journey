@@ -9,7 +9,7 @@ import org.springframework.http.ResponseEntity;
 import java.net.URI;
 
 @RestController
-@CrossOrigin(origins = "http://localhost:5175")
+@CrossOrigin(origins = {"http://localhost:5173", "http://localhost:5175"})
 public class RepeatSettingController {
     private final RepeatSettingService repeatSettingService;
 

@@ -13,24 +13,24 @@
             </div>
 
             <!-- 네비게이션 링크 -->
-            <div class="hidden md:ml-6 md:flex md:space-x-8">
+            <div class="hidden md:ml-6 md:flex md:space-x-8 md:items-center">
               <router-link to="/todos"
-                           class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors"
+                           class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors flex items-center"
                            :class="{ 'border-blue-500 text-blue-600': $route.name === 'todos' || $route.name === 'home' }">
                 할일 관리
               </router-link>
 
               <router-link to="/categories"
-                           class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors"
+                           class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors flex items-center"
                            :class="{ 'border-blue-500 text-blue-600': $route.name === 'categories' }">
                 카테고리 관리
               </router-link>
 
-              <router-link to="/stats"
-                           class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-2 px-1 border-b-2 font-medium text-sm transition-colors"
+              <!--<router-link to="/stats"
+                           class="border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300 whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm transition-colors flex items-center"
                            :class="{ 'border-blue-500 text-blue-600': $route.name === 'statistics' }">
                 통계
-              </router-link>
+              </router-link>-->
             </div>
           </div>
 

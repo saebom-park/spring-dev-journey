@@ -1,19 +1,19 @@
 package com.todo.dto;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 public class ScheduleRequestDto {
-    private LocalDateTime startDate;
-    private LocalDateTime dueDate;
+    private LocalDate startDate;
+    private LocalDate dueDate;
 
     // constructor
     public ScheduleRequestDto() {}
-    public ScheduleRequestDto(LocalDateTime startDate, LocalDateTime dueDate) {
+    public ScheduleRequestDto(LocalDate startDate, LocalDate dueDate) {
         this.startDate = startDate;
         this.dueDate = dueDate;
     }
 
     // getter
-    public LocalDateTime getStartDate() { return startDate; }
-    public LocalDateTime getDueDate() { return dueDate; }
+    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getDueDate() { return dueDate; }
 }

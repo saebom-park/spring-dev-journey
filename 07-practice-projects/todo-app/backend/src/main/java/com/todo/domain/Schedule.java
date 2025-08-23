@@ -1,7 +1,7 @@
 package com.todo.domain;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @Entity
 @Table(name="schedules")
@@ -12,24 +12,25 @@ public class Schedule {
     private Long id;
 
     @Column(name="start_date")
-    private LocalDateTime startDate;
+    private LocalDate startDate;
 
     @Column(name="due_date")
-    private LocalDateTime dueDate;
+    private LocalDate dueDate;
 
     // constructor
-    public Schedule(LocalDateTime startDate, LocalDateTime dueDate) {
+    public Schedule() {}
+    public Schedule(LocalDate startDate, LocalDate dueDate) {
         this.startDate = startDate;
         this.dueDate = dueDate;
     }
 
     // getter
     public Long getId() { return id; }
-    public LocalDateTime getStartDate() { return startDate; }
-    public LocalDateTime getDueDate() { return dueDate; }
+    public LocalDate getStartDate() { return startDate; }
+    public LocalDate getDueDate() { return dueDate; }
 
     // setter
     public void setId(Long id) { this.id = id; }
-    public void setStartDate(LocalDateTime startDate) { this.startDate = startDate; }
-    public void setDueDate(LocalDateTime dueDate) { this.dueDate = dueDate; }
+    public void setStartDate(LocalDate startDate) { this.startDate = startDate; }
+    public void setDueDate(LocalDate dueDate) { this.dueDate = dueDate; }
 }

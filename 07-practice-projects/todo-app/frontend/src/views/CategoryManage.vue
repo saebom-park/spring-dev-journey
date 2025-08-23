@@ -121,9 +121,18 @@
         <div class="flex flex-wrap gap-2">
           <button v-for="color in presetColors" :key="color"
                   @click="newCategory.color = color"
-                  class="w-8 h-8 rounded-full border-2 border-gray-300 hover:border-gray-400 transition-colors"
+                  class="w-8 h-8 rounded-full border-2 transition-all duration-200 relative"
+                  :class="newCategory.color === color
+                    ? 'border-gray-800 shadow-lg scale-110'
+                    : 'border-gray-300 hover:border-gray-400'"
                   :style="{ backgroundColor: color }"
-                  :title="color"></button>
+                  :title="color">
+            <!-- 선택된 색상에 체크 표시 -->
+            <span v-if="newCategory.color === color"
+                  class="absolute inset-0 flex items-center justify-center text-white text-xs font-bold">
+              ✓
+            </span>
+          </button>
         </div>
       </div>
     </div>
