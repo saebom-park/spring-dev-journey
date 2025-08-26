@@ -11,10 +11,17 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.DeleteMapping;
+import java.util.List;
+import java.util.stream.Collectors;
+
 // [API-1] ResponseEntity 사용
 import org.springframework.http.ResponseEntity;
 import java.net.URI;
-import java.util.List;
+// [API-2] Valid 어노테이션, BindingResult 사용
+import jakarta.validation.Valid;
+import org.springframework.validation.BindingResult;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
+
 
 @RestController
 @RequestMapping("/api/diaries")
@@ -22,10 +29,20 @@ public class DiaryController {
     private final DiaryService diaryService;
 
     // constructor
-    public DiaryController(DiaryService diaryService) { this.diaryService = diaryService; }
+    public DiaryController(DiaryService diaryService) {
+        this.diaryService = diaryService;
+    }
 
     @PostMapping
-    public ResponseEntity<DiaryResponseDto> createDiary(@RequestBody DiaryRequestDto requestDto) {
+    public ResponseEntity<?> createDiary(@Valid @RequestBody DiaryRequestDto requestDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getAllErrors().stream().map(
+                    DefaultMessageSourceResolvable::getDefaultMessage
+            ).toList();
+
+            return ResponseEntity.badRequest().body(errors);
+        }
+
         DiaryResponseDto response = diaryService.createDiary(requestDto);
 
         return ResponseEntity.created(
@@ -35,7 +52,11 @@ public class DiaryController {
 
     @GetMapping
     public ResponseEntity<List<DiaryResponseDto>> getDiaries() {
-        return ResponseEntity.ok(diaryService.getDiaries());
+        return ResponseEntity.ok(
+            diaryService.getDiaries().stream().map(
+                diary -> new DiaryResponseDto(diary.getId(), diary.getTitle(), diary.getContent(), diary.getCreatedDate())
+            ).collect(Collectors.toList())
+        );
     }
 
     @GetMapping("/{id}")
@@ -44,7 +65,14 @@ public class DiaryController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<DiaryResponseDto> updateDiary(@PathVariable Long id, @RequestBody DiaryRequestDto requestDto) {
+    public ResponseEntity<?> updateDiary(@PathVariable Long id, @Valid @RequestBody DiaryRequestDto requestDto, BindingResult bindingResult) {
+        if (bindingResult.hasErrors()) {
+            List<String> errors = bindingResult.getAllErrors().stream().map(
+                    DefaultMessageSourceResolvable::getDefaultMessage
+            ).toList();
+
+            return ResponseEntity.badRequest().body(errors);
+        }
         return ResponseEntity.ok(diaryService.updateDiary(id, requestDto));
     }
 
