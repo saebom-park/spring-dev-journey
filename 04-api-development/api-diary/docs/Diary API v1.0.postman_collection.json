@@ -1,0 +1,205 @@
+{
+	"info": {
+		"_postman_id": "9db6aef3-eb89-4580-ad77-883b599df66a",
+		"name": "Diary API v1.0",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "46609554"
+	},
+	"item": [
+		{
+			"name": "Create Diary (POST)",
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"나만의 첫 API Collection\",\r\n    \"content\": \"엄청 신기하다!!!!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/diaries",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"diaries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get All Diaries (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/diaries",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"diaries"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Diary by ID (GET)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/diaries/6",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"diaries",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Diary (PUT)",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"swagger postman 수정 테스트\",\r\n    \"content\": \"신난다!!!\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/diaries/6",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"diaries",
+						"6"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Diary (DELETE)",
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseURL}}/api/diaries/4",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"diaries",
+						"4"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get Diary Not Found (GET)",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"swagger postman 수정 테스트\",\r\n    \"content\": \"신난다!!!\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/diaries/99",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"diaries",
+						"99"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Diary Validation Error (POST)",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"title\": \"\",\r\n    \"content\": \"빈 제목 테스트\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{baseURL}}/api/diaries",
+					"host": [
+						"{{baseURL}}"
+					],
+					"path": [
+						"api",
+						"diaries"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": "http://localhost:8080"
+		}
+	]
+}
