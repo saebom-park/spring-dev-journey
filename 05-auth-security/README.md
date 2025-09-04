@@ -1,16 +1,17 @@
-# 🧷 05. 인증 & 보안 (Auth & Security)
+# 📎 05. 인증 & 보안 (Auth & Security)
 
-> 이 단계에서는 로그인 기능의 핵심인 인증(Authentication)과 권한(Authorization)을 학습합니다.  
-> 스프링 시큐리티의 기본 구조와 JWT 기반 인증 흐름까지 익히게 됩니다.
+이 섹션에서는 로그인 기능의 핵심인 **인증(Authentication)** 과 **권한(Authorization)** 을 학습한다.  
+Spring Security의 기본 구조부터 세션/토큰 기반 인증, 권한 제어, 비밀번호 암호화까지 실습을 통해 이해한다.  
+최종적으로는 **JWT 기반 인증 시스템**을 직접 구현해본다.
 
 ---
 
 ## ✅ 학습 목표
-
-- 스프링 시큐리티 필터 흐름 이해
-- 로그인, 로그아웃, 접근 제어 처리 구현
-- JWT 토큰 발급 및 검증 흐름 습득
-- 사용자 역할(Role)에 따른 보안 정책 구성
+- 세션 기반 로그인 흐름 이해 및 구현
+- JWT 토큰 발급 및 검증 처리
+- Spring Security 필터 체인 동작 구조 학습
+- 사용자 역할(Role) 기반 접근 제어 정책 구성
+- 안전한 비밀번호 저장 방식(BCryptPasswordEncoder) 적용
 
 ---
 
@@ -18,48 +19,47 @@
 
 | 주제 | 설명 |
 |------|------|
-| 스프링 시큐리티 구조 | 기본 필터 체인, 인증 vs 인가 흐름 |
-| 로그인 처리 | `UsernamePasswordAuthenticationFilter` 기반 로그인 |
-| 비밀번호 암호화 | `BCryptPasswordEncoder` 사용 |
-| 사용자 역할 설정 | `ROLE_USER`, `ROLE_ADMIN` 등의 권한 기반 제어 |
-| 인가 처리 | URL 접근 권한 설정 (`hasRole`, `hasAuthority`) |
-| JWT 인증 흐름 | 토큰 발급 → 헤더 전달 → 필터에서 인증 처리 |
-| 시큐리티 설정 | `SecurityFilterChain`, `WebSecurityCustomizer` |
-| 세션 vs 토큰 | 상태 기반 인증 vs 무상태 인증 비교
+| 세션 로그인 | HttpSession 기반 로그인/로그아웃 처리 |
+| JWT 인증 | 토큰 발급 → 헤더 전달 → 필터에서 검증 |
+| 스프링 시큐리티 구조 | 기본 필터 체인, DelegatingFilterProxy 동작 이해 |
+| 권한 설정 | ROLE_USER, ROLE_ADMIN 등 Role 기반 접근 제어 |
+| 비밀번호 암호화 | BCryptPasswordEncoder 기반 단방향 해싱 |
+| 인가 처리 | URL, 메서드 단위 권한 제어 (`@PreAuthorize`, `hasRole`) |
+| 세션 vs 토큰 | 상태 기반 인증 vs 무상태 인증 비교 |
 
 ---
 
 ## 📂 문서 구성
 
-| 파일명 예시 | 설명 |
-|-------------|------|
-| `01-security-basic.md` | 시큐리티 구조와 필터 흐름 |
-| `02-form-login.md` | 기본 로그인 처리 구현 |
-| `03-password-encoding.md` | 비밀번호 암호화 및 검증 실습 |
-| `04-jwt-authentication.md` | JWT 기반 로그인 구현 |
-| `...-mistakes.md` | 토큰 오류, 필터 등록 실수 등 보안 실수 정리 |
-| `...-extra.md` | 세션 인증 vs JWT 인증 비교, 보안 취약점 참고 |
+| 파일명 | 설명 |
+|--------|------|
+| sec-1-session-login.md | 세션 기반 로그인 |
+| sec-2-jwt-auth.md | JWT 인증 |
+| sec-3-security-filter-chain.md | Spring Security 필터 체인 |
+| sec-4-role-authorization.md | 권한 설정 |
+| sec-5-password-encoding.md | 비밀번호 암호화 |
+| sec-*-mistakes.md | 각 단계별 실수노트 |
+| sec-*-questions.md | 각 단계별 질문노트 |
+| sec-*-extra.md | 추가 개념 정리 (있을 경우) |
 
 ---
 
 ## 🧭 학습 흐름
-
-1. 기본 Form 로그인부터 시큐리티 구조 이해
-2. 사용자 정보 저장 → 인증 처리 → 인가 처리 흐름 직접 구현
-3. JWT 토큰 기반 인증 흐름 확장
-4. 보안 이슈 발생 사례와 함께 실수 노트 정리
+1. **SEC-1**: 세션 기반 로그인 (HttpSession 활용)
+2. **SEC-2**: JWT 기반 인증 흐름 구현
+3. **SEC-3**: Spring Security 필터 체인 구조 이해 및 설정
+4. **SEC-4**: 사용자 권한(Role) 기반 접근 제어
+5. **SEC-5**: 비밀번호 암호화 적용 및 보안 강화
 
 ---
 
 ## 📌 작성 기준
-
-- Spring Security 6 기준 (SecurityFilterChain 사용)
+- Spring Security 6.x 기준 (SecurityFilterChain 사용)
 - JWT는 Access Token 중심 구성
-- 설정 클래스와 커스텀 필터 분리 구조
+- Controller / Service / Repository 3계층 구조 유지
+- 설정 클래스와 커스텀 필터 분리 설계
 
 ---
 
-> “백엔드 개발자라면 보안은 선택이 아니야.”  
->  
-> 사용자의 정보를 지키는 가장 기본적인 약속,  
-> **안전한 인증 시스템을 설계할 수 있어야 진짜 개발자!** 🔒
+> **“보안은 선택이 아니라 필수다.”**  
+> 안전한 인증 시스템을 설계하는 능력이 백엔드 개발자의 기본 자격이다. 🔒
