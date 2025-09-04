@@ -20,7 +20,9 @@ import java.net.URI;
 import jakarta.validation.Valid;
 //import org.springframework.validation.BindingResult;
 //import org.springframework.context.support.DefaultMessageSourceResolvable;
-
+// [API-5] Paging 처리
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @RestController
 @RequestMapping("/api/diaries")
@@ -61,12 +63,8 @@ public class DiaryController {
     }
 
     @GetMapping
-    public ResponseEntity<List<DiaryResponseDto>> getDiaries() {
-        return ResponseEntity.ok(
-            diaryService.getDiaries().stream().map(
-                diary -> new DiaryResponseDto(diary.getId(), diary.getTitle(), diary.getContent(), diary.getCreatedDate())
-            ).toList()
-        );
+    public ResponseEntity<Page<DiaryResponseDto>> getDiaries(Pageable pageable) {
+        return ResponseEntity.ok(diaryService.getDiaries(pageable));
     }
 
     @GetMapping("/{id}")

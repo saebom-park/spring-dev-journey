@@ -10,6 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
+// [API-5] Paging 처리
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @Service
 @Transactional
@@ -27,12 +30,13 @@ public class DiaryServiceImpl implements DiaryService {
         return getDiaryResponseDto(diary);
     }
 
+    // [API-5] paging 처리
     @Override
     @Transactional(readOnly=true)
-    public List<DiaryResponseDto> getDiaries() {
-        return diaryRepository.findAll().stream().map(
-                this::getDiaryResponseDto
-        ).collect(Collectors.toList());
+    public Page<DiaryResponseDto> getDiaries(Pageable pageable) {
+        return diaryRepository.findAll(pageable).map(
+                diary -> new DiaryResponseDto(diary.getId(), diary.getTitle(), diary.getContent(), diary.getCreatedDate())
+        );
     }
 
     @Override
