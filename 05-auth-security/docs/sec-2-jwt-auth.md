@@ -94,6 +94,7 @@ public class JwtLoginController {
         }
     }
 
+    // validateToken 사용 버전
     @GetMapping("/secure")
     public LoginResponse secure(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
@@ -101,6 +102,18 @@ public class JwtLoginController {
             String username = JwtUtil.getUsername(token);
             return new LoginResponse("보호된 리소스 접근 성공", username);
         } else {
+            return new LoginResponse("토큰이 유효하지 않습니다", null);
+        }
+    }
+    
+    // validateToken 없이 쓰는 버전
+    @GetMapping("/secure2")
+    public LoginResponse secure2(@RequestHeader("Authorization") String authHeader) {
+        String token = authHeader.replace("Bearer ", "");
+        try {
+            String username = JwtUtil.getUsername(token); // 검증 + 추출 동시에
+            return new LoginResponse("보호된 리소스 접근 성공", username);
+        } catch (Exception e) {
             return new LoginResponse("토큰이 유효하지 않습니다", null);
         }
     }
@@ -153,6 +166,7 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 - JWT는 반드시 **서명(Signature)** 으로 위조 방지  
 - 만료 시간(expiration) 설정 필수  
 - Refresh Token 전략까지 적용하면 보안성 강화 가능  
+- **실무 스타일**: validateToken을 분리할 수도 있고, 생략하고 getUsername만 써도 된다  
 
 ---
 
@@ -167,9 +181,10 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
 2. `JwtLoginController` 작성  
    - `/login` : 로그인 성공 시 JWT 발급  
    - `/secure` : Authorization 헤더의 토큰 검증 후 사용자 정보 반환  
+   - `/secure2` : validateToken 없이 getUsername만 사용하여 검증 + 추출  
 3. Postman 테스트  
    - 로그인 요청 → 토큰 발급 확인  
-   - Authorization 헤더에 토큰 담아 `/secure` 요청 → 정상 응답 확인  
+   - Authorization 헤더에 토큰 담아 `/secure` 또는 `/secure2` 요청 → 정상 응답 확인  
    - 토큰 만료/위조 상황도 테스트  
 
 > 참고: JWT 발급 시 HMAC-SHA256 알고리즘과 Secret Key를 사용한다.
