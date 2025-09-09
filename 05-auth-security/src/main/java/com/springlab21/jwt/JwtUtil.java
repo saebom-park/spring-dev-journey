@@ -10,7 +10,7 @@ import java.util.Date;
 
 public class JwtUtil {
     private static final Key secretKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
-    private static final long EXPIRATION_TIME = 1000 * 60 * 30; // 30분
+    private static final long EXPIRATION_TIME = 1000 * 60 * 30;
 
     // 토큰 생성
     public static String createToken(String username) {
@@ -32,10 +32,9 @@ public class JwtUtil {
         }
     }
 
-    // 토근에서 사용자 이름 추출
+    // 토큰에서 사용자 이름 추출
     public static String getUsername(String token) {
-        Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build()
-                .parseClaimsJws(token).getBody();
+        Claims claims = Jwts.parserBuilder().setSigningKey(secretKey).build().parseClaimsJws(token).getBody();
         return claims.getSubject();
     }
 }
