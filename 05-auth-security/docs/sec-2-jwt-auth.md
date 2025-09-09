@@ -84,9 +84,10 @@ public class JwtUtil {
 ```java
 package com.springlab21.controller;
 
+import com.springlab21.jwt.JwtUtil;
 import com.springlab21.dto.LoginRequest;
 import com.springlab21.dto.LoginResponse;
-import com.springlab21.jwt.JwtUtil;
+import com.springlab21.dto.SecureResponse;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -105,25 +106,25 @@ public class JwtLoginController {
 
     // validateToken 사용 버전
     @GetMapping("/secure")
-    public LoginResponse secure(@RequestHeader("Authorization") String authHeader) {
+    public SecureResponse secure(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         if (JwtUtil.validateToken(token)) {
             String username = JwtUtil.getUsername(token);
-            return new LoginResponse("보호된 리소스 접근 성공", token);
+            return new SecureResponse("보호된 리소스 접근 성공", username);
         } else {
-            return new LoginResponse("토큰이 유효하지 않습니다", null);
+            return new SecureResponse("토큰이 유효하지 않습니다", null);
         }
     }
 
     // validateToken 없이 쓰는 버전
     @GetMapping("/secure2")
-    public LoginResponse secure2(@RequestHeader("Authorization") String authHeader) {
+    public SecureResponse secure2(@RequestHeader("Authorization") String authHeader) {
         String token = authHeader.replace("Bearer ", "");
         try {
-            String username = JwtUtil.getUsername(token); // 검증 + 추출 동시에
-            return new LoginResponse("보호된 리소스 접근 성공", token);
+            String username = JwtUtil.getUsername(token);
+            return new SecureResponse("보호된 리소스 접근 성공", username);
         } catch (Exception e) {
-            return new LoginResponse("토큰이 유효하지 않습니다", null);
+            return new SecureResponse("토큰이 유효하지 않습니다", null);
         }
     }
 }
