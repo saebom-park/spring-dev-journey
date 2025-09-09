@@ -109,7 +109,7 @@ public class JwtLoginController {
         String token = authHeader.replace("Bearer ", "");
         if (JwtUtil.validateToken(token)) {
             String username = JwtUtil.getUsername(token);
-            return new LoginResponse("보호된 리소스 접근 성공", username);
+            return new LoginResponse("보호된 리소스 접근 성공", token);
         } else {
             return new LoginResponse("토큰이 유효하지 않습니다", null);
         }
@@ -121,7 +121,7 @@ public class JwtLoginController {
         String token = authHeader.replace("Bearer ", "");
         try {
             String username = JwtUtil.getUsername(token); // 검증 + 추출 동시에
-            return new LoginResponse("보호된 리소스 접근 성공", username);
+            return new LoginResponse("보호된 리소스 접근 성공", token);
         } catch (Exception e) {
             return new LoginResponse("토큰이 유효하지 않습니다", null);
         }
