@@ -115,4 +115,24 @@ public class RefreshController {
 
 ---
 
-📌 이 문서는 **심화 학습용**이므로, SEC-2 기본 실습을 완료한 후 이어서 진행해야 한다.
+## ✅ 세션 vs JWT 이론 비교
+
+| 구분 | 세션(Session) | JWT(JSON Web Token) |
+| --- | --- | --- |
+| **저장 위치** | 서버 (메모리/DB/Redis 등) | 클라이언트 (로컬스토리지, 쿠키 등) |
+| **상태 관리** | Stateful (서버가 세션 상태 기억) | Stateless (서버는 상태 저장 안 함) |
+| **로그아웃** | 가능 → `session.invalidate()` 즉시 차단 | 불가능 → 토큰은 만료 전까지 유효, 클라이언트가 삭제해야 함 |
+| **무효화** | 서버에서 세션 삭제 즉시 반영 | 토큰 무효화 어려움, Access 짧게 + Refresh 관리로 해결 |
+| **확장성** | 서버 저장소 필요 → 서버 늘리면 세션 공유 문제 발생 | 서버 저장소 불필요 → 확장성 유리 |
+| **보안 위험** | 세션 탈취(Session Hijacking) | 토큰 탈취(Token Theft) → 만료 전까지 막을 방법 없음 |
+| **실무 활용** | 전통적인 웹 앱 (Spring MVC, JSP, Legacy 등) | SPA, 모바일 앱, MSA, API 서버 중심 아키텍처 |
+
+## 🧪 Postman 실습 비교
+
+| 시나리오 | 세션(Session) | JWT |
+| --- | --- | --- |
+| **1. 로그인** | `POST /api/session/login` → 세션ID 발급 (쿠키 저장) | `POST /api/jwt/login` → Access Token 발급 (응답 JSON) |
+| **2. 보호 API 접근** | `GET /api/session/secure` → 세션ID 쿠키 자동 전송 → 성공 | `GET /api/jwt/secure` + `Authorization: Bearer {token}` → 성공 |
+| **3. 로그아웃** | `POST /api/session/logout` → 세션 무효화됨 | 별도 API 없음 (클라이언트 토큰 삭제 필요) |
+| **4. 로그아웃 후 재접속** | `GET /api/session/secure` → 실패 (즉시 차단) | `GET /api/jwt/secure` → 여전히 성공 (만료 전까지 유효) |
+| **5. 만료 처리** | 세션 만료 시간 지나면 자동 차단 | Access Token 만료 시 자동 차단 (Refresh Token으로 재발급 가능) |

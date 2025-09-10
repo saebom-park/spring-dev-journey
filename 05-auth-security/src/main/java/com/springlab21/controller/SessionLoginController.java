@@ -25,8 +25,8 @@ public class SessionLoginController {
         }
     }
 
-    @GetMapping("/check")
-    public LoginResponse check(HttpSession session) {
+    @GetMapping("/secure")
+    public LoginResponse secure(HttpSession session) {
         String username = (String) session.getAttribute("username");
         if (username == null) {
             return new LoginResponse("로그인 필요", null);
