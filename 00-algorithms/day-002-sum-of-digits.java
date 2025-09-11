@@ -5,8 +5,9 @@
 // - 제한 조건
 //  : N의 범위 : 100,000,000 이하의 자연수
 
+
 // [내 풀이]
-class SolutionMy {
+class Solution {
     public int solution(int num) {
         String numStr = String.valueOf(Math.abs(num));
         int sum = 0;
@@ -18,19 +19,21 @@ class SolutionMy {
     }
 
     public static void main(String[] args) {
-        System.out.println(new SolutionMy().solution(146));
+        System.out.println(new Solution().solution(146));
     }
 }
+
 
 // 실수 노트
 // 1. int → String 변환 시 (String) 캐스팅 시도 → String.valueOf(num) 사용해야 함
 // 2. 문자열 길이 → length() 메서드 써야 함
 // 3. 문자열 인덱스 접근 → charAt(i) + '0' 빼서 숫자 변환
-// 4. static 메서드가 아닌 경우 → 객체 생성 후 호출해야 함 (new SolutionMy().solution())
+// 4. static 메서드가 아닌 경우 → 객체 생성 후 호출해야 함 (new Solution().solution())
 // 5. System.out.prinln 오타 → println
 
+
 // [온이 풀이]
-class Solution {
+class OniSolution {
     public int solution(int n) {
         int sum = 0;
         while (n > 0) {
@@ -41,7 +44,7 @@ class Solution {
     }
 
     public static void main(String[] args) {
-        Solution s = new Solution();
+        OniSolution s = new OniSolution();
         System.out.println(s.solution(146)); // 11
         System.out.println(s.solution(123)); // 6
     }
