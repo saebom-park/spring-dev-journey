@@ -8,11 +8,11 @@
 // [≥ª «Æ¿Ã]
 class SolutionMy {
     public int solution(int num) {
-        String numToStr = String.valueOf(num);
+        String numStr = String.valueOf(Math.abs(num));
         int sum = 0;
-        for (int i = 0; i < numToStr.length(); i++) {
-            char c = numToStr.charAt(i);
-            sum += c - '0';
+
+        for (int i = 0; i < numStr.length(); i++) {
+            sum += numStr.charAt(i) - '0';
         }
         return sum;
     }
