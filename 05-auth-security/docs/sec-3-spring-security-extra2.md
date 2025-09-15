@@ -1,4 +1,4 @@
-# [SEC-3단계] 추가 개념 정리 2
+# [SEC-3단계] 추가 개념 정리 2 (DB 연동 UserDetailsService)
 
 > 💬 커스텀 로그인 페이지와 InMemory 계정은 연습용일 뿐이다.  
 > 실무에서는 반드시 **DB 사용자 정보**를 기반으로 인증을 처리해야 한다.  
@@ -40,7 +40,6 @@ public class User {
     private String password;
     private String role;
 
-    // 기본 생성자
     public User() {}
 
     public User(String username, String password, String role) {
@@ -70,7 +69,6 @@ package com.springlab21.repository;
 
 import com.springlab21.entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
-
 import java.util.Optional;
 
 public interface UserRepository extends JpaRepository<User, Long> {
@@ -106,15 +104,9 @@ public class CustomUserDetails implements UserDetails {
     }
 
     @Override
-    public String getPassword() {
-        return user.getPassword();
-    }
-
+    public String getPassword() { return user.getPassword(); }
     @Override
-    public String getUsername() {
-        return user.getUsername();
-    }
-
+    public String getUsername() { return user.getUsername(); }
     @Override
     public boolean isAccountNonExpired() { return true; }
     @Override
@@ -159,9 +151,9 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 ---
 
-### 5. `SecurityConfig.java`
+### 5. `SecurityConfig.java` (DB 연동 버전)
 ```java
-package com.springlab21;
+package com.springlab21.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -218,7 +210,7 @@ public class LoginController {
 
 ---
 
-### 7. `login.html` (templates/login.html)
+### 7. `login.html`
 ```html
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
@@ -246,11 +238,11 @@ public class LoginController {
 
 ## 📌 포인트 요약
 
-- **DB User 엔티티 + JPA Repository**를 사용해 사용자 정보를 관리한다.  
-- `CustomUserDetailsService`에서 `UserDetailsService`를 구현하여 DB 사용자 인증을 처리한다.  
-- 비밀번호는 반드시 **BCrypt 암호화** 후 저장/검증한다.  
-- 로그인 성공/실패 흐름은 이전 커스텀 Form Login과 동일하다.  
-- 이 방식이 실무에서 가장 많이 쓰이는 **기본 인증 구조**다.  
+- DB User 엔티티 + Repository로 사용자 정보 관리.  
+- `CustomUserDetailsService`에서 DB 사용자 인증 처리.  
+- 비밀번호는 **BCrypt 암호화** 필수.  
+- 로그인 성공/실패 흐름은 커스텀 Form Login과 동일.  
+- 이 방식이 실무에서 가장 많이 쓰이는 **기본 인증 구조**.  
 
 ---
 
@@ -259,8 +251,8 @@ public class LoginController {
 🎯 목표: DB 기반 사용자 인증을 구현한다.  
 
 1. `User` 엔티티와 `UserRepository` 작성.  
-2. `CustomUserDetails`, `CustomUserDetailsService` 구현.  
+2. `CustomUserDetails`와 `CustomUserDetailsService` 구현.  
 3. `SecurityConfig`에서 `PasswordEncoder` 등록.  
 4. `login.html` 페이지 작성.  
-5. 실행 후 DB에 사용자 계정을 삽입 (username: spring / password: 1234 → BCrypt 암호화).  
-6. `/secure/hello` 접근 시 로그인 페이지로 리다이렉트 → 로그인 성공 시 접근 가능 확인.  
+5. 실행 후 DB에 사용자 계정 삽입 (`spring` / `1234` → BCrypt 암호화).  
+6. `/secure/hello` 접근 → 로그인 페이지 이동 → 로그인 성공 후 접근 확인.  

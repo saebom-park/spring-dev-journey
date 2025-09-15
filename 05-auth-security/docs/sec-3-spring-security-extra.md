@@ -1,4 +1,4 @@
-# [SEC-3단계] 추가 개념 정리
+# [SEC-3단계] 추가 개념 정리 (커스텀 Form Login)
 
 > 💬 기본 Form Login 대신, 실무에서는 보통 **커스텀 로그인 페이지 + UserDetailsService + PasswordEncoder**를 조합해 사용한다.  
 > 이번 정리에서는 Spring Security의 **커스텀 Form Login 방식**을 학습한다.  
@@ -19,9 +19,9 @@
 
 ## 🧾 예시 코드 (`com.springlab21` 기준)
 
-### 1. `SecurityConfig.java`
+### 1. `SecurityConfig.java` (수정)
 ```java
-package com.springlab21;
+package com.springlab21.config;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -42,7 +42,6 @@ public class SecurityConfig {
                 .password(passwordEncoder.encode("1234"))
                 .roles("USER")
                 .build();
-
         return new InMemoryUserDetailsManager(user);
     }
 
@@ -59,7 +58,7 @@ public class SecurityConfig {
                 .anyRequest().authenticated()
             )
             .formLogin(form -> form
-                .loginPage("/login")               // 커스텀 로그인 페이지
+                .loginPage("/login")
                 .defaultSuccessUrl("/secure/hello", true)
                 .permitAll()
             )
@@ -117,32 +116,12 @@ public class LoginController {
 
 ---
 
-### 4. `SecureController.java` (이전과 동일)
-```java
-package com.springlab21.controller;
-
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-@RestController
-public class SecureController {
-
-    @GetMapping("/secure/hello")
-    public String secureHello() {
-        return "보호된 페이지: 로그인 성공 후 접근 가능!";
-    }
-}
-```
-
----
-
 ## 📌 포인트 요약
 
-- **InMemoryUserDetailsManager**로 사용자 계정을 등록해 인증을 테스트할 수 있다.  
-- **PasswordEncoder**를 반드시 적용해야 한다 (`BCryptPasswordEncoder`).  
-- `login.html` 작성 후 `formLogin().loginPage("/login")` 설정으로 **커스텀 로그인 페이지** 사용.  
-- 로그인 성공 시 `defaultSuccessUrl`로 이동 설정 가능.  
-- DB 연동으로 확장하려면 `UserDetailsService` 구현체를 직접 만들어서 JPA/MyBatis와 연결한다.  
+- **InMemoryUserDetailsManager**로 사용자 계정 등록 가능.  
+- **PasswordEncoder**(`BCryptPasswordEncoder`)를 적용해야 안전.  
+- `login.html` 작성 후 `formLogin().loginPage("/login")`으로 **커스텀 페이지** 사용.  
+- 로그인 성공 시 `defaultSuccessUrl`로 이동 가능.  
 
 ---
 
@@ -150,10 +129,9 @@ public class SecureController {
 
 🎯 목표: 기본 로그인 폼을 **커스텀 로그인 페이지**로 교체하고, 사용자 계정을 직접 정의한다.  
 
-1. 기존 `springlab21` 프로젝트에 `SecurityConfig` 클래스를 추가한다.  
-2. `InMemoryUserDetailsManager`에 계정 등록 (`username: spring`, `password: 1234`).  
-3. `PasswordEncoder`로 `BCryptPasswordEncoder` 적용.  
-4. `login.html` 템플릿 작성.  
-5. `LoginController`에서 `/login` 요청 시 템플릿 반환하도록 구성.  
-6. 실행 후 브라우저에서 `http://localhost:8080/secure/hello` 접근 시 로그인 페이지로 이동하는지 확인.  
-7. 로그인 성공 → `/secure/hello` 접근 가능 확인.  
+1. `SecurityConfig`에 `InMemoryUserDetailsManager`와 `PasswordEncoder` 등록.  
+2. 사용자 계정 등록 (`username: spring`, `password: 1234`).  
+3. `login.html` 템플릿 작성.  
+4. `LoginController`에서 `/login` 요청 처리.  
+5. 실행 후 브라우저에서 `/secure/hello` 접근 → 로그인 페이지 이동 확인.  
+6. `spring/1234` 로그인 성공 시 `/secure/hello` 접근 가능 확인.  
