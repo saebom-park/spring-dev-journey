@@ -22,12 +22,22 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+    // Spring Security (필수)
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+
+    // Thymeleaf (커스텀 로그인 페이지 작성 시 필요)
+    implementation 'org.springframework.boot:spring-boot-starter-thymeleaf'
+
+    // JPA + DB (DB 연동 심화 실습 시 필요)
+    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
+    runtimeOnly 'com.h2database:h2' // 테스트용 In-Memory DB
+
     // JWT (jjwt)
     implementation 'io.jsonwebtoken:jjwt-api:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-impl:0.11.5'
     implementation 'io.jsonwebtoken:jjwt-jackson:0.11.5'
 
-    // Lombok (편리하게 쓰고 싶을 경우)
+    // Lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
 
