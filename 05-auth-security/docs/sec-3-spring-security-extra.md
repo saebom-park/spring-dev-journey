@@ -19,7 +19,7 @@
 
 ## 🧾 예시 코드 (`com.springlab21` 기준)
 
-### 1. `SecurityConfig.java` (수정)
+### 1. `SecurityConfigCustom.java` (수정)
 ```java
 package com.springlab21.config;
 
@@ -34,7 +34,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfigCustom {
 
     @Bean
     public InMemoryUserDetailsManager userDetailsService(PasswordEncoder passwordEncoder) {

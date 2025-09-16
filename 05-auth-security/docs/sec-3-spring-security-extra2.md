@@ -151,7 +151,7 @@ public class CustomUserDetailsService implements UserDetailsService {
 
 ---
 
-### 5. `SecurityConfig.java` (DB 연동 버전)
+### 5. `SecurityConfigDb.java` (DB 연동 버전)
 ```java
 package com.springlab21.config;
 
@@ -163,7 +163,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfigDb {
 
     @Bean
     public PasswordEncoder passwordEncoder() {
