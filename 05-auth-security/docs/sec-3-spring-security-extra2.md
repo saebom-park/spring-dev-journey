@@ -252,7 +252,7 @@ public class LoginController {
 
 1. `User` 엔티티와 `UserRepository` 작성.  
 2. `CustomUserDetails`와 `CustomUserDetailsService` 구현.  
-3. `SecurityConfig`에서 `PasswordEncoder` 등록.  
+3. `SecurityConfigDb`에서 `PasswordEncoder` 등록.  
 4. `login.html` 페이지 작성.  
 5. 실행 후 DB에 사용자 계정 삽입 (`spring` / `1234` → BCrypt 암호화).  
 6. `/secure/hello` 접근 → 로그인 페이지 이동 → 로그인 성공 후 접근 확인.  

@@ -19,7 +19,7 @@
 
 ## 🧾 예시 코드 (`com.springlab21` 기준)
 
-### 1. `SecurityConfigCustom.java` (수정)
+### 1. `SecurityConfigCustom.java`
 ```java
 package com.springlab21.config;
 
@@ -129,7 +129,7 @@ public class LoginController {
 
 🎯 목표: 기본 로그인 폼을 **커스텀 로그인 페이지**로 교체하고, 사용자 계정을 직접 정의한다.  
 
-1. `SecurityConfig`에 `InMemoryUserDetailsManager`와 `PasswordEncoder` 등록.  
+1. `SecurityConfigCustom`에 `InMemoryUserDetailsManager`와 `PasswordEncoder` 등록.  
 2. 사용자 계정 등록 (`username: spring`, `password: 1234`).  
 3. `login.html` 템플릿 작성.  
 4. `LoginController`에서 `/login` 요청 처리.  
