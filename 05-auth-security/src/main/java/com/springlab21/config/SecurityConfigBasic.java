@@ -7,7 +7,7 @@ import org.springframework.security.config.annotation.web.configurers.LogoutConf
 import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
-public class SecurityConfig {
+public class SecurityConfigBasic {
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
