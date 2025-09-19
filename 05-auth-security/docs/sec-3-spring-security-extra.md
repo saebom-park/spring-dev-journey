@@ -1,4 +1,4 @@
-# [SEC-3단계] 추가 개념 정리 (커스텀 Form Login)
+# [SEC-3-EXTRA1단계] 커스텀 Form Login
 
 > 💬 기본 Form Login 대신, 실무에서는 보통 **커스텀 로그인 페이지 + UserDetailsService + PasswordEncoder**를 조합해 사용한다.  
 > 이번 정리에서는 Spring Security의 **커스텀 Form Login 방식**을 학습한다.  

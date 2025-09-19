@@ -1,4 +1,4 @@
-# [SEC-3단계] 질문노트: Spring Security (SecurityConfigCustom)
+# [SEC-3-EXTRA1단계] 질문노트: Spring Security (SecurityConfigCustom)
 
 > 💬 내가 직접 궁금해서 물어본 것들 + 온이가 설명해준 요약
 > 

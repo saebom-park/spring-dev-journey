@@ -1,4 +1,4 @@
-# [SEC-3단계] 추가 개념 정리 2 (DB 연동 UserDetailsService)
+# [SEC-3-EXTRA2단계] DB 연동 UserDetailsService
 
 > 💬 커스텀 로그인 페이지와 InMemory 계정은 연습용일 뿐이다.  
 > 실무에서는 반드시 **DB 사용자 정보**를 기반으로 인증을 처리해야 한다.  

@@ -1,4 +1,4 @@
-# [SEC-3단계] SecurityConfigCustom 완전 해부
+# [SEC-3-EXTRA1단계] SecurityConfigCustom 완전 해부
 
 > 커스텀 Form Login 구현을 위해 작성한 `SecurityConfigCustom.java` 코드를 한 줄씩 분석한다.  
 > 특히, 낯설 수 있는 `UserDetailsService`와 `UserDetails` 개념을 집중적으로 설명하여 이해를 돕는다.  
