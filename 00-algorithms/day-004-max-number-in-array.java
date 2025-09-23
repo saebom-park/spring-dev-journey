@@ -8,7 +8,7 @@
 
 
 // [내 풀이]
-class Solution {
+public class Solution {
     public String solution(String str) {
         String[] arr = str.split(" ");
 
@@ -32,6 +32,30 @@ class Solution {
 }
 
 
+// [내 풀이 개선]
+public class Solution {
+    public String solution(String str) {
+        String[] arr = str.split(" ");
+
+        int min = Integer.MAX_VALUE;
+        int max = Integer.MIN_VALUE;
+
+        for (String a : arr) {
+            int num = Integer.parseInt(a);
+            
+            if (num < min) min = num;
+            if (num > max) max = num;
+        }
+
+        return min + " " + max;
+    }
+
+    public static void main(String[] args) {
+        System.out.println(new Solution().solution("1 2 9 11 -23 -21 -7"));
+    }
+}
+
+
 // 실수 노트
 // 1. min, max를 String 타입으로 두고 Integer.parseInt()를 반복 호출 → 비효율적
 //    → int 타입으로 두고 한 번만 파싱해서 비교하는 게 더 적절함
@@ -41,7 +65,7 @@ class Solution {
 
 
 // [온이 풀이 - 기본 스타일]
-class OniSolution {
+public class OniSolution {
     public String solution(String s) {
         String[] arr = s.split(" ");
         int min = Integer.MAX_VALUE;
@@ -69,7 +93,7 @@ class OniSolution {
 // [온이 풀이 - Stream 스타일]
 import java.util.Arrays;
 
-class OniStreamSolution {
+public class OniStreamSolution {
     public String solution(String s) {
         int[] nums = Arrays.stream(s.split(" "))
                            .mapToInt(Integer::parseInt)
