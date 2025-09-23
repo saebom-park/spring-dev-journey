@@ -13,9 +13,7 @@ public class CustomUserDetails implements UserDetails {
     private final User user;
 
     // constructor
-    public CustomUserDetails(User user) {
-        this.user = user;
-    }
+    public CustomUserDetails(User user) { this.user = user; }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -39,5 +37,4 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public boolean isEnabled() { return true; }
-    
 }
