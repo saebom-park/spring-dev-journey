@@ -17,8 +17,16 @@ public class CustomUserDetails implements UserDetails {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(user.getRole()));
+        return user.getRoles().stream()
+                .map(SimpleGrantedAuthority::new)
+                .toList();
     }
+
+    // [SEC-3-EXTRA2] 단계 실습 메서드
+//    @Override
+//    public Collection<? extends GrantedAuthority> getAuthorities() {
+//        return List.of(new SimpleGrantedAuthority(user.getRole()));
+//    }
 
     @Override
     public String getPassword() { return user.getPassword(); }
