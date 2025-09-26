@@ -1,4 +1,4 @@
-# [SEC-4단계] 권한 설정 심화 (authorization-advanced)
+# [SEC-4-EXTRA1단계] 권한 설정 심화 (authorization-advanced)
 
 > 💬 SEC-4에서 로그인 사용자의 Role/Authority에 따라 접근 제어를 학습했다.  
 > 이번 심화에서는 실무에서 자주 쓰이는 **권한 계층(RoleHierarchy), SpEL 기반 접근 제어, 커스텀 접근 제어**를 다룬다.  
