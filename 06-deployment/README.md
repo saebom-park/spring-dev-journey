@@ -31,12 +31,12 @@
 
 | 파일명 예시 | 설명 |
 |-------------|------|
-| `01-deploy-ec2.md` | EC2 서버 생성, SSH 접속, 환경설정 |
-| `02-nginx-setup.md` | Nginx 설치, 리버스 프록시 설정 |
-| `03-https-ssl.md` | 인증서 발급, HTTPS 적용 |
-| `04-ci-cd.md` | GitHub Actions로 자동 배포 구성 |
-| `05-github-readme.md` | 리포지토리 정리 기준 및 문서 템플릿 |
-| `06-portfolio-guide.md` | 프로젝트 설명, 기술 스택 정리, 면접 포인트 |
+| `deploy-1-ec2.md` | EC2 서버 생성, SSH 접속, 환경설정 |
+| `deploy-2-nginx-setup.md` | Nginx 설치, 리버스 프록시 설정 |
+| `deploy-3-https-ssl.md` | 인증서 발급, HTTPS 적용 |
+| `deploy-4-ci-cd.md` | GitHub Actions로 자동 배포 구성 |
+| `deploy-5-github-readme.md` | 리포지토리 정리 기준 및 문서 템플릿 |
+| `deploy-6-portfolio-guide.md` | 프로젝트 설명, 기술 스택 정리, 면접 포인트 |
 | `...-mistakes.md` | 배포 중 자주 하는 실수, 포트 문제, 인증서 오류 등 |
 | `...-extra.md` | 배포 자동화 비교, GitHub Tips, 면접 예시 질문 |
 
