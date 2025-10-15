@@ -1,6 +1,6 @@
 # Day01-3 — while 반복문으로 1부터 N까지의 합 (Sum to N using while)
 
-> 📆 Date: 2025-10-16
+> 📆 Date: 2025-10-15
 > 
 > 
 > ⏱ 설계 / 구현 / 디버그: 1m / 2m / 1m
