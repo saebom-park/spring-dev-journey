@@ -1,16 +1,17 @@
-# 🧷 06. 배포 & 포트폴리오 완성 (Deployment & Portfolio)
+# 🧷 06. 배포 (Deployment)
 
-> 이 단계에서는 로컬에서 완성한 프로젝트를 외부 서버에 배포합니다.  
-> 또한 GitHub 리포지토리와 포트폴리오 정리를 통해 면접 대비까지 함께 준비합니다.
+> 이 단계에서는 로컬에서 완성한 Spring Boot 프로젝트를  
+> **AWS EC2에 배포하고, 자동 실행 → Nginx → HTTPS → CI/CD** 순으로  
+> 실무 수준의 배포 환경을 구축합니다.
 
 ---
 
 ## ✅ 학습 목표
 
-- 로컬 프로젝트를 jar로 빌드하고 AWS EC2에 배포
-- Nginx를 활용한 프록시 설정 및 HTTPS 인증 적용
-- GitHub 리포지토리 구조 정리 및 문서화
-- 포트폴리오 설명 및 면접 대응 흐름까지 구성
+- 로컬 프로젝트를 JAR로 빌드하고 EC2 서버에 직접 배포  
+- systemd를 통한 자동 실행 환경 구성  
+- Nginx 리버스 프록시 설정 및 HTTPS(SSL) 적용  
+- GitHub Actions 기반 CI/CD 자동 배포 파이프라인 구축  
 
 ---
 
@@ -18,48 +19,45 @@
 
 | 주제 | 설명 |
 |------|------|
-| 프로젝트 빌드 | Gradle/Maven으로 `jar` 생성 |
-| 서버 환경 구축 | AWS EC2, 리눅스 기본 명령어 |
-| 배포 자동화 | GitHub Actions를 통한 CI/CD |
-| 웹 서버 연동 | Nginx, 도메인 연결, HTTPS 적용 |
-| GitHub 정리 | README.md, 브랜치 전략, 커밋 메시지 관리 |
-| 포트폴리오 | 프로젝트 소개 문서 작성 및 면접 대응 정리 |
+| EC2 수동 배포 | JAR 빌드 → 서버 전송 → systemd 서비스 등록 |
+| 리버스 프록시 | Nginx로 80 → 8080 트래픽 전달 |
+| HTTPS 인증 | Certbot으로 SSL 인증서 발급 및 443 리다이렉트 |
+| CI/CD 자동화 | GitHub Actions로 자동 빌드·배포 구성 |
 
 ---
 
 ## 📂 문서 구성
 
-| 파일명 예시 | 설명 |
-|-------------|------|
-| `deploy-1-ec2.md` | EC2 서버 생성, SSH 접속, 환경설정 |
-| `deploy-2-nginx-setup.md` | Nginx 설치, 리버스 프록시 설정 |
-| `deploy-3-https-ssl.md` | 인증서 발급, HTTPS 적용 |
-| `deploy-4-ci-cd.md` | GitHub Actions로 자동 배포 구성 |
-| `deploy-5-github-readme.md` | 리포지토리 정리 기준 및 문서 템플릿 |
-| `deploy-6-portfolio-guide.md` | 프로젝트 설명, 기술 스택 정리, 면접 포인트 |
-| `...-mistakes.md` | 배포 중 자주 하는 실수, 포트 문제, 인증서 오류 등 |
-| `...-extra.md` | 배포 자동화 비교, GitHub Tips, 면접 예시 질문 |
+| 파일명 | 설명 |
+|---------|------|
+| `deploy-1-ec2.md` | EC2 서버 생성, JAR 업로드, systemd 서비스 등록 |
+| `deploy-2-nginx-setup.md` | Nginx 설치, 리버스 프록시 설정 (80 포트 연결) |
+| `deploy-3-https-ssl.md` | Certbot 기반 SSL 인증, HTTPS 적용 |
+| `deploy-4-ci-cd.md` | GitHub Actions를 활용한 자동 배포 파이프라인 구성 |
+| `...-questions.md` | 각 단계별 질문노트 |
+| `...-mistakes.md` | 각 단계별 실수노트 |
+| `...-lifecycle.md` | 운영/재시작/중지 매뉴얼 정리 |
 
 ---
 
 ## 🧭 학습 흐름
 
-1. 로컬 프로젝트를 빌드하고 EC2 서버에 수동 배포
-2. Nginx 프록시 설정 및 HTTPS 적용
-3. GitHub Actions로 자동화 (CI/CD)
-4. 포트폴리오와 README를 구조화하여 면접 대비
+1. **DEPLOY-1:** EC2 서버에 직접 배포 (수동 실행 → systemd 자동화)  
+2. **DEPLOY-2:** Nginx 리버스 프록시 설정 (80 → 8080 트래픽 전달)  
+3. **DEPLOY-3:** HTTPS 적용 (SSL 인증서 + 80→443 리다이렉트)  
+4. **DEPLOY-4:** GitHub Actions로 자동 배포 (CI/CD 파이프라인 완성)
 
 ---
 
 ## 📌 작성 기준
 
-- AWS EC2 기준 (Amazon Linux or Ubuntu)
-- 무중단 배포는 Blue-Green 전략 없이 단순 재시작
-- README는 "한눈에 구조가 보이도록" 구성
+- AWS EC2 (Ubuntu 22.04) 기준  
+- 서비스 자동 실행은 **systemd**, 웹 서버는 **Nginx** 사용  
+- HTTPS 인증은 **Let’s Encrypt (Certbot)** 기반  
+- CI/CD는 **GitHub Actions + EC2 SSH 배포** 방식  
+- README는 “한눈에 단계별 구조가 보이도록” 구성  
 
 ---
 
-> “코드는 누구나 짤 수 있지만, 배포는 선택받은 자만이 해낸다.”  
->  
-> 이제 진짜 백엔드 개발자의 마지막 관문 —  
-> **“내 코드를 외부에서 직접 서비스해보기!”** 🚀
+> “배포는 단순한 전달이 아니라,  
+> **서비스의 생명 주기를 설계하는 기술이다.**” 🚀  
