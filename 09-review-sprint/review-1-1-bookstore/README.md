@@ -63,10 +63,10 @@
 ## 📂 폴더 구조 예시
 
 ```
-review-1-java-core/
+review-1-1-bookstore/
 ├── README.md
 └── src/
-    └── com.review1/
+    └── com.review11/
         ├── Book.java
         ├── Member.java
         ├── Order.java

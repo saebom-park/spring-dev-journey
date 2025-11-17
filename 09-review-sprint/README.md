@@ -1,4 +1,4 @@
-# 🌿 spring-dev-journey: 총복습 스프린트 (10-review-sprint)
+# 🌿 spring-dev-journey: 총복습 스프린트 (09-review-sprint)
 
 > 이 디렉토리는 지금까지 학습한 Java, JDBC, Spring, MyBatis, JPA 개념을  
 > **“기억 → 복습 → 손코딩”** 흐름으로 되짚어보는 총정리 실습 시리즈입니다.
