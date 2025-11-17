@@ -14,3 +14,14 @@ build/
 # OS 무시 파일
 .DS_Store
 Thumbs.db
+
+# Backup 무시
+*backup*/
+*backup*
+*_backup*/
+*_backup*
+*old*/
+*old*
+*.bak
+*.backup
+*.old
