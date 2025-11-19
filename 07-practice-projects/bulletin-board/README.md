@@ -134,6 +134,7 @@ bulletin-board/
                 └── com/saebom/bulletinboard/
                      └── BulletinBoardApplicationTests.java
 ---
+```
 
 ## 🧪 실행 방법
 1. MySQL DB 준비  
