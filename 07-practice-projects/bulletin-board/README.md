@@ -128,7 +128,7 @@ bulletin-board/
       │         │         ├── ArticleMapper.xml
       │         │         └── CommentMapper.xml
       │         └── ddl/
-      │              └── bulletin-board-schema.sql   ← **아까 만든 DDL 파일**
+      │              └── bulletin-board-schema.sql
       └── test/
            └── java/
                 └── com/saebom/bulletinboard/
