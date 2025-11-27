@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('게시글 상세', ~{::content})}">
+<body>
+<div th:fragment="content">
+
+    <!-- 게시글 정보 영역 -->
+    <h1 th:text="${article.title}">게시글 상세</h1>
+
+    <div class="detail-meta">
+        <span>
+            <span class="label">작성자</span>
+            <span th:text="${article.memberId}">작성자ID</span>
+        </span>
+        <span>
+            <span class="label">조회수</span>
+            <span th:text="${article.viewCount}">0</span>
+        </span>
+        <span>
+            <span class="label">작성일</span>
+            <span th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">
+                2025-01-01 12:00
+            </span>
+        </span>
+        <span>
+            <span class="label">수정일</span>
+            <span th:text="${#temporals.format(article.updatedAt, 'yyyy-MM-dd HH:mm')}">
+                2025-01-01 12:00
+            </span>
+        </span>
+    </div>
+
+    <hr>
+
+    <div>
+        <pre th:text="${article.content}">내용</pre>
+    </div>
+
+    <hr>
+
+    <div class="form-actions">
+        <a th:href="@{/articles}">목록</a>
+        <a th:href="@{/articles/{id}/edit(id=${article.id})}">수정</a>
+
+        <form th:action="@{/articles/{id}/delete(id=${article.id})}"
+              method="post"
+              style="display:inline">
+            <button type="submit">삭제</button>
+        </form>
+    </div>
+
+    <hr>
+
+    <!-- 🔽🔽 여기부터 댓글 영역 🔽🔽 -->
+
+    <!-- 댓글 목록 -->
+    <section style="margin-top: 24px;">
+        <h2 style="font-size: 18px; margin-bottom: 12px;">댓글</h2>
+
+        <div th:if="${#lists.isEmpty(comments)}">
+            <p style="font-size: 13px; color: #9ca3af;">아직 작성된 댓글이 없습니다.</p>
+        </div>
+
+        <ul th:if="${!#lists.isEmpty(comments)}"
+            style="list-style: none; padding: 0; margin: 0 0 16px 0;">
+            <li th:each="comment : ${comments}"
+                style="border-bottom: 1px solid #e5e7eb; padding: 10px 0;">
+
+                <!-- 🟢 1) 수정 모드일 때: textarea + 저장/취소 -->
+                <div th:if="${editCommentId != null and editCommentId == comment.id}">
+                    <form th:action="@{|/comments/${comment.id}/edit|}"
+                          method="post"
+                          th:object="${commentUpdateForm}">
+
+                        <!-- 어떤 게시글로 돌아갈지 -->
+                        <input type="hidden" name="articleId" th:value="${article.id}"/>
+
+                        <textarea th:field="*{content}"
+                                  rows="3"
+                                  style="width:100%;"></textarea>
+
+                        <div style="margin-top: 6px;">
+                            <button type="submit" style="font-size: 12px;">저장</button>
+                            <a th:href="@{|/articles/${article.id}|}"
+                               style="font-size: 12px; margin-left: 8px;">
+                                취소
+                            </a>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- 🔵 2) 일반 모드일 때: 지금이랑 똑같이 내용 + 수정/삭제 버튼 -->
+                <div th:unless="${editCommentId != null and editCommentId == comment.id}">
+                    <div style="font-size: 14px; white-space: pre-wrap;"
+                         th:text="${comment.content}">댓글 내용</div>
+
+                    <div style="margin-top: 4px; font-size: 12px; color: #9ca3af;">
+                        <span>작성자: </span>
+                        <span th:text="${comment.memberId}">작성자ID</span>
+                        <span> · </span>
+                        <span th:text="${#temporals.format(comment.createdAt, 'yyyy-MM-dd HH:mm')}">
+                    2025-01-01 12:00
+                </span>
+
+                        <!-- 수정 버튼 (지금은 전부 노출) -->
+                        <a th:href="@{|/articles/${article.id}?editCommentId=${comment.id}|}"
+                           style="font-size: 11px; margin-left: 8px;">
+                            수정
+                        </a>
+
+                        <!-- 삭제 버튼 (기존 그대로 유지) -->
+                        <form th:action="@{/comments/{id}/delete(id=${comment.id})}"
+                              method="post"
+                              style="display:inline; margin-left: 8px;">
+                            <input type="hidden" name="articleId" th:value="${article.id}">
+                            <button type="submit" style="font-size: 11px;">삭제</button>
+                        </form>
+                    </div>
+                </div>
+
+            </li>
+        </ul>
+    </section>
+
+    <!-- 댓글 작성 폼 -->
+    <section style="margin-top: 12px;">
+        <h3 style="font-size: 16px; margin-bottom: 8px;">댓글 작성</h3>
+
+        <form th:action="@{/articles/{articleId}/comments(articleId=${article.id})}"
+              th:object="${commentCreateForm}"
+              method="post">
+
+            <div>
+                <label for="comment-content">내용</label><br>
+                <textarea id="comment-content"
+                          th:field="*{content}"
+                          rows="4"></textarea>
+                <div th:if="${#fields.hasErrors('content')}"
+                     th:errors="*{content}"
+                     class="field-error">
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <button type="submit">댓글 등록</button>
+            </div>
+        </form>
+    </section>
+
+</div>
+</body>
+</html>

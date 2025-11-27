@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout(pageTitle, content)">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${pageTitle}">bulletin-board</title>
+    <link rel="stylesheet" th:href="@{/css/bulletin.css}">
+</head>
+<body>
+
+<div>
+    <h2>bulletin-board</h2>
+    <hr>
+</div>
+
+<main>
+    <!-- 각 페이지에서 넘겨주는 content fragment가 여기로 들어옴 -->
+    <div th:insert="${content}"></div>
+</main>
+
+</body>
+</html>

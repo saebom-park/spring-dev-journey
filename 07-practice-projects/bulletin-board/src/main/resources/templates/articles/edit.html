@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('게시글 수정', ~{::content})}">
+<body>
+<div th:fragment="content">
+
+    <h1>게시글 수정</h1>
+
+    <form th:action="@{/articles/{id}/edit(id=${articleId})}"
+          th:object="${articleUpdateForm}"
+          method="post">
+
+        <div>
+            <label for="title">제목</label><br>
+            <input type="text" id="title" th:field="*{title}">
+            <div th:if="${#fields.hasErrors('title')}"
+                 th:errors="*{title}"
+                 class="field-error">
+            </div>
+        </div>
+
+        <div>
+            <label for="content">내용</label><br>
+            <textarea id="content" rows="10" cols="50"
+                      th:field="*{content}"></textarea>
+            <div th:if="${#fields.hasErrors('content')}"
+                 th:errors="*{content}"
+                 class="field-error">
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">수정 완료</button>
+            <a th:href="@{/articles/{id}(id=${articleId})}">취소</a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('게시글 목록', ~{::content})}">
+<body>
+<div th:fragment="content">
+    <h1>게시글 목록</h1>
+
+    <div class="page-actions">
+        <a th:href="@{/articles/new}">새 글 작성</a>
+    </div>
+
+    <table>
+        <thead>
+        <tr>
+            <th>번호</th>
+            <th>제목</th>
+            <th>작성자</th>
+            <th>조회수</th>
+            <th>작성일</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:if="${#lists.isEmpty(articles)}">
+            <td colspan="5">등록된 게시글이 없습니다.</td>
+        </tr>
+        <tr th:each="article : ${articles}">
+            <td th:text="${article.id}">1</td>
+            <td>
+                <a th:href="@{/articles/{id}(id=${article.id})}"
+                   th:text="${article.title}">제목</a>
+            </td>
+            <td th:text="${article.memberId}">작성자ID</td>
+            <td th:text="${article.viewCount}">0</td>
+            <td th:text="${#temporals.format(article.createdAt, 'yyyy-MM-dd HH:mm')}">
+                2025-01-01 12:00
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+</body>
+</html>

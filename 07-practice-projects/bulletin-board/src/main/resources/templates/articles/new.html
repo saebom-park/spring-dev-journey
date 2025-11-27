@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{layout :: layout('새 글 작성', ~{::content})}">
+<body>
+<div th:fragment="content">
+
+    <h1>새 게시글 작성</h1>
+
+    <form th:action="@{/articles}" th:object="${articleCreateForm}" method="post">
+
+        <div>
+            <label for="title">제목</label><br>
+            <input type="text" id="title" th:field="*{title}">
+            <div th:if="${#fields.hasErrors('title')}"
+                 th:errors="*{title}"
+                 class="field-error">
+            </div>
+        </div>
+
+        <div>
+            <label for="content">내용</label><br>
+            <textarea id="content" rows="10" cols="50"
+                      th:field="*{content}"></textarea>
+            <div th:if="${#fields.hasErrors('content')}"
+                 th:errors="*{content}"
+                 class="field-error">
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit">등록</button>
+            <a th:href="@{/articles}">취소</a>
+        </div>
+
+    </form>
+
+</div>
+
+</body>
+</html>

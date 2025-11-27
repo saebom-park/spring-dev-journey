@@ -1,0 +1,275 @@
+/* ---------- 기본 레이아웃 ---------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, sans-serif;
+    background: #f3f4f8;
+    color: #222;
+}
+
+/* 상단 공통 헤더 (layout.html 안의 h2 영역) */
+body > div:first-of-type {
+    max-width: 980px;
+    margin: 24px auto 0;
+    padding: 0 20px;
+}
+
+body > div:first-of-type h2 {
+    margin: 0 0 8px;
+    font-size: 22px;
+    font-weight: 700;
+    color: #2b2f3c;
+}
+
+body > div:first-of-type hr {
+    border: none;
+    border-top: 1px solid #e0e4f0;
+    margin: 8px 0 0;
+}
+
+/* 메인 카드 레이아웃 */
+main {
+    max-width: 980px;
+    margin: 20px auto 40px;
+    padding: 0 20px;
+}
+
+main > div {
+    background: #ffffff;
+    border-radius: 14px;
+    box-shadow: 0 10px 25px rgba(15, 23, 42, 0.06);
+    padding: 24px 24px 28px;
+}
+
+/* ---------- 타이틀 & 상단 영역 ---------- */
+
+h1 {
+    margin: 0 0 18px;
+    font-size: 24px;
+    font-weight: 700;
+    color: #1f2933;
+}
+
+.page-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 16px;
+}
+
+/* ---------- 링크 & 버튼 ---------- */
+
+a {
+    color: #2563eb;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* 버튼처럼 보이는 링크 (목록의 "새 글 작성", 폼의 "취소" 등) */
+.page-actions a,
+.form-actions a {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 14px;
+    border-radius: 8px;
+    border: 1px solid #d0d7e6;
+    background: #ffffff;
+    color: #111827;
+    font-size: 13px;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.15s ease;
+}
+
+.page-actions a:hover,
+.form-actions a:hover {
+    background: #f3f4ff;
+    border-color: #b6c3f0;
+}
+
+/* 실제 버튼들 */
+button,
+input[type="submit"] {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 16px;
+    border-radius: 8px;
+    border: 1px solid #2563eb;
+    background: #2563eb;
+    color: #ffffff;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+}
+
+button:hover,
+input[type="submit"]:hover {
+    background: #1d4ed8;
+    border-color: #1d4ed8;
+}
+
+button:disabled,
+input[type="submit"]:disabled {
+    background: #cbd5f5;
+    border-color: #cbd5f5;
+    cursor: default;
+}
+
+/* 폼 하단 버튼 묶음 */
+.form-actions {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+}
+
+/* ---------- 테이블 스타일 (목록) ---------- */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 4px;
+    font-size: 13px;
+}
+
+thead {
+    background: linear-gradient(90deg, #f4f6fb, #eef2ff);
+}
+
+th,
+td {
+    padding: 10px 12px;
+    border-bottom: 1px solid #e3e7f2;
+    text-align: left;
+}
+
+th {
+    font-weight: 600;
+    color: #4b5563;
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+tbody tr:hover {
+    background: #f9fafc;
+}
+
+tbody tr:last-child td {
+    border-bottom: none;
+}
+
+/* "게시글이 없습니다" 한 줄 */
+tbody tr td[colspan] {
+    text-align: center;
+    color: #9ca3af;
+}
+
+/* 제목 링크 */
+td a {
+    font-weight: 500;
+    color: #111827;
+}
+
+td a:hover {
+    color: #2563eb;
+    text-decoration: underline;
+}
+
+/* ---------- 상세 페이지 ---------- */
+
+pre {
+    margin: 0;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    font-family: inherit;
+    font-size: 14px;
+    line-height: 1.8;
+}
+
+.detail-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px 20px;
+    font-size: 12px;
+    color: #6b7280;
+    margin-bottom: 14px;
+}
+
+.detail-meta span.label {
+    font-weight: 600;
+    color: #4b5563;
+}
+
+/* ---------- 폼 공통 ---------- */
+
+form {
+    margin-top: 8px;
+}
+
+label {
+    font-weight: 600;
+    display: inline-block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    color: #374151;
+}
+
+input[type="text"],
+textarea {
+    width: 100%;
+    padding: 9px 11px;
+    border-radius: 8px;
+    border: 1px solid #d1d5db;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+    background: #f9fafb;
+}
+
+input[type="text"]:focus,
+textarea:focus {
+    border-color: #2563eb;
+    box-shadow: 0 0 0 1px rgba(37, 99, 235, 0.15);
+    background: #ffffff;
+}
+
+textarea {
+    resize: vertical;
+    min-height: 200px;
+}
+
+/* ---------- 에러 메시지 ---------- */
+
+.field-error {
+    color: #dc2626;
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* 에러가 있는 필드 강조 */
+input.field-error,
+textarea.field-error {
+    border-color: #dc2626;
+    background: #fef2f2;
+}
+
+/* ---------- 기타 ---------- */
+
+hr {
+    border: none;
+    border-top: 1px solid #e5e7eb;
+    margin: 16px 0;
+}
