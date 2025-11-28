@@ -1,22 +1,69 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:fragment="layout(pageTitle, content)">
+      th:fragment="layout(title, content)">
 <head>
     <meta charset="UTF-8">
-    <title th:text="${pageTitle}">bulletin-board</title>
+    <title th:text="${title} ?: 'Saebom Board'">Saebom Board</title>
     <link rel="stylesheet" th:href="@{/css/bulletin.css}">
 </head>
-<body>
+<body class="bb-body">
 
-<div>
-    <h2>bulletin-board</h2>
-    <hr>
+<div class="bb-layout">
+
+    <!-- Sidebar -->
+    <aside class="bb-sidebar">
+        <div class="bb-sidebar__brand">
+            <div class="bb-sidebar__logo">S</div>
+            <div>
+                <div class="bb-sidebar__title">Saebom Board</div>
+                <div class="bb-sidebar__subtitle">Bulletin Dashboard</div>
+            </div>
+        </div>
+
+        <nav class="bb-sidebar__nav">
+            <div class="bb-sidebar__nav-title">Overview</div>
+            <a href="#" class="bb-sidebar__link bb-sidebar__link--active">
+                <span class="bb-sidebar__link-icon">◆</span>
+                <span>Articles</span>
+            </a>
+            <a href="#" class="bb-sidebar__link">
+                <span class="bb-sidebar__link-icon">◎</span>
+                <span>Members</span>
+            </a>
+        </nav>
+
+        <div class="bb-sidebar__footer">
+            <div>spring-dev-journey</div>
+            <div>bulletin-board · MyBatis</div>
+        </div>
+    </aside>
+
+    <!-- Main -->
+    <div class="bb-main">
+
+        <!-- Header -->
+        <header class="bb-header">
+            <div class="bb-header__title-group">
+                <h1 class="bb-header__title" th:text="${title}">Page title</h1>
+                <div class="bb-header__subtitle">
+                    Simple bulletin board powered by Spring Boot & MyBatis.
+                </div>
+            </div>
+            <div class="bb-header__right">
+                <div class="bb-header__pill">
+                    v1.0 · Practice Project
+                </div>
+            </div>
+        </header>
+
+        <!-- Content -->
+        <main class="bb-content">
+            <section th:insert="${content}"></section>
+        </main>
+
+    </div>
+
 </div>
-
-<main>
-    <!-- 각 페이지에서 넘겨주는 content fragment가 여기로 들어옴 -->
-    <div th:insert="${content}"></div>
-</main>
 
 </body>
 </html>
