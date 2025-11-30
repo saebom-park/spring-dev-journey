@@ -135,9 +135,3 @@ bulletin-board/
                      └── BulletinBoardApplicationTests.java
 ---
 ```
-
-## 🧪 실행 방법
-1. MySQL DB 준비  
-2. 스키마 생성  
-3. 애플리케이션 실행  
-4. 브라우저 접속  
