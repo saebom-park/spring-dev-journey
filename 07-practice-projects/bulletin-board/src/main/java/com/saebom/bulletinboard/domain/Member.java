@@ -18,17 +18,12 @@ public class Member {
 
     }
 
-    private Member(String username, String password, String name, String email, String role) {
+    public Member(String username, String password, String name, String email, String role) {
         this.username = username;
         this.password = password;
         this.name = name;
         this.email = email;
         this.role = role;
-    }
-
-    // method
-    public static Member createUser(String username, String encodedPassword, String name, String email) {
-        return new Member(username, encodedPassword, name, email, "ROLE_USER");
     }
 
     // getter
