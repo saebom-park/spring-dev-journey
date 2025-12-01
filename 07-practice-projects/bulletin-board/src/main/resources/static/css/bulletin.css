@@ -599,13 +599,15 @@ tbody td a:hover {
     margin-top: 4px;
     display: flex;
     flex-wrap: wrap;
-    gap: 4px 10px;
+    align-items: center;
+    gap: 4px 8px;
     font-size: 12px;
     color: var(--bs-text-soft);
 }
 
 .bb-comment-actions {
     display: inline-flex;
+    align-items: center;
     gap: 4px;
     margin-left: 6px;
 }
@@ -758,4 +760,28 @@ tbody td a:hover {
     border-color: var(--bs-primary-dark);
     box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
     transform: translateY(-1px);
+}
+
+/* ===========================
+   Notice / Info Message (Login Prompt)
+   =========================== */
+
+.bb-info-box {
+    padding: 16px 18px;
+    border-radius: var(--bs-radius-md);
+    background: #f0fdf4; /* 아주 연한 초록 */
+    border: 1px solid #bbf7d0; /* 연녹색 라인 */
+    color: #166534; /* 깊은 녹색 텍스트 */
+    font-size: 13px;
+    line-height: 1.6;
+}
+
+.bb-info-box a {
+    color: var(--bs-primary);
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+.bb-info-box a:hover {
+    color: var(--bs-primary-dark);
 }

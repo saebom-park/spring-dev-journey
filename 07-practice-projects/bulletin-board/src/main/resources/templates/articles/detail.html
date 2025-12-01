@@ -37,11 +37,13 @@
                    class="bb-btn bb-btn--ghost bb-btn--sm">
                     목록
                 </a>
-                <a th:href="@{/articles/{id}/edit(id=${article.id})}"
+                <a th:if="${article.memberId == loginMemberId}"
+                   th:href="@{/articles/{id}/edit(id=${article.id})}"
                    class="bb-btn bb-btn--subtle bb-btn--sm">
                     수정
                 </a>
-                <form th:action="@{/articles/{id}/delete(id=${article.id})}"
+                <form th:if="${article.memberId == loginMemberId}"
+                      th:action="@{/articles/{id}/delete(id=${article.id})}"
                       method="post">
                     <button type="submit"
                             class="bb-btn bb-btn--danger bb-btn--sm">
@@ -128,7 +130,8 @@
                                     2025-01-01 12:00
                                 </span>
 
-                                <span class="bb-comment-actions">
+                                <span th:if="${loginMemberId != null and comment.memberId == loginMemberId}"
+                                      class="bb-comment-actions">
                                     <a th:href="@{|/articles/${article.id}?editCommentId=${comment.id}|}"
                                        class="bb-btn bb-btn--subtle bb-btn--sm">
                                         수정
@@ -153,7 +156,7 @@
             <hr class="bb-divider">
 
             <!-- 댓글 작성 -->
-            <div>
+            <div th:if="${loginMemberId != null}">
                 <h4 class="bb-comments__title">댓글 작성</h4>
 
                 <form th:action="@{/articles/{articleId}/comments(articleId=${article.id})}"
@@ -182,6 +185,11 @@
                     </div>
 
                 </form>
+            </div>
+
+            <!-- 비로그인 안내 -->
+            <div th:if="${loginMemberId == null}" class="bb-info-box">
+                댓글을 작성하려면 <a th:href="@{/login}">로그인</a>이 필요합니다.
             </div>
 
         </div>
