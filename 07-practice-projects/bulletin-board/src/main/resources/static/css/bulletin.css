@@ -658,3 +658,104 @@ tbody td a:hover {
         gap: 6px;
     }
 }
+
+/* ===========================
+   Login Page
+   =========================== */
+
+.bb-login-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bs-bg);
+    padding: 20px;
+}
+
+.bb-login-card {
+    width: 100%;
+    max-width: 380px;
+    background: var(--bs-card-bg);
+    border-radius: var(--bs-radius-lg);
+    box-shadow: var(--bs-shadow-soft);
+    padding: 32px 30px 36px;
+    text-align: center;
+}
+
+.bb-login-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--bs-text-main);
+    letter-spacing: -0.02em;
+}
+
+.bb-login-sub {
+    margin: 8px 0 24px;
+    font-size: 13px;
+    color: var(--bs-text-soft);
+}
+
+.bb-login-form-group {
+    text-align: left;
+    margin-bottom: 18px;
+}
+
+.bb-login-label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #374151;
+}
+
+.bb-login-input {
+    width: 100%;
+    border-radius: var(--bs-radius-md);
+    border: 1px solid #d1d5db;
+    padding: 9px 11px;
+    font-size: 14px;
+    background: #f9fafb;
+    font-family: inherit;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+}
+
+.bb-login-input:focus {
+    border-color: var(--bs-primary);
+    background: #ffffff;
+    box-shadow: 0 0 0 1px rgba(34, 197, 94, 0.18);
+    outline: none;
+}
+
+/* 에러 메시지 (게시판 폼과 톤 맞춤) */
+.bb-login-error {
+    color: var(--bs-danger);
+    font-size: 12px;
+    margin-top: 4px;
+}
+
+/* 로그인 버튼 */
+.bb-login-btn {
+    width: 100%;
+    margin-top: 12px;
+    height: 40px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 600;
+    background: var(--bs-primary);
+    border: 1px solid var(--bs-primary);
+    color: #ffffff;
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease,
+    box-shadow 0.15s ease, transform 0.12s ease;
+}
+
+.bb-login-btn:hover {
+    background: var(--bs-primary-dark);
+    border-color: var(--bs-primary-dark);
+    box-shadow: 0 6px 18px rgba(16, 185, 129, 0.35);
+    transform: translateY(-1px);
+}
