@@ -12,6 +12,6 @@ public interface ArticleService {
     List<Article> getArticles();
     List<Article> getArticlesByMember(Long memberId);
 
-    void updateArticle(Long id, String title, String content);
-    void deleteArticle(Long id);
+    void updateArticle(Long id, Long memberId, String title, String content);
+    void deleteArticle(Long id, Long memberId);
 }

@@ -53,9 +53,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void updateComment(Long id, String content) {
+    public void updateComment(Long id, Long memberId, String content) {
 
         Comment comment = getComment(id);
+
+        if (!comment.getMemberId().equals(memberId)) {
+            throw new IllegalStateException("본인 댓글만 수정할 수 있습니다.");
+        }
 
         comment.setContent(content);
 
@@ -66,7 +70,13 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    public void deleteComment(Long id) {
+    public void deleteComment(Long id, Long memberId) {
+
+        Comment comment = getComment(id);
+
+        if (!comment.getMemberId().equals(memberId)) {
+            throw new IllegalStateException("본인 댓글만 삭제할 수 있습니다.");
+        }
 
         int deleted = commentMapper.deleteById(id);
         if (deleted != 1) {

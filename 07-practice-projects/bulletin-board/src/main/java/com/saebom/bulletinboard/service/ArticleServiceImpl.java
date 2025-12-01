@@ -53,9 +53,12 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void updateArticle(Long id, String title, String content) {
+    public void updateArticle(Long id, Long memberId, String title, String content) {
 
         Article article = getArticle(id);
+        if (!article.getMemberId().equals(memberId)) {
+            throw new IllegalStateException("본인 게시글만 수정할 수 있습니다.");
+        }
 
         article.setTitle(title);
         article.setContent(content);
@@ -67,7 +70,13 @@ public class ArticleServiceImpl implements ArticleService {
     }
 
     @Override
-    public void deleteArticle(Long id) {
+    public void deleteArticle(Long id, Long memberId) {
+
+        Article article = getArticle(id);
+
+        if (!article.getMemberId().equals(memberId)) {
+            throw new IllegalStateException("본인 게시글만 삭제할 수 있습니다.");
+        }
 
         int deleted = articleMapper.deleteById(id);
         if (deleted != 1) {

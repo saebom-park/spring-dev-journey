@@ -3,6 +3,8 @@ package com.saebom.bulletinboard.controller;
 import com.saebom.bulletinboard.dto.comment.CommentCreateForm;
 import com.saebom.bulletinboard.dto.comment.CommentUpdateForm;
 import com.saebom.bulletinboard.service.CommentService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,18 +23,21 @@ public class CommentController {
     public String create(
             @PathVariable Long articleId,
             @Valid @ModelAttribute("commentCreateForm") CommentCreateForm form,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            HttpServletRequest request
     ) {
         if (bindingResult.hasErrors()) {
             return "redirect:/articles/" + articleId;
         }
 
-        // TODO: Security 적용 후 현재 로그인 사용자 ID 사용
-        Long tempMemberId = 2L;
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
 
         Long commentId = commentService.createComment(
                 articleId,
-                tempMemberId,
+                loginMemberId,
                 form.getContent()
         );
 
@@ -44,13 +49,19 @@ public class CommentController {
             @PathVariable Long commentId,
             @RequestParam(value = "articleId") Long articleId,
             @Valid @ModelAttribute("commentUpdateForm") CommentUpdateForm form,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            HttpServletRequest request
     ) {
         if (bindingResult.hasErrors()) {
             return "redirect:/articles/" + articleId + "?editCommentId=" + commentId;
         }
 
-        commentService.updateComment(commentId, form.getContent());
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
+
+        commentService.updateComment(commentId, loginMemberId, form.getContent());
 
         return "redirect:/articles/" + articleId;
     }
@@ -58,10 +69,26 @@ public class CommentController {
     @PostMapping("/comments/{commentId}/delete")
     public String delete(
             @PathVariable Long commentId,
-            @RequestParam(value = "articleId") Long articleId
+            @RequestParam(value = "articleId") Long articleId,
+            HttpServletRequest request
     ) {
-        commentService.deleteComment(commentId);
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
+
+        commentService.deleteComment(commentId, loginMemberId);
         return "redirect:/articles/" + articleId;
+    }
+
+    // 헬퍼메서드
+    private Long getLoginMemberId(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return null;
+        }
+
+        return (Long) session.getAttribute("LOGIN_MEMBER");
     }
 
 }

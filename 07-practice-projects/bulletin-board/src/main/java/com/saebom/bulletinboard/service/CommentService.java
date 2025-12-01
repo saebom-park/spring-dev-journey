@@ -12,6 +12,6 @@ public interface CommentService {
     List<Comment> getCommentsByArticle(Long articleId);
     List<Comment> getCommentsByMember(Long memberId);
 
-    void updateComment(Long id, String content);
-    void deleteComment(Long id);
+    void updateComment(Long id, Long memberId, String content);
+    void deleteComment(Long id, Long memberId);
 }

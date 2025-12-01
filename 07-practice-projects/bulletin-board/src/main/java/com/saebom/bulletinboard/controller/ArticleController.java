@@ -8,6 +8,8 @@ import com.saebom.bulletinboard.dto.comment.CommentCreateForm;
 import com.saebom.bulletinboard.dto.comment.CommentUpdateForm;
 import com.saebom.bulletinboard.service.ArticleService;
 import com.saebom.bulletinboard.service.CommentService;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -39,10 +41,14 @@ public class ArticleController {
     public String detail(
             @PathVariable Long id,
             @RequestParam(value = "editCommentId", required = false) Long editCommentId,
+            HttpServletRequest request,
             Model model
     ) {
         Article article = articleService.getArticle(id);
         List<Comment> comments = commentService.getCommentsByArticle(id);
+
+        Long loginMemberId = getLoginMemberId(request);
+        model.addAttribute("loginMemberId", loginMemberId);
 
         model.addAttribute("article", article);
         model.addAttribute("comments", comments);
@@ -50,6 +56,11 @@ public class ArticleController {
 
         if (editCommentId != null) {
             Comment comment = commentService.getComment(editCommentId);
+
+            if (loginMemberId == null || !comment.getMemberId().equals(loginMemberId)) {
+                return "redirect:/articles" + id;
+            }
+
             CommentUpdateForm commentUpdateForm = new CommentUpdateForm();
             commentUpdateForm.setContent(comment.getContent());
             model.addAttribute("commentUpdateForm", commentUpdateForm);
@@ -60,7 +71,12 @@ public class ArticleController {
     }
 
     @GetMapping("/new")
-    public String showCreateForm(Model model) {
+    public String showCreateForm(HttpServletRequest request, Model model) {
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
+
         model.addAttribute("articleCreateForm", new ArticleCreateForm());
         return "articles/new";
     }
@@ -68,17 +84,20 @@ public class ArticleController {
     @PostMapping
     public String create(
             @Valid @ModelAttribute("articleCreateForm") ArticleCreateForm form,
-            BindingResult bindingResult
+            BindingResult bindingResult,
+            HttpServletRequest request
     ) {
         if (bindingResult.hasErrors()) {
             return "articles/new";
         }
 
-        // TODO: Security 적용 후 현재 로그인 사용자 ID 사용
-        Long tempMemberId = 2L;
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
 
         Long articleId = articleService.createArticle(
-                tempMemberId,
+                loginMemberId,
                 form.getTitle(),
                 form.getContent()
         );
@@ -87,8 +106,17 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}/edit")
-    public String showEditForm(@PathVariable Long id, Model model) {
+    public String showEditForm(@PathVariable Long id, HttpServletRequest request, Model model) {
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
+
         Article article = articleService.getArticle(id);
+
+        if (!article.getMemberId().equals(loginMemberId)) {
+            return "redirect:/articles/" + id;
+        }
 
         ArticleUpdateForm form = new ArticleUpdateForm();
         form.setTitle(article.getTitle());
@@ -105,6 +133,7 @@ public class ArticleController {
             @PathVariable Long id,
             @Valid @ModelAttribute("articleUpdateForm") ArticleUpdateForm form,
             BindingResult bindingResult,
+            HttpServletRequest request,
             Model model
     ) {
         if (bindingResult.hasErrors()) {
@@ -112,17 +141,35 @@ public class ArticleController {
             return "articles/edit";
         }
 
-        // TODO: 권한 체크는 나중에 Security에서 처리
-        articleService.updateArticle(id, form.getTitle(), form.getContent());
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
+
+        articleService.updateArticle(id, loginMemberId, form.getTitle(), form.getContent());
 
         return "redirect:/articles/" + id;
     }
 
     @PostMapping("/{id}/delete")
-    public String delete(@PathVariable Long id) {
-        // TODO: 작성자 본인 + 관리자 체크는 Security 적용 후 처리
-        articleService.deleteArticle(id);
+    public String delete(@PathVariable Long id, HttpServletRequest request) {
+        Long loginMemberId = getLoginMemberId(request);
+        if (loginMemberId == null) {
+            return "redirect:/login";
+        }
+
+        articleService.deleteArticle(id, loginMemberId);
         return "redirect:/articles";
+    }
+
+    // 헬퍼 메서드
+    private Long getLoginMemberId(HttpServletRequest request) {
+        HttpSession session = request.getSession(false);
+        if (session == null) {
+            return null;
+        }
+
+        return (Long) session.getAttribute("LOGIN_MEMBER");
     }
 
 }
