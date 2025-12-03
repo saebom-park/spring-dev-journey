@@ -55,13 +55,15 @@ public class LoginController {
     }
 
     @PostMapping("/logout")
-    public String logout(HttpServletRequest request) {
+    public String logout(
+            @RequestParam(value = "redirectURL", required = false, defaultValue = "/articles") String redirectURL,
+            HttpServletRequest request) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();
         }
 
-        return "redirect:/login";
+        return "redirect:" + redirectURL;
     }
 
 }

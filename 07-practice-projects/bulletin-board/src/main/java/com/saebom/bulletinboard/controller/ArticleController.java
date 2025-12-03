@@ -49,7 +49,6 @@ public class ArticleController {
         List<Comment> comments = commentService.getCommentsByArticle(id);
 
         Long loginMemberId = getLoginMemberId(request);
-        model.addAttribute("loginMemberId", loginMemberId);
 
         model.addAttribute("article", article);
         model.addAttribute("comments", comments);
@@ -59,7 +58,7 @@ public class ArticleController {
             Comment comment = commentService.getComment(editCommentId);
 
             if (loginMemberId == null || !comment.getMemberId().equals(loginMemberId)) {
-                return "redirect:/articles" + id;
+                return "redirect:/articles/" + id;
             }
 
             CommentUpdateForm commentUpdateForm = new CommentUpdateForm();

@@ -20,9 +20,27 @@
             </div>
         </div>
 
+        <div class="bb-sidebar__user-inline bb-sidebar__user-inline--center" th:if="${loginMemberId != null}">
+            <a th:href="@{/members/edit}"
+               class="bb-sidebar__inline-btn">
+                회원정보 수정
+            </a>
+            <form th:action="@{/logout}" method="post" style="margin:0;">
+                <input type="hidden" name="redirectURL" th:value="${currentURL}" />
+                <button type="submit"
+                        class="bb-sidebar__inline-btn bb-sidebar__inline-btn--logout">
+                    로그아웃
+                </button>
+            </form>
+        </div>
+
+        <div class="bb-sidebar__user-inline bb-sidebar__user-inline--right" th:if="${loginMemberId == null}">
+            <a th:href="@{/login}" class="bb-sidebar__inline-btn">로그인</a>
+        </div>
+
         <nav class="bb-sidebar__nav">
             <div class="bb-sidebar__nav-title">Overview</div>
-            <a href="#" class="bb-sidebar__link bb-sidebar__link--active">
+            <a th:href="@{/articles}" class="bb-sidebar__link bb-sidebar__link--active">
                 <span class="bb-sidebar__link-icon">◆</span>
                 <span>Articles</span>
             </a>

@@ -785,3 +785,56 @@ tbody td a:hover {
 .bb-info-box a:hover {
     color: var(--bs-primary-dark);
 }
+
+/* ===========================
+   Sidebar Inline User Buttons
+   =========================== */
+
+/* 공통 영역 */
+.bb-sidebar__user-inline {
+    display: flex;
+    gap: 8px;
+}
+
+/* 로그인 상태 → 가운데 정렬 */
+.bb-sidebar__user-inline--center {
+    justify-content: center;
+}
+
+/* 비로그인 상태 → 오른쪽 정렬 */
+.bb-sidebar__user-inline--right {
+    justify-content: flex-end;
+}
+
+.bb-sidebar__inline-btn {
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.08);
+    color: #e5e7eb;
+    font-size: 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.16);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background .12s ease, opacity .12s ease;
+}
+
+.bb-sidebar__inline-btn:hover {
+    background: rgba(255,255,255,0.16);
+    opacity: 1;
+}
+
+/* 로그아웃 전용 색감 */
+.bb-sidebar__inline-btn--logout {
+    color: #fca5a5;
+    border-color: rgba(251,113,133,0.25);
+    cursor: pointer;
+}
+
+.bb-sidebar__inline-btn--logout:hover {
+    background: rgba(251,113,133,0.14);
+    color: #f87171;
+}
