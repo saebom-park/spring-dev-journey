@@ -3,6 +3,7 @@ package com.saebom.bulletinboard.controller;
 import com.saebom.bulletinboard.dto.comment.CommentCreateForm;
 import com.saebom.bulletinboard.dto.comment.CommentUpdateForm;
 import com.saebom.bulletinboard.service.CommentService;
+import com.saebom.bulletinboard.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -88,7 +89,7 @@ public class CommentController {
             return null;
         }
 
-        return (Long) session.getAttribute("LOGIN_MEMBER");
+        return (Long) session.getAttribute(SessionConst.LOGIN_MEMBER);
     }
 
 }

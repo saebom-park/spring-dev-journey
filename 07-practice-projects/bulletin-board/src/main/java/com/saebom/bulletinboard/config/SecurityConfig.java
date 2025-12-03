@@ -12,8 +12,11 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
+                .formLogin(form -> form.disable())
+                .httpBasic(basic -> basic.disable())
+                .logout(logout -> logout.disable())
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll()   // 일단 전부 허용
+                        .anyRequest().permitAll()
                 );
 
         return http.build();
