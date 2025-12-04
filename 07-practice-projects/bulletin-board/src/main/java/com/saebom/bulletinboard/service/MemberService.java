@@ -6,6 +6,7 @@ import java.util.List;
 
 public interface MemberService {
 
+    boolean isUsernameDuplicate(String username);
     Long registerMember(Member member);
 
     Member getMember(Long id);

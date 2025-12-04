@@ -11,14 +11,17 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 @Controller
 public class LoginController {
 
     private final MemberService memberService;
+    private final PasswordEncoder passwordEncoder;
 
-    public LoginController(MemberService memberService) {
+    public LoginController(MemberService memberService, PasswordEncoder passwordEncoder) {
         this.memberService = memberService;
+        this.passwordEncoder = passwordEncoder;
     }
 
     @GetMapping("/login")
@@ -30,9 +33,9 @@ public class LoginController {
 
     @PostMapping("/login")
     public String login(
-            @RequestParam(value = "redirectURL", required = false, defaultValue = "/articles") String redirectURL,
             @Valid @ModelAttribute("loginForm") LoginForm loginForm,
             BindingResult bindingResult,
+            @RequestParam(value = "redirectURL", required = false, defaultValue = "/articles") String redirectURL,
             HttpServletRequest request,
             Model model
     ) {
@@ -42,7 +45,7 @@ public class LoginController {
         }
 
         Member member = memberService.findByUsername(loginForm.getUsername());
-        if (member == null || !member.getPassword().equals(loginForm.getPassword())) {
+        if (member == null || !passwordEncoder.matches(loginForm.getPassword(), member.getPassword())) {
             model.addAttribute("redirectURL", redirectURL);
             model.addAttribute("loginError", "아이디 또는 비밀번호가 올바르지 않습니다.");
             return "member/login";
@@ -57,7 +60,8 @@ public class LoginController {
     @PostMapping("/logout")
     public String logout(
             @RequestParam(value = "redirectURL", required = false, defaultValue = "/articles") String redirectURL,
-            HttpServletRequest request) {
+            HttpServletRequest request
+    ) {
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();

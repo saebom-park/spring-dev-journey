@@ -34,8 +34,13 @@
             </form>
         </div>
 
-        <div class="bb-sidebar__user-inline bb-sidebar__user-inline--right" th:if="${loginMemberId == null}">
-            <a th:href="@{/login}" class="bb-sidebar__inline-btn">로그인</a>
+        <div class="bb-sidebar__user-inline bb-sidebar__user-inline--center" th:if="${loginMemberId == null}">
+            <a th:href="@{/login}" class="bb-sidebar__inline-btn">
+                로그인
+            </a>
+            <a th:href="@{/members/new}" class="bb-sidebar__inline-btn">
+                회원가입
+            </a>
         </div>
 
         <nav class="bb-sidebar__nav">

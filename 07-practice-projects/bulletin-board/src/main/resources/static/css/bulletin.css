@@ -373,6 +373,19 @@ input[type="submit"] {
     transform: none;
 }
 
+/* 중복확인 버튼 기본 상태(활성) → 텍스트 초록색 */
+#usernameCheckBtn {
+    color: #16a34a; /* 초록 */
+    font-weight: 600;
+}
+
+/* disabled 상태 → 텍스트 회색 */
+#usernameCheckBtn:disabled {
+    color: #9ca3af !important;  /* 연회색 */
+    cursor: not-allowed;
+    opacity: 1;                 /* 흐려지지 않게 유지 */
+}
+
 /* Action groups */
 
 .bb-actions {
@@ -837,4 +850,110 @@ tbody td a:hover {
 .bb-sidebar__inline-btn--logout:hover {
     background: rgba(251,113,133,0.14);
     color: #f87171;
+}
+
+/* ===========================
+   Signup Page
+   =========================== */
+
+.bb-signup-wrapper {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bs-bg);
+    padding: 20px;
+}
+
+.bb-signup-card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--bs-card-bg);
+    border-radius: var(--bs-radius-lg);
+    box-shadow: var(--bs-shadow-soft);
+    padding: 32px 30px 36px;
+}
+
+.bb-signup-title {
+    margin: 0;
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--bs-text-main);
+    letter-spacing: -0.02em;
+}
+
+.bb-signup-sub {
+    margin: 8px 0 24px;
+    font-size: 13px;
+    color: var(--bs-text-soft);
+}
+
+/* 아이디 중복확인 버튼 */
+.bb-check-btn {
+    margin-left: 6px;
+}
+
+/* AJAX 피드백 메시지 */
+.bb-field-feedback {
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+/* 성공 메시지 */
+.bb-field-success {
+    color: #16a34a;
+}
+
+.bb-signup-card .bb-row {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.bb-signup-card .bb-row .bb-input {
+    flex: 1;    /* 입력창이 남은 공간을 차지하게 함 */
+}
+
+.bb-check-btn {
+    white-space: nowrap; /* 버튼 줄바꿈 방지 */
+}
+
+/* Username check icons */
+.bb-check-icon {
+    display: none;                 /* 기본은 숨김 */
+    width: 16px;
+    height: 16px;
+    margin-right: 4px;
+    vertical-align: -2px;
+}
+
+.bb-check-icon svg {
+    width: 100%;
+    height: 100%;
+}
+
+/* 성공 상태일 때: 초록 체크만 보이도록 */
+.bb-field-success .bb-check-icon--success {
+    display: inline-flex;
+    color: #16a34a;
+}
+
+/* 실패 상태일 때: 빨간 X만 보이도록 */
+.bb-field-error .bb-check-icon--error {
+    display: inline-flex;
+    color: #ef4444;
+}
+
+/* 텍스트 스타일(이미 있다면 생략 가능) */
+.bb-field-feedback {
+    margin-top: 4px;
+    font-size: 12px;
+}
+
+.bb-field-success {
+    color: #16a34a;
+}
+
+.bb-field-error {
+    color: var(--bs-danger);
 }
