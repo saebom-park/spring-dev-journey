@@ -12,10 +12,10 @@ public class MemberValidationRules {
 
     // password
     public static final int PASSWORD_MIN = 8;
-    public static final int PASSWORD_MAX = 20;
+    public static final int PASSWORD_MAX = 16;
 
     // name
     public static final int NAME_MIN = 2;
-    public static final int NAME_MAX = 6;
+    public static final int NAME_MAX = 40;
 
 }

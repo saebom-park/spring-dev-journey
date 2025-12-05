@@ -30,6 +30,7 @@ public class MemberController {
     @GetMapping("/new")
     public String signUpForm(Model model) {
         model.addAttribute("memberCreateForm", new MemberCreateForm());
+        model.addAttribute("usernameChecked", false);
         return "member/signup";
     }
 
@@ -44,12 +45,14 @@ public class MemberController {
 
         model.addAttribute("usernameChecked", usernameChecked);
 
-        if (bindingResult.hasErrors()) {
-            return "member/signup";
+        if (!bindingResult.hasFieldErrors("username")) {
+            if (memberService.isUsernameDuplicate(form.getUsername())) {
+                bindingResult.rejectValue("username", "duplicate", "이미 사용 중인 아이디입니다.");
+            }
         }
 
-        if (memberService.isUsernameDuplicate(form.getUsername())) {
-            model.addAttribute("usernameError", "이미 사용 중인 아이디입니다.");
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("usernameCheck", false);
             return "member/signup";
         }
 

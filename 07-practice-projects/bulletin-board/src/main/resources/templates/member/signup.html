@@ -18,7 +18,8 @@
 
         <form th:action="@{/members/new}"
               th:object="${memberCreateForm}"
-              method="post">
+              method="post"
+              id="signupForm">
 
             <!-- 아이디 -->
             <div class="bb-form-group">
@@ -46,15 +47,19 @@
 
                 <!-- 서버 단 유효성 오류 -->
                 <div th:if="${#fields.hasErrors('username')}"
-                     th:errors="*{username}"
-                     class="bb-field-error">
-                </div>
+                     class="bb-field-error"
+                     id="usernameServerError">
+                    <!-- 실패 아이콘 -->
+                    <span class="bb-check-icon bb-check-icon--error" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M6 6L18 18M6 18L18 6"
+                                  stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
 
-                <!-- 서버 단 중복 에러 -->
-                <div th:if="${usernameError}"
-                     th:text="${usernameError}"
-                     id="usernameError"
-                     class="bb-field-error">
+                    <!-- 에러 메시지 텍스트 -->
+                    <span class="bb-check-text" th:errors="*{username}"></span>
                 </div>
 
                 <!-- AJAX 메시지 -->
@@ -90,8 +95,19 @@
                        th:field="*{password}"
                        class="bb-input"/>
                 <div th:if="${#fields.hasErrors('password')}"
-                     th:errors="*{password}"
                      class="bb-field-error">
+
+                    <!-- X 아이콘 -->
+                    <span class="bb-check-icon bb-check-icon--error" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M6 6L18 18M6 18L18 6"
+                                  stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+
+                    <!-- 에러 메시지 -->
+                    <span class="bb-check-text" th:errors="*{password}"></span>
                 </div>
             </div>
 
@@ -102,9 +118,19 @@
                        th:field="*{name}"
                        class="bb-input"/>
                 <div th:if="${#fields.hasErrors('name')}"
-                     th:errors="*{name}"
                      class="bb-field-error">
+
+                    <span class="bb-check-icon bb-check-icon--error" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" fill="none">
+                            <path d="M6 6L18 18M6 18L18 6"
+                                  stroke="currentColor" stroke-width="2"
+                                  stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </span>
+
+                    <span class="bb-check-text" th:errors="*{name}"></span>
                 </div>
+
             </div>
 
             <!-- 이메일 -->
@@ -147,9 +173,15 @@
         const hiddenEl = document.getElementById('usernameChecked');
         const username = inputEl.value.trim();
 
+        const serverErrorEl = document.getElementById('usernameServerError');
+
         // 아이콘 요소
         const iconSuccess = msgEl.querySelector('.bb-check-icon--success');
         const iconError = msgEl.querySelector('.bb-check-icon--error');
+
+        if (serverErrorEl) {
+            serverErrorEl.style.display = "none";
+        }
 
         // 상태 초기화
         msgEl.className = "bb-field-feedback";
@@ -215,6 +247,8 @@
         const iconSuccess = msgEl.querySelector('.bb-check-icon--success');
         const iconError = msgEl.querySelector('.bb-check-icon--error');
 
+        const serverErrorEl = document.getElementById('usernameServerError');
+
         if (!inputEl || !btnEl || !hiddenEl || !msgEl) return;
 
         inputEl.addEventListener('input', () => {
@@ -230,8 +264,30 @@
 
                 iconSuccess.style.display = "none";
                 iconError.style.display = "none";
+
+                if (serverErrorEl) {
+                    serverErrorEl.style.display = "none";
+                }
             }
         });
+
+        const formEl = document.getElementById('signupForm');
+        if (formEl) {
+            formEl.addEventListener('submit', (event) => {
+                const checked = hiddenEl.value === "true";
+
+                // 중복확인 안 됐으면 막기
+                if (!checked) {
+                    event.preventDefault();
+
+                    // 간단한 브라우저 팝업 (alert)
+                    alert("아이디 중복확인을 먼저 해주세요.");
+
+                    // 아이디 입력창에 포커스 주기
+                    inputEl.focus();
+                }
+            });
+        }
     });
 </script>
 

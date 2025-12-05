@@ -3,35 +3,33 @@ package com.saebom.bulletinboard.validation;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 
-public class UsernameValidator implements ConstraintValidator<Username, String> {
+public class NameValidator implements ConstraintValidator<Name, String> {
 
-    private static final String REGEX = "^[a-zA-Z0-9]+$";
+    private static final String REGEX = "^[가-힣a-zA-Z ]+$";
 
-    @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
 
         context.disableDefaultConstraintViolation();
 
         if (value == null || value.isBlank()) {
-            addMessage(context, "아이디를 입력해 주세요.");
+            addMessage(context, "이름을 입력해주세요.");
             return false;
         }
 
         int len = value.length();
-
-        if (len < MemberValidationRules.USERNAME_MIN ||
-            len > MemberValidationRules.USERNAME_MAX
+        if (len < MemberValidationRules.NAME_MIN ||
+            len > MemberValidationRules.NAME_MAX
         ) {
-            String message = "아이디는 " +
-                    MemberValidationRules.USERNAME_MIN + " ~ " +
-                    MemberValidationRules.USERNAME_MAX + "자 사이여야 합니다.";
+            String message = "이름은 " +
+                    MemberValidationRules.NAME_MIN + " ~ " +
+                    MemberValidationRules.NAME_MAX + "자 사이여야 합니다.";
 
             addMessage(context, message);
             return false;
         }
 
         if (!value.matches(REGEX)) {
-            addMessage(context, "아이디는 영문과 숫자만 사용할 수 있습니다.");
+            addMessage(context, "이름은 영문 대·소문자와 한글만 사용할수 있습니다.");
             return false;
         }
 

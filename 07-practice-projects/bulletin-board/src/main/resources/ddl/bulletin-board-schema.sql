@@ -61,3 +61,12 @@ CREATE INDEX idx_comments_member  ON comments(member_id);
 -- 1) FK에는 ON DELETE CASCADE를 걸지 않았다.
 --    → 삭제 로직은 애플리케이션(Service/Mapper)에서 명시적으로 처리.
 -- 2) 필요 시 이메일 유니크 제약(CONSTRAINT uq_members_email)을 제거해도 된다.
+
+ALTER TABLE comments
+    DROP FOREIGN KEY fk_comments_article;
+
+ALTER TABLE comments
+    ADD CONSTRAINT fk_comments_article
+        FOREIGN KEY (article_id)
+        REFERENCES articles(id)
+        ON DELETE CASCADE;
