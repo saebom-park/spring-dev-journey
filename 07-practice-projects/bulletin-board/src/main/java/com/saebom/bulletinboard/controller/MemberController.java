@@ -3,6 +3,8 @@ package com.saebom.bulletinboard.controller;
 import com.saebom.bulletinboard.domain.Member;
 import com.saebom.bulletinboard.dto.member.MemberCreateForm;
 import com.saebom.bulletinboard.dto.member.UsernameCheckForm;
+import com.saebom.bulletinboard.dto.member.MemberProfileView;
+import com.saebom.bulletinboard.dto.member.MemberUpdateForm;
 import com.saebom.bulletinboard.service.MemberService;
 import com.saebom.bulletinboard.session.SessionConst;
 import jakarta.validation.Valid;
@@ -98,6 +100,59 @@ public class MemberController {
                 duplicate ? "이미 사용 중인 아이디입니다." : "사용 가능한 아이디입니다.");
 
         return ResponseEntity.ok(response);
+    }
+
+    @GetMapping("/me")
+    public String myPage(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+        model.addAttribute("member", MemberProfileView.from(member));
+
+        return "member/profile";
+    }
+
+    @GetMapping("/me/edit")
+    public String editForm(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+
+        MemberUpdateForm form = new MemberUpdateForm();
+        form.setName(member.getName());
+        form.setEmail(member.getEmail());
+
+        model.addAttribute("member", member);
+        model.addAttribute("memberUpdateForm", form);
+
+        return "member/edit";
+    }
+
+    @PostMapping("/me/edit")
+    public String edit(
+            @Valid @ModelAttribute("memberUpdateForm") MemberUpdateForm form,
+            BindingResult bindingResult,
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+
+        if (bindingResult.hasErrors()) {
+            model.addAttribute("member", member);
+            return "member/edit";
+        }
+
+        member.setName(form.getName());
+        member.setEmail(form.getEmail());
+
+        memberService.updateMember(member);
+
+        return "redirect:/members/me";
     }
 
 }

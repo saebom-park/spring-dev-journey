@@ -14,7 +14,8 @@ public class WebConfig implements WebMvcConfigurer {
                 .order(1)
                 .addPathPatterns(
                         "/articles/**",
-                        "/comments/**"
+                        "/comments/**",
+                        "/members/me/**"
                 )
                 .excludePathPatterns(
                         "/",
@@ -26,5 +27,5 @@ public class WebConfig implements WebMvcConfigurer {
                         "/error"
                 );
     }
-    
+
 }

@@ -957,3 +957,133 @@ tbody td a:hover {
 .bb-field-error {
     color: var(--bs-danger);
 }
+
+/* ===========================
+   Profile header
+   =========================== */
+
+.bb-profile-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.bb-profile-main {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.bb-profile-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -0.03em;
+}
+
+.bb-profile-name {
+    font-size: 15px;
+    font-weight: 600;
+    color: #111827;
+}
+
+.bb-profile-meta {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    font-size: 12px;
+    color: #6b7280;
+}
+
+/* 오른쪽 뱃지 */
+.bb-profile-badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+/* ===========================
+   Profile (My Page)
+   =========================== */
+
+.bb-profile-list {
+    margin: 0;
+    padding: 0;
+    border-radius: var(--bs-radius-md);
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+}
+
+.bb-profile-row {
+    display: grid;
+    grid-template-columns: 130px 1fr;
+    padding: 10px 14px;
+    font-size: 14px;
+    column-gap: 16px;
+    align-items: center;
+    border-top: 1px solid #f3f4f6;
+}
+
+.bb-profile-row:first-child {
+    border-top: none;
+}
+
+/* dt 텍스트를 칩 형태로 */
+.bb-profile-row dt {
+    margin: 0;
+}
+
+.bb-profile-row dt span {
+    display: inline-flex;
+    align-items: center;
+    justify-content: flex-start;
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #f3f4f6;
+    font-size: 12px;
+    font-weight: 600;
+    color: #4b5563;
+}
+
+.bb-profile-row dd {
+    margin: 0;
+    color: #111827;
+    word-break: break-all;
+}
+
+/* 모바일 대응 */
+@media (max-width: 640px) {
+    .bb-profile-row {
+        grid-template-columns: 110px 1fr;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+}
+
+/* 하단 버튼 영역 여백 */
+.bb-profile-actions {
+    margin-top: 20px;
+}
+
+/* My Page card width fix */
+.bb-profile-container {
+    max-width: 600px;         /* 너무 넓지 않게 제한 */
+}
+
+/* 작은 힌트 텍스트 */
+.bb-form-hint {
+    margin-top: 6px;
+    font-size: 12px;
+    color: #6b7280; /* gray-500 */
+}
