@@ -227,6 +227,7 @@ public class MemberController {
 
         Member member = memberService.getMember(loginMemberId);
         model.addAttribute("member", member);
+        model.addAttribute("passwordChangedAt", member.getPasswordChangedAt());
         model.addAttribute("passwordChangeForm", new PasswordChangeForm());
 
         return "member/password-new";
@@ -252,6 +253,7 @@ public class MemberController {
 
         Member member = memberService.getMember(loginMemberId);
         model.addAttribute("member", member);
+        model.addAttribute("passwordChangedAt", member.getPasswordChangedAt());
 
         if (bindingResult.hasErrors()) {
             return "member/password-new";
