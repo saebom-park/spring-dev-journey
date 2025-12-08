@@ -7,16 +7,10 @@ public class UsernameCheckForm {
     @Username
     private String username;
 
-    public UsernameCheckForm() {
+    // getter
+    public String getUsername() { return username; }
 
-    }
+    // setter
+    public void setUsername(String username) { this.username = username; }
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-    
 }

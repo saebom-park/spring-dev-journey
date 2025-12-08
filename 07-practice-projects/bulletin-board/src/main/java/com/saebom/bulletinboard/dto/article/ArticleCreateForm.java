@@ -12,24 +12,12 @@ public class ArticleCreateForm {
     @NotBlank(message = "내용은 필수입니다.")
     private String content;
 
-    public ArticleCreateForm() {
+    // getter
+    public String getTitle() { return title; }
+    public String getContent() { return content; }
 
-    }
-
-    public String getTitle() {
-        return title;
-    }
-
-    public void setTitle(String title) {
-        this.title = title;
-    }
-
-    public String getContent() {
-        return content;
-    }
-
-    public void setContent(String content) {
-        this.content = content;
-    }
+    // setter
+    public void setContent(String content) { this.content = content; }
+    public void setTitle(String title) { this.title = title; }
 
 }

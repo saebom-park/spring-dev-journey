@@ -9,14 +9,10 @@ public class CommentCreateForm {
     @Size(max = 1000, message = "댓글 내용은 1000자를 넘을 수 없습니다.")
     private String content;
 
-    public CommentCreateForm() {
+    // getter
+    public String getContent() { return content; }
 
-    }
-
-    public String getContent() {
-        return content;
-    }
-
+    // setter
     public void setContent(String content) {
         this.content = content;
     }
