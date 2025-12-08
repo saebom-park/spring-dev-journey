@@ -13,7 +13,13 @@
         email,
         role,
         created_at,
-        updated_at
+        updated_at,
+        password_changed_at,
+        last_login_at,
+        login_fail_count,
+        account_locked,
+        account_locked_at,
+        status
     </sql>
 
     <resultMap id="memberResultMap" type="com.saebom.bulletinboard.domain.Member">
@@ -25,6 +31,12 @@
         <result property="role" column="role"/>
         <result property="createdAt" column="created_at"/>
         <result property="updatedAt" column="updated_at"/>
+        <result property="passwordChangedAt" column="password_changed_at"/>
+        <result property="lastLoginAt" column="last_login_at"/>
+        <result property="loginFailCount" column="login_fail_count"/>
+        <result property="accountLocked" column="account_locked"/>
+        <result property="accountLockedAt" column="account_locked_at"/>
+        <result property="status" column="status"/>
     </resultMap>
 
     <insert id="insert"
@@ -36,14 +48,16 @@
             password,
             name,
             email,
-            role
+            role,
+            status
         )
         VALUES (
             #{username},
             #{password},
             #{name},
             #{email},
-            #{role}
+            #{role},
+            #{status}
         )
     </insert>
 
@@ -77,10 +91,16 @@
             parameterType="com.saebom.bulletinboard.domain.Member">
         UPDATE members
         SET
-            password = #{password},
             name = #{name},
-            email = #{email},
-            role = #{role}
+            email = #{email}
+        WHERE id = #{id}
+    </update>
+
+    <update id="updatePassword">
+        UPDATE members
+        SET
+            password = #{password},
+            password_changed_at = NOW()
         WHERE id = #{id}
     </update>
 

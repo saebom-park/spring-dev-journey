@@ -5,8 +5,11 @@ import com.saebom.bulletinboard.dto.member.MemberCreateForm;
 import com.saebom.bulletinboard.dto.member.UsernameCheckForm;
 import com.saebom.bulletinboard.dto.member.MemberProfileView;
 import com.saebom.bulletinboard.dto.member.MemberUpdateForm;
+import com.saebom.bulletinboard.dto.member.PasswordCheckForm;
+import com.saebom.bulletinboard.dto.member.PasswordChangeForm;
 import com.saebom.bulletinboard.service.MemberService;
 import com.saebom.bulletinboard.session.SessionConst;
+import com.saebom.bulletinboard.exception.WrongPasswordException;
 import jakarta.validation.Valid;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -151,6 +154,117 @@ public class MemberController {
         member.setEmail(form.getEmail());
 
         memberService.updateMember(member);
+
+        return "redirect:/members/me";
+    }
+
+    @GetMapping("/me/password/check")
+    public String checkPasswordForm(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+
+        model.addAttribute("member", member);
+        model.addAttribute("passwordCheckForm", new PasswordCheckForm());
+
+        return "member/password-check";
+    }
+
+    @PostMapping("/me/password/check")
+    public String checkPassword(
+            @Valid @ModelAttribute("passwordCheckForm") PasswordCheckForm form,
+            BindingResult bindingResult,
+            @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            HttpServletRequest request,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+        model.addAttribute("member", member);
+
+        if (bindingResult.hasErrors()) {
+            return "member/password-check";
+        }
+
+        try {
+            memberService.validatePassword(loginMemberId, form.getPassword());
+
+            HttpSession session = request.getSession(false);
+
+            if (session == null) {
+                throw new IllegalArgumentException("세션이 유효하지 않습니다. 다시 로그인 해주세요.");
+            }
+
+            session.setAttribute(SessionConst.PASSWORD_CHECKED, true);
+
+            return "redirect:/members/me/password/new";
+
+        } catch(WrongPasswordException e) {
+            bindingResult.rejectValue("password", "wrongPassword", e.getMessage());
+
+            return "member/password-check";
+        }
+
+    }
+
+    @GetMapping("/me/password/new")
+    public String passwordChangeForm(
+            @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            HttpServletRequest request,
+            Model model
+    ) {
+
+        HttpSession session = request.getSession(false);
+        Boolean passwordChecked = (session != null)
+                ? (Boolean) session.getAttribute(SessionConst.PASSWORD_CHECKED)
+                : null;
+
+        if (!Boolean.TRUE.equals(passwordChecked)) {
+            return "redirect:/members/me/password/check";
+        }
+
+        Member member = memberService.getMember(loginMemberId);
+        model.addAttribute("member", member);
+        model.addAttribute("passwordChangeForm", new PasswordChangeForm());
+
+        return "member/password-new";
+    }
+
+    @PostMapping("/me/password/new")
+    public String passwordChange(
+            @Valid @ModelAttribute("passwordChangeForm") PasswordChangeForm form,
+            BindingResult bindingResult,
+            @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            HttpServletRequest request,
+            Model model
+    ) {
+
+        HttpSession session = request.getSession(false);
+        Boolean passwordChecked = (session != null)
+                ? (Boolean) session.getAttribute(SessionConst.PASSWORD_CHECKED)
+                : null;
+
+        if (!Boolean.TRUE.equals(passwordChecked)) {
+            return "redirect:/members/me/password/check";
+        }
+
+        Member member = memberService.getMember(loginMemberId);
+        model.addAttribute("member", member);
+
+        if (bindingResult.hasErrors()) {
+            return "member/password-new";
+        }
+
+        if (!form.getNewPassword().equals(form.getConfirmPassword())) {
+            bindingResult.rejectValue("confirmPassword", "mismatch", "변경하려는 비밀번호가 동일해야합니다.");
+            return "member/password-new";
+        }
+
+        memberService.updatePassword(loginMemberId, form.getNewPassword());
+
+        session.removeAttribute(SessionConst.PASSWORD_CHECKED);
 
         return "redirect:/members/me";
     }

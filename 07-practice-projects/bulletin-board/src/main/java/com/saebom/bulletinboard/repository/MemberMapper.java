@@ -2,6 +2,7 @@ package com.saebom.bulletinboard.repository;
 
 import com.saebom.bulletinboard.domain.Member;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -22,6 +23,10 @@ public interface MemberMapper {
 
     // 회원 정보 수정
     int update(Member member);
+
+    // 회원 패스워드 변경
+    int updatePassword(@Param("id") Long id,
+                       @Param("password") String password);
 
     // 회원 삭제
     int deleteById(Long id);

@@ -12,6 +12,12 @@ public class Member {
     private String role;
     private LocalDateTime createdAt;
     private LocalDateTime updatedAt;
+    private LocalDateTime passwordChangedAt;
+    private LocalDateTime lastLoginAt;
+    private Integer loginFailCount;
+    private Boolean accountLocked;
+    private LocalDateTime accountLockedAt;
+    private Status status;
 
     // constructor
     public Member() {
@@ -35,6 +41,12 @@ public class Member {
     public String getRole() { return role; }
     public LocalDateTime getCreatedAt() { return createdAt; }
     public LocalDateTime getUpdatedAt() { return updatedAt; }
+    public LocalDateTime getPasswordChangedAt() { return passwordChangedAt; }
+    public LocalDateTime getLastLoginAt() { return lastLoginAt; }
+    public Integer getLoginFailCount() { return loginFailCount; }
+    public Boolean getAccountLocked() { return accountLocked; }
+    public LocalDateTime getAccountLockedAt() { return accountLockedAt; }
+    public Status getStatus() { return status; }
 
     // setter
     public void setId(Long id) { this.id = id; }
@@ -51,5 +63,11 @@ public class Member {
     public void setRole(String role) { this.role = role; }
     public void setCreatedAt(LocalDateTime createdAt) { this.createdAt = createdAt; }
     public void setUpdatedAt(LocalDateTime updatedAt) { this.updatedAt = updatedAt; }
+    public void setPasswordChangedAt(LocalDateTime passwordChangedAt) { this.passwordChangedAt = passwordChangedAt; }
+    public void setLastLoginAt(LocalDateTime lastLoginAt) { this.lastLoginAt = lastLoginAt; }
+    public void setLoginFailCount(Integer loginFailCount) { this.loginFailCount = loginFailCount; }
+    public void setAccountLocked(Boolean accountLocked) { this.accountLocked = accountLocked; }
+    public void setAccountLockedAt(LocalDateTime accountLockedAt) { this.accountLockedAt = accountLockedAt; }
+    public void setStatus(Status status) { this.status = status; }
 
 }

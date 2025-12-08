@@ -43,8 +43,11 @@
                 </div>
             </div>
 
-            <div th:if="${loginError}" class="bb-login-error" style="margin-bottom: 10px;">
-                <p th:text="${loginError}"></p>
+            <div th:if="${#fields.hasGlobalErrors()}"
+                 class="bb-login-error"
+                 style="margin-bottom: 10px;">
+                <p th:each="err : ${#fields.globalErrors()}"
+                   th:text="${err}"></p>
             </div>
 
             <button type="submit" class="bb-login-btn">로그인</button>

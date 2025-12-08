@@ -2,6 +2,9 @@ package com.saebom.bulletinboard.service;
 
 import com.saebom.bulletinboard.domain.Member;
 import com.saebom.bulletinboard.domain.Role;
+import com.saebom.bulletinboard.domain.Status;
+import com.saebom.bulletinboard.exception.LoginFailedException;
+import com.saebom.bulletinboard.exception.WrongPasswordException;
 import com.saebom.bulletinboard.repository.MemberMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -39,10 +42,22 @@ public class MemberServiceImpl implements MemberService {
         String encodedPassword = passwordEncoder.encode(member.getPassword());
         member.setPassword(encodedPassword);
         member.setRole(Role.USER.value());
+        member.setStatus(Status.ACTIVE);
 
         int inserted = memberMapper.insert(member);
         if (inserted != 1) {
             throw new IllegalStateException("회원 등록에 실패했습니다.");
+        }
+
+        return member.getId();
+    }
+
+    @Override
+    public Long loginMember(String username, String password) {
+
+        Member member = memberMapper.findByUsername(username);
+        if (member == null || !passwordEncoder.matches(password, member.getPassword())) {
+            throw new LoginFailedException("아이디 또는 패스워드가 일치하지 않습니다.");
         }
 
         return member.getId();
@@ -78,6 +93,32 @@ public class MemberServiceImpl implements MemberService {
     }
 
     @Override
+    public void validatePassword(Long id, String rawPassword) {
+
+        Member member = memberMapper.findById(id);
+
+        if (member == null) {
+            throw new IllegalArgumentException("회원을 찾을 수 없습니다. id=" + id);
+        }
+
+        if (!passwordEncoder.matches(rawPassword, member.getPassword())) {
+            throw new WrongPasswordException("패스워드가 일치하지 않습니다.");
+        }
+    }
+
+    @Override
+    @Transactional
+    public void updatePassword(Long id, String newPassword) {
+
+        String encodedPassword = passwordEncoder.encode(newPassword);
+
+        int updated = memberMapper.updatePassword(id, encodedPassword);
+        if (updated != 1) {
+            throw new IllegalStateException("패스워드 변경에 실패했습니다. id=" + id);
+        }
+    }
+
+    @Override
     @Transactional
     public void deleteMember(Long id) {
 
@@ -86,4 +127,5 @@ public class MemberServiceImpl implements MemberService {
             throw new IllegalStateException("회원 삭제에 실패했습니다. id=" + id);
         }
     }
+
 }
