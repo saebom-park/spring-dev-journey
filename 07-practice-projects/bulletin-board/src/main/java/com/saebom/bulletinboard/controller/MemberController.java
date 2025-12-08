@@ -159,7 +159,7 @@ public class MemberController {
     }
 
     @GetMapping("/me/password/check")
-    public String checkPasswordForm(
+    public String passwordCheckForm(
             @SessionAttribute(name = SessionConst.LOGIN_MEMBER) Long loginMemberId,
             Model model
     ) {
@@ -234,7 +234,7 @@ public class MemberController {
     }
 
     @PostMapping("/me/password/new")
-    public String passwordChange(
+    public String changePassword(
             @Valid @ModelAttribute("passwordChangeForm") PasswordChangeForm form,
             BindingResult bindingResult,
             @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
