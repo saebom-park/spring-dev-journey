@@ -1,10 +1,10 @@
 package com.saebom.bulletinboard.dto.member;
 
-import com.saebom.bulletinboard.validation.Password;
+import jakarta.validation.constraints.NotBlank;
 
 public class PasswordCheckForm {
 
-    @Password
+    @NotBlank(message = "패스워드를 입력해주세요.")
     private String password;
 
     // getter
