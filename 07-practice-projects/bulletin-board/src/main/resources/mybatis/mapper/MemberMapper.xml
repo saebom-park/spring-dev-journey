@@ -104,6 +104,13 @@
         WHERE id = #{id}
     </update>
 
+    <update id="updateStatus">
+        UPDATE members
+        SET
+            status = #{status}
+        WHERE id = #{id}
+    </update>
+
     <delete id="deleteById"
             parameterType="long">
         DELETE FROM members

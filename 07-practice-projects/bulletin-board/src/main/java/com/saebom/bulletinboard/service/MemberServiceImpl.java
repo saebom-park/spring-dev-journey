@@ -60,6 +60,10 @@ public class MemberServiceImpl implements MemberService {
             throw new LoginFailedException("아이디 또는 패스워드가 일치하지 않습니다.");
         }
 
+        if (!Status.ACTIVE.equals(member.getStatus())) {
+            throw new LoginFailedException("활성화되지 않은 계정입니다.");
+        }
+
         return member.getId();
     }
 
@@ -115,6 +119,26 @@ public class MemberServiceImpl implements MemberService {
         int updated = memberMapper.updatePassword(id, encodedPassword);
         if (updated != 1) {
             throw new IllegalStateException("패스워드 변경에 실패했습니다. id=" + id);
+        }
+    }
+
+    @Override
+    @Transactional
+    public void withdrawMember(Long id) {
+        updateStatusInternal(id, Status.INACTIVE);
+    }
+
+    @Override
+    @Transactional
+    public void updateStatus(Long id, Status status) {
+        updateStatusInternal(id, status);
+    }
+
+    private void updateStatusInternal(Long id, Status status) {
+
+        int updated = memberMapper.updateStatus(id, status.name());
+        if (updated != 1) {
+            throw new IllegalStateException("상태 변경에 실패했습니다. id=" + id);
         }
     }
 

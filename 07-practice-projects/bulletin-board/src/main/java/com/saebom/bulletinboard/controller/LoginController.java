@@ -1,7 +1,6 @@
 package com.saebom.bulletinboard.controller;
 
 import com.saebom.bulletinboard.dto.member.LoginForm;
-import com.saebom.bulletinboard.domain.Member;
 import com.saebom.bulletinboard.service.MemberService;
 import com.saebom.bulletinboard.session.SessionConst;
 import com.saebom.bulletinboard.exception.LoginFailedException;
@@ -37,6 +36,7 @@ public class LoginController {
             HttpServletRequest request,
             Model model
     ) {
+
         if (bindingResult.hasErrors()) {
             model.addAttribute("redirectURL", redirectURL);
             return "member/login";
@@ -62,6 +62,7 @@ public class LoginController {
             @RequestParam(value = "redirectURL", required = false, defaultValue = "/articles") String redirectURL,
             HttpServletRequest request
     ) {
+
         HttpSession session = request.getSession(false);
         if (session != null) {
             session.invalidate();

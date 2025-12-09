@@ -28,6 +28,10 @@ public interface MemberMapper {
     int updatePassword(@Param("id") Long id,
                        @Param("password") String password);
 
+    // 회원 상태 변경
+    int updateStatus(@Param("id") Long id,
+                     @Param("status") String status);
+
     // 회원 삭제
     int deleteById(Long id);
 

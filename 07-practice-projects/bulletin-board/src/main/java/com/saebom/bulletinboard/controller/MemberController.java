@@ -7,6 +7,7 @@ import com.saebom.bulletinboard.dto.member.MemberProfileView;
 import com.saebom.bulletinboard.dto.member.MemberUpdateForm;
 import com.saebom.bulletinboard.dto.member.PasswordCheckForm;
 import com.saebom.bulletinboard.dto.member.PasswordChangeForm;
+import com.saebom.bulletinboard.dto.member.MemberWithdrawForm;
 import com.saebom.bulletinboard.service.MemberService;
 import com.saebom.bulletinboard.session.SessionConst;
 import com.saebom.bulletinboard.exception.WrongPasswordException;
@@ -268,7 +269,71 @@ public class MemberController {
 
         session.removeAttribute(SessionConst.PASSWORD_CHECKED);
 
-        return "redirect:/members/me";
+        return "redirect:/members/me/password/success";
+    }
+
+    @GetMapping("/me/password/success")
+    public String passwordSuccessForm(
+            @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+        model.addAttribute("member", member);
+
+        return "member/password-success";
+    }
+
+    @GetMapping("/me/withdraw")
+    public String memberWithdrawForm(
+            @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+
+        model.addAttribute("member", member);
+        model.addAttribute("memberWithdrawForm", new MemberWithdrawForm());
+
+        return "member/withdraw";
+    }
+
+    @PostMapping("/me/withdraw")
+    public String withdrawMember(
+            @Valid @ModelAttribute("memberWithdrawForm") MemberWithdrawForm form,
+            BindingResult bindingResult,
+            @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
+            HttpServletRequest request,
+            Model model
+    ) {
+
+        Member member = memberService.getMember(loginMemberId);
+        model.addAttribute("member", member);
+
+        if (bindingResult.hasErrors()) {
+            return "member/withdraw";
+        }
+
+        try {
+            memberService.validatePassword(loginMemberId, form.getPassword());
+        } catch(WrongPasswordException e) {
+            bindingResult.rejectValue("password", "wrong", e.getMessage());
+            return "member/withdraw";
+        }
+
+        memberService.withdrawMember(loginMemberId);
+
+        HttpSession session = request.getSession(false);
+        if (session != null) {
+            session.invalidate();
+        }
+
+        return "redirect:/members/withdraw/success";
+    }
+
+    @GetMapping("/withdraw/success")
+    public String withdrawSuccessForm() {
+        return "member/withdraw-success";
     }
 
 }
