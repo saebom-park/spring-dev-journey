@@ -158,6 +158,214 @@ body.bb-body {
     color: #6b7280;
 }
 
+/* ===========================
+   Sidebar User Card
+   =========================== */
+
+.bb-sidebar__user-card {
+    padding: 14px 12px;
+    border-radius: var(--bs-radius-lg);
+    background: radial-gradient(circle at top left,
+    rgba(34,197,94,0.16), rgba(15,23,42,0.98));
+    border: 1px solid rgba(148,163,184,0.45);
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-height: 118px;
+}
+
+.bb-sidebar__user-main {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+}
+
+.bb-sidebar__user-avatar {
+    width: 32px;
+    height: 32px;
+    min-width: 32px;
+    border-radius: 999px;
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    color: #ecfdf5;
+    font-weight: 700;
+    font-size: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: -0.03em;
+}
+
+.bb-sidebar__user-texts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    min-width: 0;            /* 줄바꿈 자연스럽게 */
+}
+
+.bb-sidebar__user-name {
+    font-size: 13px;
+    font-weight: 600;
+    color: #f9fafb;
+}
+
+.bb-sidebar__user-meta {
+    font-size: 11px;
+    line-height: 1.3;
+    color: #cbd5f5;
+}
+
+.bb-sidebar__name-group {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+/* 오른쪽 뱃지 */
+.bb-sidebar__user-badge {
+    padding: 4px 10px;
+    border-radius: 999px;
+    background: #ecfdf5;
+    color: #059669;
+    font-size: 11px;
+    font-weight: 600;
+}
+
+.bb-sidebar__user-inline {
+    display: flex;
+    gap: 8px;
+}
+
+.bb-sidebar__user-inline--spaced {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+
+/* 로그인 상태 → 가운데 정렬 */
+.bb-sidebar__user-inline--center {
+    justify-content: center;
+}
+
+.bb-sidebar__inline-btn {
+    padding: 6px 10px;
+    background: rgba(255,255,255,0.08);
+    color: #e5e7eb;
+    font-size: 12px;
+    border-radius: 999px;
+    text-decoration: none;
+    border: 1px solid rgba(255,255,255,0.16);
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    transition: background .12s ease, opacity .12s ease;
+}
+
+.bb-sidebar__inline-btn:hover {
+    background: rgba(255,255,255,0.16);
+    opacity: 1;
+}
+
+/* 로그아웃 전용 색감 */
+.bb-sidebar__inline-btn--logout {
+    color: #fca5a5;
+    border-color: rgba(251,113,133,0.25);
+    cursor: pointer;
+}
+
+.bb-sidebar__inline-btn--logout:hover {
+    background: rgba(251,113,133,0.14);
+    color: #f87171;
+}
+
+/* 게스트 전용 약간 더 부드러운 아바타 색 */
+.bb-sidebar__user-avatar--guest {
+    background: linear-gradient(135deg, #22c55e, #16a34a);
+    opacity: 0.9;
+}
+
+/* 회원가입 버튼을 조금 더 라이트하게 */
+.bb-sidebar__inline-btn--outline {
+    background: transparent;
+    border: 1px solid rgba(148, 163, 184, 0.6);
+}
+
+/* Header brand link (Saebom Board 클릭 영역) */
+.bb-header__brand-link {
+    text-decoration: none;
+    color: inherit;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    margin-bottom: 6px;
+}
+
+/* Brand 아래에 페이지 타이틀 묶음 */
+.bb-header__page {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+/* 햄버거 버튼 기본은 데스크탑에서 숨김 */
+.bb-header__menu-btn {
+    display: none;
+    align-items: center;       /* 버튼 안에서 아이콘 수직 가운데 */
+    justify-content: center;   /* 버튼 안에서 아이콘 수평 가운데 */
+    width: 32px;
+    height: 32px;
+    padding: 0;
+    border-radius: 999px;
+    border: 1px solid #e5e7eb;
+    background: #ffffff;
+    cursor: pointer;
+}
+
+/* 아이콘 컨테이너 */
+.bb-header__menu-icon {
+    position: relative;
+    width: 14px;   /* 햄버거 가로 길이 */
+    height: 10px;  /* 햄버거 전체 높이 */
+}
+
+/* 3줄 공통 스타일 */
+.bb-header__menu-icon::before,
+.bb-header__menu-icon::after,
+.bb-header__menu-icon span {
+    content: "";
+    position: absolute;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: #0f172a; /* 짙은 남색/검정 느낌 */
+    border-radius: 999px;
+}
+
+/* 가운데 줄 */
+.bb-header__menu-icon span {
+    top: 4px;
+}
+
+/* 위/아래 줄 */
+.bb-header__menu-icon::before {
+    top: 0;
+}
+
+.bb-header__menu-icon::after {
+    bottom: 0;
+}
+
+/* 사이드바 열렸을 때 스크롤 잠그기 */
+.bb-body--no-scroll {
+    overflow: hidden;
+}
+
+/* 사이드바 백드롭 기본 숨김 (데스크탑) */
+.bb-sidebar-backdrop {
+    display: none;
+}
+
 /* Main area */
 
 .bb-main {
@@ -656,24 +864,6 @@ tbody td a:hover {
     justify-content: space-between;
 }
 
-/* Responsive */
-
-@media (max-width: 960px) {
-    .bb-sidebar {
-        display: none;
-    }
-
-    .bb-main {
-        padding: 16px 14px 24px;
-    }
-
-    .bb-header {
-        flex-direction: column;
-        align-items: flex-start;
-        gap: 6px;
-    }
-}
-
 /* ===========================
    Login Page
    =========================== */
@@ -752,7 +942,7 @@ tbody td a:hover {
 /* 로그인 버튼 */
 .bb-login-btn {
     width: 100%;
-    margin-top: 12px;
+    margin-top: 22px;
     height: 40px;
     display: inline-flex;
     align-items: center;
@@ -797,59 +987,6 @@ tbody td a:hover {
 
 .bb-info-box a:hover {
     color: var(--bs-primary-dark);
-}
-
-/* ===========================
-   Sidebar Inline User Buttons
-   =========================== */
-
-/* 공통 영역 */
-.bb-sidebar__user-inline {
-    display: flex;
-    gap: 8px;
-}
-
-/* 로그인 상태 → 가운데 정렬 */
-.bb-sidebar__user-inline--center {
-    justify-content: center;
-}
-
-/* 비로그인 상태 → 오른쪽 정렬 */
-.bb-sidebar__user-inline--right {
-    justify-content: flex-end;
-}
-
-.bb-sidebar__inline-btn {
-    padding: 6px 10px;
-    background: rgba(255,255,255,0.08);
-    color: #e5e7eb;
-    font-size: 12px;
-    border-radius: 999px;
-    text-decoration: none;
-    border: 1px solid rgba(255,255,255,0.16);
-
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-
-    transition: background .12s ease, opacity .12s ease;
-}
-
-.bb-sidebar__inline-btn:hover {
-    background: rgba(255,255,255,0.16);
-    opacity: 1;
-}
-
-/* 로그아웃 전용 색감 */
-.bb-sidebar__inline-btn--logout {
-    color: #fca5a5;
-    border-color: rgba(251,113,133,0.25);
-    cursor: pointer;
-}
-
-.bb-sidebar__inline-btn--logout:hover {
-    background: rgba(251,113,133,0.14);
-    color: #f87171;
 }
 
 /* ===========================
@@ -959,61 +1096,6 @@ tbody td a:hover {
 }
 
 /* ===========================
-   Profile header
-   =========================== */
-
-.bb-profile-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-}
-
-.bb-profile-main {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.bb-profile-avatar {
-    width: 40px;
-    height: 40px;
-    border-radius: 999px;
-    background: linear-gradient(135deg, #22c55e, #16a34a);
-    color: #ffffff;
-    font-weight: 700;
-    font-size: 18px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    letter-spacing: -0.03em;
-}
-
-.bb-profile-name {
-    font-size: 15px;
-    font-weight: 600;
-    color: #111827;
-}
-
-.bb-profile-meta {
-    display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-    color: #6b7280;
-}
-
-/* 오른쪽 뱃지 */
-.bb-profile-badge {
-    padding: 4px 10px;
-    border-radius: 999px;
-    background: #ecfdf5;
-    color: #059669;
-    font-size: 11px;
-    font-weight: 600;
-}
-
-/* ===========================
    Profile (My Page)
    =========================== */
 
@@ -1062,15 +1144,6 @@ tbody td a:hover {
     word-break: break-all;
 }
 
-/* 모바일 대응 */
-@media (max-width: 640px) {
-    .bb-profile-row {
-        grid-template-columns: 110px 1fr;
-        padding: 8px 12px;
-        font-size: 13px;
-    }
-}
-
 /* 하단 버튼 영역 여백 */
 .bb-profile-actions {
     margin-top: 20px;
@@ -1078,7 +1151,7 @@ tbody td a:hover {
 
 /* My Page card width fix */
 .bb-profile-container {
-    max-width: 600px;         /* 너무 넓지 않게 제한 */
+    max-width: 100%;
 }
 
 /* 작은 힌트 텍스트 */
@@ -1090,8 +1163,49 @@ tbody td a:hover {
 
 /* 회원 탈퇴 영역 */
 .bb-profile-danger {
-    margin-top: 12px;
-    text-align: right;
+    margin-top: 20px;
+    padding: 12px 14px;
+    border-radius: 14px;
+    background: #fef2f2;            /* 연한 레드 배경 */
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.bb-profile-danger__texts {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+}
+
+.bb-profile-danger__title {
+    font-size: 12px;
+    font-weight: 600;
+    color: #b91c1c;                 /* red-700 */
+}
+
+.bb-profile-danger__desc {
+    font-size: 12px;
+    color: #6b7280;                 /* gray-500 */
+}
+
+/* 탈퇴 버튼: 과하게 크지 않은 아웃라인 버튼 */
+.bb-profile-danger__btn {
+    align-self: center;
+    padding: 6px 14px;
+    border-radius: 999px;
+    border: 1px solid #f97373;      /* red-400 */
+    background: #ffffff;
+    font-size: 12px;
+    color: #b91c1c;
+    text-decoration: none;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+.bb-profile-danger__btn:hover {
+    background: #fee2e2;            /* hover 시 살짝만 강조 */
 }
 
 .bb-link-danger {
@@ -1129,4 +1243,235 @@ tbody td a:hover {
     margin-bottom: 4px;
     color: #b91c1c;
     line-height: 1.5;
+}
+
+/* 기본: 모바일 카드 레이아웃 숨김 (데스크탑에서만 테이블 보이게) */
+.bb-article-list-mobile {
+    display: none;
+}
+
+.bb-article-actions-bottom {
+    margin-top: 12px;
+    display: flex;
+    justify-content: flex-end;  /* 우측 정렬 */
+    align-items: center;
+    gap: 8px;
+}
+
+.bb-article-actions-bottom form {
+    margin: 0;
+    display: inline-block;      /* 줄바꿈 방지 */
+}
+
+/* 결과 메시지 공통 블록 */
+.bb-result {
+    text-align: center;
+    padding: 24px 20px 20px;
+}
+
+.bb-result__icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 999px;
+    margin: 0 auto 14px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 26px;
+    font-weight: 700;
+    color: #ffffff;
+}
+
+/* 성공용 아이콘 배경 */
+.bb-result__icon--success {
+    background: linear-gradient(135deg, #10b981, #22c55e);
+    box-shadow: 0 10px 25px rgba(16, 185, 129, 0.35);
+}
+
+/* 위험/탈퇴용 아이콘 배경 */
+.bb-result__icon--danger {
+    background: linear-gradient(135deg, #ef4444, #f97373);
+    box-shadow: 0 10px 25px rgba(248, 113, 113, 0.35);
+}
+
+.bb-result__title {
+    font-size: 18px;
+    font-weight: 700;
+    color: #020617;
+    margin-bottom: 6px;
+}
+
+.bb-result__subtitle {
+    font-size: 13px;
+    color: #6b7280;
+    margin-bottom: 14px;
+}
+
+.bb-result__text {
+    font-size: 13px;
+    color: #4b5563;
+    line-height: 1.6;
+    margin: 0;
+}
+
+/* 하단 버튼 영역 정렬 */
+.bb-result-actions {
+    margin-top: 18px;
+    display: flex;
+    justify-content: center;
+}
+
+/* Responsive */
+@media (max-width: 960px) {
+
+    .bb-layout {
+        min-height: 100vh;
+    }
+
+    /* 사이드바: 화면 밖으로 숨겨놨다가, 클래스 붙으면 들어오게 */
+    .bb-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        bottom: 0;
+        width: 220px;
+        z-index: 1000;
+        transform: translateX(-100%);            /* 기본: 왼쪽 밖으로 숨김 */
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .bb-sidebar--open {
+        transform: translateX(0);                /* open일 때 왼쪽에서 슬라이드 인 */
+        box-shadow: 14px 0 40px rgba(15, 23, 42, 0.45);
+    }
+
+    .bb-main {
+        padding: 14px 14px 24px;
+    }
+
+    .bb-header {
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        gap: 10px;
+    }
+
+    .bb-header__title-group {
+        flex-direction: row;
+        gap: 8px;
+    }
+
+    /* 모바일에서만 햄버거 버튼 보이게 */
+    .bb-header__menu-btn {
+        display: inline-flex;
+        margin-top: 4px;
+    }
+
+    /* 사이드바 뒷배경(어두운 레이어) */
+    .bb-sidebar-backdrop {
+        position: fixed;
+        inset: 0;
+        background: rgba(15, 23, 42, 0.45);
+        z-index: 900;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.2s ease;
+    }
+
+    .bb-sidebar-backdrop--visible {
+        opacity: 1;
+        pointer-events: auto;
+    }
+}
+
+/* 모바일 카드 레이아웃 */
+@media (max-width: 768px) {
+
+    .bb-login-wrapper {
+        align-items: flex-start;  /* 위쪽 정렬 */
+        padding-top: 100px;        /* 위에만 여백 */
+    }
+
+    .bb-signup-wrapper {
+        align-items: flex-start;  /* 위쪽 정렬 */
+        padding-top: 100px;        /* 위에만 여백 */
+    }
+
+    .bb-login-card {
+        max-width: 100%;          /* 좌우 꽉 차게 (여백은 padding으로) */
+    }
+
+    .bb-profile-row {
+        grid-template-columns: 110px 1fr;
+        padding: 8px 12px;
+        font-size: 13px;
+    }
+
+    /* 테이블 감추기 */
+    .bb-article-table-desktop {
+        display: none;
+    }
+
+    /* 카드 리스트 보이기 */
+    .bb-article-list-mobile {
+        display: block;
+        margin-top: 12px;
+    }
+
+    .bb-article-card-list {
+        list-style: none;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .bb-article-card {
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 12px 14px;
+        box-shadow: 0 10px 30px rgba(15, 23, 42, 0.08);
+    }
+
+    .bb-article-card__link {
+        display: block;
+        text-decoration: none;
+        color: inherit;
+    }
+
+    .bb-article-card__title {
+        font-size: 14px;
+        font-weight: 600;
+        color: #020617;
+        margin-bottom: 6px;
+        line-height: 1.4;
+    }
+
+    .bb-article-card__meta {
+        font-size: 11px;
+        color: #6b7280;
+        display: flex;
+        flex-wrap: wrap;
+        gap: 4px;
+        align-items: center;
+    }
+
+    .bb-article-card__dot {
+        color: #9ca3af;
+    }
+
+    .bb-article-card__views span {
+        margin-left: 2px;
+    }
+
+    .bb-article-actions-bottom {
+        margin-top: 10px;
+        gap: 6px;
+    }
+
+    .bb-card__header {
+        display: block;
+    }
+
 }

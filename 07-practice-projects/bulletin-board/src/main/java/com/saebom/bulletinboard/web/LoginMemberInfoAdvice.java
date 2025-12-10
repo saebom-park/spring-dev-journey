@@ -1,5 +1,7 @@
 package com.saebom.bulletinboard.web;
 
+import com.saebom.bulletinboard.domain.Member;
+import com.saebom.bulletinboard.service.MemberService;
 import com.saebom.bulletinboard.session.SessionConst;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
@@ -10,6 +12,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 @ControllerAdvice
 public class LoginMemberInfoAdvice {
 
+    private final MemberService memberService;
+
+    // constructor
+    public LoginMemberInfoAdvice(MemberService memberService) { this.memberService = memberService;}
+
     @ModelAttribute
     public void addLoginMemberInfo(Model model, HttpServletRequest request) {
 
@@ -17,7 +24,8 @@ public class LoginMemberInfoAdvice {
 
         Long loginMemberId = (session != null) ? (Long) session.getAttribute(SessionConst.LOGIN_MEMBER) : null;
         if (loginMemberId != null) {
-            model.addAttribute("loginMemberId", loginMemberId);
+            Member member = memberService.getMember(loginMemberId);
+            model.addAttribute("loginMember", member);
         }
 
         String requestURI = request.getRequestURI();

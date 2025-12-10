@@ -23,7 +23,7 @@ public class WebConfig implements WebMvcConfigurer {
                         "/logout",
                         "/css/**",
                         "/js/**",
-                        "/images/**",
+                        "/img/**",
                         "/error",
                         "/members/me/withdraw/success"
                 );

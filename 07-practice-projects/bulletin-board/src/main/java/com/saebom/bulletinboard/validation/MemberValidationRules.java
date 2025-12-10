@@ -16,6 +16,6 @@ public class MemberValidationRules {
 
     // name
     public static final int NAME_MIN = 2;
-    public static final int NAME_MAX = 40;
+    public static final int NAME_MAX = 4;
 
 }

@@ -165,9 +165,6 @@ public class MemberController {
             Model model
     ) {
 
-        Member member = memberService.getMember(loginMemberId);
-
-        model.addAttribute("member", member);
         model.addAttribute("passwordCheckForm", new PasswordCheckForm());
 
         return "member/password-check";
@@ -178,12 +175,8 @@ public class MemberController {
             @Valid @ModelAttribute("passwordCheckForm") PasswordCheckForm form,
             BindingResult bindingResult,
             @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
-            HttpServletRequest request,
-            Model model
+            HttpServletRequest request
     ) {
-
-        Member member = memberService.getMember(loginMemberId);
-        model.addAttribute("member", member);
 
         if (bindingResult.hasErrors()) {
             return "member/password-check";
@@ -227,7 +220,6 @@ public class MemberController {
         }
 
         Member member = memberService.getMember(loginMemberId);
-        model.addAttribute("member", member);
         model.addAttribute("passwordChangedAt", member.getPasswordChangedAt());
         model.addAttribute("passwordChangeForm", new PasswordChangeForm());
 
@@ -253,7 +245,6 @@ public class MemberController {
         }
 
         Member member = memberService.getMember(loginMemberId);
-        model.addAttribute("member", member);
         model.addAttribute("passwordChangedAt", member.getPasswordChangedAt());
 
         if (bindingResult.hasErrors()) {
@@ -274,13 +265,8 @@ public class MemberController {
 
     @GetMapping("/me/password/success")
     public String passwordSuccessForm(
-            @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
-            Model model
+            @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId
     ) {
-
-        Member member = memberService.getMember(loginMemberId);
-        model.addAttribute("member", member);
-
         return "member/password-success";
     }
 
@@ -290,9 +276,6 @@ public class MemberController {
             Model model
     ) {
 
-        Member member = memberService.getMember(loginMemberId);
-
-        model.addAttribute("member", member);
         model.addAttribute("memberWithdrawForm", new MemberWithdrawForm());
 
         return "member/withdraw";
@@ -303,12 +286,8 @@ public class MemberController {
             @Valid @ModelAttribute("memberWithdrawForm") MemberWithdrawForm form,
             BindingResult bindingResult,
             @SessionAttribute(SessionConst.LOGIN_MEMBER) Long loginMemberId,
-            HttpServletRequest request,
-            Model model
+            HttpServletRequest request
     ) {
-
-        Member member = memberService.getMember(loginMemberId);
-        model.addAttribute("member", member);
 
         if (bindingResult.hasErrors()) {
             return "member/withdraw";

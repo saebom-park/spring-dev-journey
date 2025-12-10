@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout('게시글 상세', ~{::content})}">
+      th:replace="~{layout :: layout(~{::content})}">
 <body>
 <section th:fragment="content" class="bb-stack bb-stack--lg">
 
@@ -24,32 +24,7 @@
                             2025-01-01 12:00
                         </span>
                     </span>
-                    <span>
-                        <span class="bb-meta-label">수정일</span>
-                        <span th:text="${#temporals.format(article.updatedAt, 'yyyy-MM-dd HH:mm')}">
-                            2025-01-01 12:00
-                        </span>
-                    </span>
                 </div>
-            </div>
-            <div class="bb-actions bb-actions--right">
-                <a th:href="@{/articles}"
-                   class="bb-btn bb-btn--ghost bb-btn--sm">
-                    목록
-                </a>
-                <a th:if="${article.memberId == loginMemberId}"
-                   th:href="@{/articles/{id}/edit(id=${article.id})}"
-                   class="bb-btn bb-btn--subtle bb-btn--sm">
-                    수정
-                </a>
-                <form th:if="${article.memberId == loginMemberId}"
-                      th:action="@{/articles/{id}/delete(id=${article.id})}"
-                      method="post">
-                    <button type="submit"
-                            class="bb-btn bb-btn--danger bb-btn--sm">
-                        삭제
-                    </button>
-                </form>
             </div>
         </div>
 
@@ -59,6 +34,27 @@
                 내용
             </div>
         </div>
+
+        <div class="bb-card__footer bb-article-actions-bottom">
+            <a th:href="@{/articles}"
+               class="bb-btn bb-btn--ghost bb-btn--sm">
+                목록
+            </a>
+            <a th:if="${loginMember != null and article.memberId == loginMember.id}"
+               th:href="@{/articles/{id}/edit(id=${article.id})}"
+               class="bb-btn bb-btn--subtle bb-btn--sm">
+                수정
+            </a>
+            <form th:if="${loginMember != null and article.memberId == loginMember.id}"
+                  th:action="@{/articles/{id}/delete(id=${article.id})}"
+                  method="post">
+                <button type="submit"
+                        class="bb-btn bb-btn--danger bb-btn--sm">
+                    삭제
+                </button>
+            </form>
+        </div>
+
     </div>
 
     <!-- 댓글 카드 -->
@@ -130,7 +126,7 @@
                                     2025-01-01 12:00
                                 </span>
 
-                                <span th:if="${loginMemberId != null and comment.memberId == loginMemberId}"
+                                <span th:if="${loginMember != null and comment.memberId == loginMember.id}"
                                       class="bb-comment-actions">
                                     <a th:href="@{|/articles/${article.id}?editCommentId=${comment.id}|}"
                                        class="bb-btn bb-btn--subtle bb-btn--sm">
@@ -156,7 +152,7 @@
             <hr class="bb-divider">
 
             <!-- 댓글 작성 -->
-            <div th:if="${loginMemberId != null}">
+            <div th:if="${loginMember != null}">
                 <h4 class="bb-comments__title">댓글 작성</h4>
 
                 <form th:action="@{/articles/{articleId}/comments(articleId=${article.id})}"
@@ -188,7 +184,7 @@
             </div>
 
             <!-- 비로그인 안내 -->
-            <div th:if="${loginMemberId == null}" class="bb-info-box">
+            <div th:if="${loginMember == null}" class="bb-info-box">
                 댓글을 작성하려면 <a th:href="@{/login}">로그인</a>이 필요합니다.
             </div>
 

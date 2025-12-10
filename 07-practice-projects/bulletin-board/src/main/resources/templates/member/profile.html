@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout('내 정보', ~{::content})}">
+      th:replace="~{layout :: layout(~{::content})}">
 <body>
 <section th:fragment="content" class="bb-stack bb-stack--lg">
 
@@ -13,23 +13,6 @@
         </div>
 
         <div class="bb-card__body">
-
-            <!-- 프로필 요약 헤더 (이름 + 뱃지만) -->
-            <div class="bb-profile-header">
-                <div class="bb-profile-main">
-                    <div class="bb-profile-avatar"
-                         th:text="${#strings.substring(member.name, 0, 1)}">
-                    </div>
-                    <div>
-                        <div class="bb-profile-name" th:text="${member.name}"></div>
-                    </div>
-                </div>
-
-                <!-- 간단한 뱃지(지금은 고정 텍스트, 나중에 role로 분기해도 좋음) -->
-                <div class="bb-profile-badge">
-                    일반 회원
-                </div>
-            </div>
 
             <!-- 상세 정보 테이블 (아이디/이름/이메일/가입일/최종 수정일) -->
             <dl class="bb-profile-list">
@@ -69,10 +52,19 @@
             </div>
 
             <div class="bb-profile-danger">
-                <a th:href="@{/members/me/withdraw}" class="bb-link-danger">
+                <div class="bb-profile-danger__texts">
+                    <div class="bb-profile-danger__title">계정 삭제 안내</div>
+                    <p class="bb-profile-danger__desc">
+                        Saebom Board 계정을 삭제하면 복구할 수 없습니다.
+                    </p>
+                </div>
+
+                <a th:href="@{/members/me/withdraw}"
+                   class="bb-profile-danger__btn">
                     회원 탈퇴
                 </a>
             </div>
+
 
         </div>
 

@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      th:replace="~{layout :: layout('회원 탈퇴', ~{::content})}">
+      th:replace="~{layout :: layout(~{::content})}">
 <body>
 <section th:fragment="content" class="bb-stack bb-stack--lg">
 
@@ -15,21 +15,6 @@
         </div>
 
         <div class="bb-card__body">
-
-            <div class="bb-profile-header">
-                <div class="bb-profile-main">
-                    <div class="bb-profile-avatar"
-                         th:text="${#strings.substring(member.name, 0, 1)}">
-                    </div>
-                    <div>
-                        <div class="bb-profile-name" th:text="${member.name}"></div>
-                    </div>
-                </div>
-
-                <div class="bb-profile-badge bb-profile-badge--danger">
-                    탈퇴 진행
-                </div>
-            </div>
 
             <form th:action="@{/members/me/withdraw}"
                   th:object="${memberWithdrawForm}"
