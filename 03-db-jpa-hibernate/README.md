@@ -1,73 +1,99 @@
-# 🧷 03. DB 연동 & JPA / Hibernate
-
-> 📁 폴더 위치: `03-db-jpa-hibernate/`
->
-> 자바 애플리케이션과 데이터베이스를 연결하는 다양한 방식(JDBC, DAO, JPA)을 학습합니다.
-> SQL 기초부터 JDBC 실습, DAO 구조 분리, 트랜잭션 처리까지의 흐름을 경험한 뒤,
-> ORM 기반인 JPA의 동작 방식도 실습하게 됩니다.
+# 03-db-jpa-hibernate
+Java 애플리케이션과 데이터베이스를 연동하는 여러 방식(JDBC, DAO, MyBatis, JPA)을 단계적으로 학습하는 구간입니다.  
+SQL 기초부터 JDBC 실습, DAO/트랜잭션 구조, 그리고 JPA/Hibernate를 통한 ORM까지 실습 중심으로 다룹니다.
 
 ---
 
-## ✅ 학습 목표
+## 🗂️ 구성 안내
+- `db-*` 폴더 : SQL, JDBC, DAO, 트랜잭션 등 **DB 기본/실습 단계**
+- `dba-*` 폴더 : MyBatis, JPA, 연관관계 매핑, 트랜잭션 전파 등 **심화 단계**
+- 각 폴더는 개별 Gradle 프로젝트로 구성되며, `src/`와 `.md` 문서가 함께 존재합니다.
 
-- 관계형 데이터베이스 구조와 SQL 기본 문법 학습  
-- JDBC를 활용한 DB 연결 및 CRUD 처리 흐름 체득  
-- DAO 패턴과 트랜잭션 처리 방식 적용 실습  
-- 이후 JPA 기반 ORM 구조와 영속성 컨텍스트 이해  
+---
+
+## 🎯 학습 목표
+- 관계형 데이터베이스 구조와 SQL 기본 문법을 이해한다.
+- JDBC를 활용해 DB 연결 및 CRUD 처리 흐름을 직접 구현한다.
+- DAO 패턴과 트랜잭션 처리를 적용해 **DB 접근 로직과 비즈니스 로직을 분리**한다.
+- MyBatis를 통해 SQL 중심 매핑 구조를 경험한다.
+- JPA/Hibernate를 사용한 ORM 구조와 영속성 컨텍스트 개념을 이해한다.
+- 이후 서비스 프로젝트에서 일관된 DB 연동 구조를 설계할 수 있는 기반을 마련한다.
 
 ---
 
 ## 🧠 전체 학습 구성 (총 11단계)
 
-| 챕터                       | 코드   | 주제                           | 폴더명 |
-|--------------------------|------|------------------------------|------------------------------|
-| DB 연동 기초 (JDBC & SQL)    | DB-1 | 관계형 데이터베이스 구조 이해             | `db-1-rdb-structure` |
-| 〃                        | DB-2 | SQL 문법 기초 실습                 | `db-2-sql-basic` |
-| 〃                        | DB-3 | JDBC 기반 DB 연결 실습             | `db-3-jdbc-basic` |
-| 〃                        | DB-4 | CRUD 흐름과 JDBC 처리 구조 익히기      | `db-4-crud-basic` |
-| 〃                        | DB-5 | DAO 패턴 설계와 역할 분리             | `db-5-dao-pattern` |
-| 〃                        | DB-6 | 트랜잭션 처리 흐름과 롤백 제어            | `db-6-transaction` |
-| DB 연동 심화 (MyBatis / JPA) | DBA-1 | MyBatis 기본 흐름 및 매핑 구조         | `dba-1-mybatis-basic` |
-| 〃                        | DBA-2 | 동적 SQL 및 resultMap 적용 실습      | `dba-2-dynamic-sql` |
-| 〃                        | DBA-3 | JPA 엔티티 매핑 및 Repository 설계     | `dba-3-jpa-entity-repository` |
-| 〃                        | DBA-4 | 연관관계 매핑 실습 (단방향/양방향)         | `dba-4-1-relation-mapping-unidirectional`<br>`dba-4-2-relation-mapping-bidirectional` |
-| 〃                        | DBA-5 | 트랜잭션 전파와 영속성 컨텍스트 이해        | `dba-5-transaction-cascade` |
+| 구분                       | 코드    | 주제                            | 폴더명                                                                                   |
+|--------------------------|-------|-------------------------------|---------------------------------------------------------------------------------------|
+| DB 연동 기초 (JDBC & SQL)    | DB-1  | 관계형 데이터베이스 구조 이해              | `db-1-rdb-structure`                                                                  |
+| 〃                        | DB-2  | SQL 문법 기초 실습                  | `db-2-sql-basic`                                                                      |
+| 〃                        | DB-3  | JDBC 기반 DB 연결 & 기본 흐름         | `db-3-jdbc-basic`                                                                     |
+| 〃                        | DB-4  | JDBC로 CRUD 처리 구조 익히기          | `db-4-crud-basic`                                                                     |
+| 〃                        | DB-5  | DAO 패턴 설계와 역할 분리              | `db-5-dao-pattern`                                                                    |
+| 〃                        | DB-6  | 트랜잭션 처리 흐름과 롤백 제어             | `db-6-transaction`                                                                    |
+| DB 연동 심화 (MyBatis / JPA) | DBA-1 | MyBatis 기본 흐름 및 매핑 구조         | `dba-1-mybatis-basic`                                                                 |
+| 〃                        | DBA-2 | 동적 SQL 및 resultMap 적용 실습      | `dba-2-dynamic-sql`                                                                   |
+| 〃                        | DBA-3 | JPA 엔티티 매핑 및 Repository 설계    | `dba-3-jpa-entity-repository`                                                         |
+| 〃                        | DBA-4 | 연관관계 매핑 실습 (단방향 / 양방향)        | `dba-4-1-relation-mapping-unidirectional`<br>`dba-4-2-relation-mapping-bidirectional` |
+| 〃                        | DBA-5 | 트랜잭션 전파와 영속성 컨텍스트, cascade 이해 | `dba-5-transaction-cascade`                                                           |
 
 ---
 
-## 📂 문서 구성 예시
+## 📂 문서 구성 규칙
 
-| 파일명                                              | 설명                                   |
-|--------------------------------------------------|--------------------------------------|
-| `db-1-rdb-structure.md`                           | RDB 구조와 테이블 설계 흐름 정리                 |
-| `db-2-sql-basic.md`                               | SQL 문법 예시 및 실습 미션 정리                 |
-| `db-3-jdbc-basic.md`                              | JDBC 연결/CRUD 실습 정리                      |
-| `db-4-crud-basic.md`                              | JDBC 기반 CRUD 처리 구조 정리                  |
-| `db-5-dao-pattern.md`                             | DAO 패턴 설계와 역할 분리 정리                  |
-| `db-6-transaction.md`                             | 트랜잭션 처리 흐름과 롤백 제어 정리               |
-| `dba-1-mybatis-basic.md`                          | MyBatis 기본 흐름 및 매퍼 구조 정리              |
-| `dba-2-dynamic-sql.md`                            | 동적 SQL, resultMap 적용 정리                 |
-| `dba-3-jpa-entity-repository.md`                  | JPA 엔티티 매핑 & Repository 설계 정리         |
-| `dba-4-1-relation-mapping-unidirectional.md`      | 연관관계 매핑 실습 — 단방향                      |
-| `dba-4-2-relation-mapping-bidirectional.md`       | 연관관계 매핑 실습 — 양방향                      |
-| `dba-5-transaction-cascade.md`                    | 트랜잭션 전파 & 영속성 컨텍스트 정리               |
+각 단계(폴더)는 다음 형식에 맞춰 문서를 구성합니다.  
+(예: `db-3-jdbc-basic`, `dba-2-dynamic-sql`, `dba-3-jpa-entity-repository` 등)
+
+| 파일명 형식                   | 설명                                           |
+|--------------------------|----------------------------------------------|
+| `<코드>-<주제>.md`           | 기본 수업자료 (개념 요약, 예시 코드, 실습 미션 포함)             |
+| `<코드>-<주제>-questions.md` | 학습 중 나온 질문과 답변 정리 (필요 시 생성)                  |
+| `<코드>-<주제>-mistakes.md`  | 실습 중 발생한 오류·실수 기록 (필요 시 생성)                  |
+| `<코드>-<주제>-extra.md`     | 개념 정리만으로 부족한 부분을 보완하는 **추가 개념 정리** (필요 시 생성) |
+| `<코드>-<주제>-details.md`   | 예시 코드 전체 흐름을 해설하는 **실행 흐름 분석 문서** (필요 시 생성)  |
+
+> 모든 접두어 `<코드>-<주제>`는 폴더명과 동일한 패턴을 사용합니다.  
+> (`db-3-jdbc-basic`, `dba-1-mybatis-basic` 등)
 
 ---
 
 ## 🧭 학습 흐름 요약
 
-### 1. DB 연동 기초 (JDBC & SQL)
-- 관계형 DB 구조와 SQL 기초를 학습하고  
-- JDBC로 DB를 직접 연결해 데이터 처리 실습  
-- CRUD → DAO → 트랜잭션 흐름까지 정복  
+### 1. DB 연동 기초 (DB-1 ~ DB-6)
+1. **RDB 구조 이해** → 테이블, PK/FK, 정규화 기초
+2. **SQL 기본 문법** → SELECT, INSERT, UPDATE, DELETE 및 조건/정렬
+3. **JDBC 연결 흐름** → 드라이버 로딩, 커넥션, Statement, ResultSet 처리
+4. **CRUD 구조화** → 반복되는 JDBC 코드를 메서드/클래스로 분리
+5. **DAO 패턴 도입** → 데이터 접근 계층과 비즈니스 로직 분리
+6. **트랜잭션 처리** → commit / rollback, 예외 발생 시 롤백 전략
 
-### 2. DB 연동 심화 (MyBatis / JPA)
-- MyBatis로 SQL 중심 매핑 구조 경험  
-- 이후 JPA의 객체 중심 ORM 구조로 전환  
-- 영속성 컨텍스트와 트랜잭션 전파 개념까지 확장  
+### 2. DB 연동 심화 (DBA-1 ~ DBA-5)
+1. **MyBatis**로 SQL과 자바 코드의 결합도 낮추기 (매퍼 XML, 인터페이스 매핑)
+2. **동적 SQL**과 `resultMap`으로 유연한 쿼리 작성 및 컬럼-필드 매핑 정리
+3. **JPA 엔티티 & Repository** 설계로 객체 중심 데이터 접근 구조 익히기
+4. **연관관계 매핑(단방향/양방향)**을 통해 도메인 모델 간 관계 표현
+5. **영속성 컨텍스트와 트랜잭션 전파, cascade**를 통해 JPA 내부 동작 이해
 
 ---
 
-> “JDBC로 시작해 DAO로 구조화하고,  
-> 트랜잭션 흐름을 익히며,  
-> MyBatis & JPA로 유지보수성과 확장성을 갖춘다.”
+## 📌 문서 종류별 기록 원칙
+
+### `-extra.md`
+- 개념 위주로 복기할 필요가 있는 주제를 **추가로 구조화**하는 문서
+- 표, 단계별 정리, 간단한 샘플 코드 등을 사용해 흐름을 압축 정리
+- 예: JDBC 5단계 흐름, 커넥션/Statement/ResultSet 관계 정리
+
+### `-details.md`
+- 특정 실습 코드의 **전체 실행 흐름을 해설**하는 문서
+- 파일 구조 → 주요 클래스/설정 파일 → 실행 순서 → 흐름 요약 순서로 정리
+- 예: MyBatis 실습에서 `mybatis-config.xml`, Mapper XML, 도메인 객체, 매퍼 인터페이스, 실행 클래스 간 관계 설명
+
+### `-questions.md`
+- 학습 중 나온 질문을 Q/A 형식으로 정리
+- 질문은 그대로 기록하고, 답변은 핵심 위주로 정리
+- 실무에서 어떤 선택을 하는지, 이유를 함께 남기는 것을 원칙으로 함
+
+### `-mistakes.md`
+- 실습 중 발생한 오류·실수를 실제 코드와 함께 기록
+- 잘못된 코드 → 수정 코드 → 원인 → 요약 순으로 정리
+- 같은 실수를 반복하지 않도록 **패턴 중심**으로 남긴다

@@ -1,4 +1,4 @@
-# ☀️ Algorithm Curriculum (3-Month Intensive)
+# ☀️ Algorithm Curriculum
 
 > 📍 위치: `00-algorithms/algorithms-curriculum/`
 >
@@ -51,4 +51,3 @@ algorithms-curriculum/
 - 모든 파일은 **All-in-One** 포맷 유지  
 - 오탈자 수정은 즉시 반영 후 커밋  
 - 매 Phase 종료 시 `README.md`에 완료일 갱신  
-
