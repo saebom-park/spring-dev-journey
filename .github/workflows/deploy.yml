@@ -19,7 +19,7 @@ jobs:
           java-version: '17'
 
       - name: Gradle build
-        working-directory: 06-deployment
+        working-directory: 07-deployment
         run: |
           chmod +x gradlew
           ./gradlew clean build -x test
@@ -30,7 +30,7 @@ jobs:
           host: ${{ secrets.EC2_HOST }}
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_KEY }}
-          source: "06-deployment/build/libs/*.jar"
+          source: "07-deployment/build/libs/*.jar"
           target: "/opt/app/springlab23/"
 
       - name: Restart service on EC2
