@@ -15,6 +15,15 @@
 | 💳 membership-payment | Spring Boot + JPA     | 등급 / 결제 / 포인트 / 정산        | ✔ Role 기반 권한 + 도메인 정책 기반 인가            | Vue |
 | 🗂 todo-app           | Spring Boot + JPA     | 할 일 / 태그                      | 선택적                                    | React |
 
+---
+
+## 🔗 서비스 링크
+
+- 🧱 **bulletin-board**
+  - 📁 프로젝트 README:  
+    👉 [bulletin-board 바로가기](https://github.com/saebomm/bulletin-board)
+
+> 다른 서비스 프로젝트들은 순차적으로 구현 및 분리 예정입니다.
 
 ---
 
@@ -26,7 +35,7 @@
 - 예외 처리, DTO 분리, API 응답 규칙 등 서비스 품질 개선
 - 배포(EC2 + Nginx + HTTPS + CI/CD)를 통한 운영 경험 축적
 
-### 📌 프로젝트별 목표 강화점
+### 📌 프로젝트별 목표
 
 #### 🧱 bulletin-board
 - MyBatis + 스프링 3계층 구조 완성
