@@ -21,7 +21,7 @@
 
 - 🧱 **bulletin-board**
   - 📁 프로젝트 README:  
-    👉 [bulletin-board 바로가기](https://github.com/saebomm/bulletin-board)
+    👉 [bulletin-board 바로가기](https://github.com/saebom-park/bulletin-board)
 
 > 다른 서비스 프로젝트들은 순차적으로 구현 및 분리 예정입니다.
 
