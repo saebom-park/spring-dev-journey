@@ -1,18 +1,10 @@
 # Algorithm Curriculum Master Schedule
 
 > 전체 알고리즘 학습 로드맵 (Phase0~Phase5)
-목적: 알고리즘 사고력을 단계별로 체화하기 위한 구조적 커리큘럼
-> 
 
 ---
 
 ## 🧩 Phase 0. Java 문법 리빌드 (5 Days)
-
-> 목표: 입력 → 조건 → 반복 → 누적 → 비교 → 출력
-> 
-> 
-> 손코딩 루틴으로 완전 체화
-> 
 
 ### Day01 – 기본 문법 & 제어문 기초
 
@@ -207,16 +199,7 @@
 
 ---
 
-## 🧭 운영 규칙 & 체크리스트
-
-- **파일명 규칙:** `dayNN-topic.md` (예: `day08-prefix-basic.md`)
-- **섹션 고정:** 💡→🧾→📌→🌱→📒→🐞
-- **시간 기록:** 설계/구현/디버그 시간을 상단에 표기 (예: 10m/20m/5m)
-- **템플릿:** 개념 요약은 Phase0=간략, Phase1~5=교재형(V3) 사용
-
----
-
 ## 📌 부록: 템플릿 파일들
 
-- `templates/concept-v3.md` (교재형 개념 섹션 골격)
+- `templates/concept.md` (교재형 개념 섹션 골격)
 - `templates/day-file-skeleton.md` (All-in-One 골격)

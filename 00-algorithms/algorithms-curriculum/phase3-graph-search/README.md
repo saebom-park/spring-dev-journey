@@ -17,14 +17,7 @@
 ## 🧭 진행 방식
 
 1. 💡 개념 문서: `concept-v3.md` 기반 교재형 정리  
-2. 🧾 문제 풀이: `day-file-skeleton.md` 기반 All-in-One 작성    
-
----
-
-## 🌿 관리 원칙
-
-- 모든 파일은 **All-in-One 포맷** 유지  
-- 코드와 설명은 반드시 함께 작성 (온이 풀이 포함)
+2. 🧾 문제 풀이: `day-file-skeleton.md` 기반 All-in-One 작성
 
 ---
 
