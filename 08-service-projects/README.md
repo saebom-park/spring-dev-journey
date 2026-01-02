@@ -8,12 +8,12 @@
 
 ## 🗂️ 프로젝트 구성
 
-| 프로젝트명           | 기술 스택             | 주요 도메인                      | 보안 수준                                  | 프론트 |
-|----------------------|------------------------|----------------------------------|----------------------------------------|--------|
-| 🧱 bulletin-board     | Spring Boot + MyBatis | 회원 / 게시글 / 댓글              | ✔ 세션 로그인 → Security 인증·인가 적용 예정        | Thymeleaf |
-| 🛒 mini-shop (Main)   | Spring Boot + JPA     | 상품 / 주문 / 재고 / 결제 / 포인트 | ✔ 실서비스급 보안 (JWT, 관리자 권한, 도메인 정책 기반 인가) | Vue |
-| 💳 membership-payment | Spring Boot + JPA     | 등급 / 결제 / 포인트 / 정산        | ✔ Role 기반 권한 + 도메인 정책 기반 인가            | Vue |
-| 🗂 todo-app           | Spring Boot + JPA     | 할 일 / 태그                      | 선택적                                    | React |
+| 프로젝트명                  | 기술 스택             | 주요 도메인                      | 보안 수준                                  | 프론트 |
+|------------------------|------------------------|----------------------------------|----------------------------------------|--------|
+| 🧱 bulletin-board      | Spring Boot + MyBatis | 회원 / 게시글 / 댓글              | ✔ 세션 로그인 → Security 인증·인가 적용 예정        | Thymeleaf |
+| 🛒 keeb-station (Main) | Spring Boot + JPA     | 상품 / 주문 / 재고 / 결제 / 포인트 | ✔ 실서비스급 보안 (JWT, 관리자 권한, 도메인 정책 기반 인가) | Vue |
+| 💳 membership-payment  | Spring Boot + JPA     | 등급 / 결제 / 포인트 / 정산        | ✔ Role 기반 권한 + 도메인 정책 기반 인가            | Vue |
+| 🗂 todo-app            | Spring Boot + JPA     | 할 일 / 태그                      | 선택적                                    | React |
 
 ---
 
@@ -22,6 +22,10 @@
 - 🧱 **bulletin-board**
   - 📁 프로젝트 README:  
     👉 [bulletin-board 바로가기](https://github.com/saebom-park/bulletin-board)
+
+- 🛒 **keeb-station**
+    - 📁 프로젝트 README:  
+      👉 [keeb-station 바로가기](https://github.com/saebom-park/keeb-station)
 
 > 다른 서비스 프로젝트들은 순차적으로 구현 및 분리 예정입니다.
 
@@ -41,7 +45,7 @@
 - MyBatis + 스프링 3계층 구조 완성
 - 로그인/권한 + CRUD + 페이징/조회수 + 검색 기능 구현
 
-#### 🛒 mini-shop (Main)
+#### 🛒 keeb-station (Main)
 - JPA 활용한 복잡한 도메인 모델 설계(주문–주문상품–재고–결제 흐름)
 - 실서비스급 보안(JWT 인증 + 관리자 권한 + 정책)
 - Vue 기반 관리자 대시보드
@@ -61,22 +65,6 @@
 
 ---
 
-## 📂 폴더 구조
-
-```
-08-service-projects/
- ├── bulletin-board/
- │   └── README.md
- ├── todo-app/
- │   └── README.md
- ├── mini-shop/
- │   └── README.md
- └── membership-payment/
-     └── README.md
-```
-
----
-
 ## 📝 README 구성 (프로젝트 공통)
 
 모든 프로젝트의 README는 아래 포맷을 고정 사용합니다.
@@ -87,14 +75,3 @@
     - 기능별 핵심 구현 요소
     - 기술적으로 중요한 포인트 중심
 4. **📂 폴더 구조** — 프로젝트 모듈 구조 설명
-
----
-
-## ✔ 정리
-
-08-service-projects는 단순 기능 구현이 아니라  
-**서비스 하나를 처음부터 끝까지 구성할 수 있는 역량을 만드는 과정**입니다.
-
-특히 **mini-shop은 메인 프로젝트**로서  
-스프링, 보안, 도메인 설계, 프론트(Vue), 배포까지  
-실무 서비스와 동일한 구조로 구성하는 것을 목표로 합니다.
