@@ -1,9 +1,6 @@
 # Algorithm Curriculum
 
 > 📍 위치: `00-algorithms/algorithms-curriculum/`
->
-> 교재형 포맷으로 진행하는 알고리즘 루틴.  
-> 목표는 **“문제를 설계하고 설명할 수 있는 수준의 실전 감각 확보.”**
 
 ---
 
